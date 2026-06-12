@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/Team",
+  "title": "Team",
+  "type": "object",
+  "properties": {
+    "team_id": {
+      "type": "integer",
+      "example": 1
+    },
+    "name": {
+      "type": "string",
+      "example": "New England"
+    },
+    "mascot": {
+      "type": "string",
+      "example": "Patriots"
+    },
+    "abbreviation": {
+      "type": "string",
+      "example": "NE"
+    },
+    "ranking": {
+      "type": "integer",
+      "nullable": true
+    },
+    "record": {
+      "type": "string",
+      "example": "10-7"
+    },
+    "conference": {
+      "$ref": "#/components/schemas/Conference"
+    },
+    "division": {
+      "$ref": "#/components/schemas/Division"
+    }
+  }
+}

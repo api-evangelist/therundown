@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/SportsResponse",
+  "title": "SportsResponse",
+  "type": "object",
+  "properties": {
+    "sports": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Sport"
+      }
+    }
+  }
+}

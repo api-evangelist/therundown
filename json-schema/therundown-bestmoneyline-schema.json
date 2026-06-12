@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/BestMoneyline",
+  "title": "BestMoneyline",
+  "type": "object",
+  "properties": {
+    "moneyline_home": {
+      "type": "number",
+      "nullable": true
+    },
+    "moneyline_away": {
+      "type": "number",
+      "nullable": true
+    },
+    "moneyline_draw": {
+      "type": "number",
+      "nullable": true
+    },
+    "best_affiliate_home": {
+      "$ref": "#/components/schemas/BestAffiliateInfo"
+    },
+    "best_affiliate_away": {
+      "$ref": "#/components/schemas/BestAffiliateInfo"
+    },
+    "best_affiliate_draw": {
+      "$ref": "#/components/schemas/BestAffiliateInfo"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/MarketHistoryResponse",
+  "title": "MarketHistoryResponse",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string"
+        },
+        "market_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "count": {
+          "type": "integer"
+        }
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MarketLinePriceHistory"
+      }
+    }
+  }
+}

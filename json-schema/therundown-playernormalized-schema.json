@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/PlayerNormalized",
+  "title": "PlayerNormalized",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "sport_id": {
+      "type": "integer"
+    },
+    "team_id": {
+      "type": "integer"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "weight": {
+      "type": "number"
+    },
+    "height": {
+      "type": "number"
+    },
+    "display_weight": {
+      "type": "string"
+    },
+    "display_height": {
+      "type": "string"
+    },
+    "age": {
+      "type": "integer"
+    },
+    "date_of_birth": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "jersey": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string"
+    },
+    "position_abbreviation": {
+      "type": "string"
+    },
+    "debut_year": {
+      "type": "integer"
+    },
+    "birth_place_city": {
+      "type": "string"
+    },
+    "birth_place_country": {
+      "type": "string"
+    },
+    "experience_years": {
+      "type": "integer"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "status": {
+      "type": "string"
+    },
+    "bats": {
+      "type": "string",
+      "description": "MLB only \u2014 batting side"
+    },
+    "throws": {
+      "type": "string",
+      "description": "MLB only \u2014 throwing arm"
+    }
+  }
+}

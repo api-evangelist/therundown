@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/BestSpread",
+  "title": "BestSpread",
+  "type": "object",
+  "properties": {
+    "point_spread_home": {
+      "type": "number",
+      "nullable": true
+    },
+    "point_spread_away": {
+      "type": "number",
+      "nullable": true
+    },
+    "point_spread_home_money": {
+      "type": "number",
+      "nullable": true
+    },
+    "point_spread_away_money": {
+      "type": "number",
+      "nullable": true
+    },
+    "best_affiliate_home": {
+      "$ref": "#/components/schemas/BestAffiliateInfo"
+    },
+    "best_affiliate_away": {
+      "$ref": "#/components/schemas/BestAffiliateInfo"
+    }
+  }
+}

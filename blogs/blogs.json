@@ -1,0 +1,10 @@
+{
+  "name": "TheRundown Blog",
+  "description": "Blog and news content from TheRundown sports betting data platform.",
+  "url": "https://blog.therundown.io",
+  "rss": null,
+  "rss_confirmed": false,
+  "last_checked": "2026-06-12",
+  "notes": "blog.therundown.io resolves to an unrelated site via Cloudflare DNS. No RSS/Atom feed confirmed at common paths (/rss, /feed, /rss.xml). Blog may be inactive or hosted elsewhere.",
+  "posts": []
+}

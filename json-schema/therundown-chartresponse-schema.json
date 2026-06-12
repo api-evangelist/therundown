@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/ChartResponse",
+  "title": "ChartResponse",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string"
+        },
+        "market_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "market_name": {
+          "type": "string"
+        }
+      }
+    },
+    "series": {
+      "type": "object",
+      "description": "Keyed by affiliate ID",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/ChartSeries"
+      }
+    }
+  }
+}

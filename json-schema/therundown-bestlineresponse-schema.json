@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/BestLineResponse",
+  "title": "BestLineResponse",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "moneyline": {
+      "$ref": "#/components/schemas/BestMoneyline"
+    },
+    "spread": {
+      "$ref": "#/components/schemas/BestSpread"
+    },
+    "total": {
+      "$ref": "#/components/schemas/BestTotal"
+    },
+    "periods": {
+      "type": "object",
+      "description": "Period-specific best lines keyed by period name",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "moneyline": {
+            "$ref": "#/components/schemas/BestMoneyline"
+          },
+          "spread": {
+            "$ref": "#/components/schemas/BestSpread"
+          },
+          "total": {
+            "$ref": "#/components/schemas/BestTotal"
+          }
+        }
+      }
+    }
+  }
+}

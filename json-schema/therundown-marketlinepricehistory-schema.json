@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/MarketLinePriceHistory",
+  "title": "MarketLinePriceHistory",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "market_line_price_id": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "event_id": {
+      "type": "string"
+    },
+    "sport_id": {
+      "type": "integer"
+    },
+    "affiliate_id": {
+      "type": "integer"
+    },
+    "market_participant_id": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "market_id": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "line": {
+      "type": "string"
+    },
+    "price": {
+      "type": "string"
+    },
+    "previous_price": {
+      "type": "string",
+      "nullable": true
+    },
+    "closed_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "change_type": {
+      "type": "string",
+      "description": "Type of change (e.g., \"price_change\", \"new\", \"closed\")"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/BestTotal",
+  "title": "BestTotal",
+  "type": "object",
+  "properties": {
+    "total_over": {
+      "type": "number",
+      "nullable": true
+    },
+    "total_under": {
+      "type": "number",
+      "nullable": true
+    },
+    "total_over_money": {
+      "type": "number",
+      "nullable": true
+    },
+    "total_under_money": {
+      "type": "number",
+      "nullable": true
+    },
+    "best_affiliate_over": {
+      "$ref": "#/components/schemas/BestAffiliateInfo"
+    },
+    "best_affiliate_under": {
+      "$ref": "#/components/schemas/BestAffiliateInfo"
+    }
+  }
+}

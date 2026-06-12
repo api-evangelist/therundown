@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/V1LinePeriods",
+  "title": "V1LinePeriods",
+  "type": "object",
+  "properties": {
+    "period_full_game": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_first_half": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_second_half": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_first_period": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_second_period": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_third_period": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_fourth_period": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_live_full_game": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_live_first_half": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_live_second_half": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_live_first_period": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_live_second_period": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_live_third_period": {
+      "$ref": "#/components/schemas/V1Line"
+    },
+    "period_live_fourth_period": {
+      "$ref": "#/components/schemas/V1Line"
+    }
+  }
+}

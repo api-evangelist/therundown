@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/PlayerStatResponse",
+  "title": "PlayerStatResponse",
+  "type": "object",
+  "properties": {
+    "player": {
+      "$ref": "#/components/schemas/PlayerNormalized"
+    },
+    "stats": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/PlayerStats"
+      }
+    }
+  }
+}

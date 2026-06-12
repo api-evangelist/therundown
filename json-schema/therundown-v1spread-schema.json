@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/V1Spread",
+  "title": "V1Spread",
+  "type": "object",
+  "properties": {
+    "point_spread_away": {
+      "type": "number",
+      "example": 3.5
+    },
+    "point_spread_away_delta": {
+      "type": "number"
+    },
+    "point_spread_home": {
+      "type": "number",
+      "example": -3.5
+    },
+    "point_spread_home_delta": {
+      "type": "number"
+    },
+    "point_spread_away_money": {
+      "type": "number",
+      "example": -110
+    },
+    "point_spread_away_money_delta": {
+      "type": "number"
+    },
+    "point_spread_home_money": {
+      "type": "number",
+      "example": -110
+    },
+    "point_spread_home_money_delta": {
+      "type": "number"
+    },
+    "date_updated": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "format": {
+      "type": "string"
+    },
+    "extended_spreads": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/V1Spread"
+      }
+    }
+  }
+}

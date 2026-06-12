@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/TeamGameStats",
+  "title": "TeamGameStats",
+  "type": "object",
+  "properties": {
+    "team_id": {
+      "type": "integer",
+      "nullable": true
+    },
+    "team": {
+      "$ref": "#/components/schemas/TeamNormalized"
+    },
+    "stat_id": {
+      "type": "integer",
+      "nullable": true
+    },
+    "stat": {
+      "$ref": "#/components/schemas/StatDefinition"
+    },
+    "event_id": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    }
+  }
+}

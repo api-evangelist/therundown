@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/Sport",
+  "title": "Sport",
+  "type": "object",
+  "properties": {
+    "sport_id": {
+      "type": "integer",
+      "example": 4
+    },
+    "sport_name": {
+      "type": "string",
+      "example": "NBA"
+    }
+  }
+}

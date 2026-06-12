@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/Market",
+  "title": "Market",
+  "type": "object",
+  "description": "Market definition. The `line_value_is_participant` flag indicates whether the line value represents a participant name (true) or a numeric value like a spread/total (false).\n",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "example": 1
+    },
+    "name": {
+      "type": "string",
+      "example": "Money Line"
+    },
+    "description": {
+      "type": "string"
+    },
+    "short_description": {
+      "type": "string"
+    },
+    "line_value_is_participant": {
+      "type": "boolean",
+      "description": "If true, the line \"value\" field is a participant name rather than a numeric line"
+    },
+    "proposition": {
+      "type": "boolean",
+      "description": "Whether this is a proposition/prop market"
+    },
+    "period_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "Associated period. 0=Full Game, 1=1st Half, 2=2nd Half, 3-6=Quarters/periods, 7=Live Full Game, 13-18=Live periods. For tennis, 3/4 represent prematch Set 1/Set 2 and 15/16 represent live Set 1/Set 2.\n"
+    },
+    "live_variant_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "ID of the live/in-play variant of this market"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

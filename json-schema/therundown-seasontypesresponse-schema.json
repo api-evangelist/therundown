@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/SeasonTypesResponse",
+  "title": "SeasonTypesResponse",
+  "type": "object",
+  "properties": {
+    "season_types": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SeasonTypeSport"
+      }
+    }
+  }
+}

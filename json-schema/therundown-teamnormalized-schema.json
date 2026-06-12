@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/TeamNormalized",
+  "title": "TeamNormalized",
+  "type": "object",
+  "properties": {
+    "team_id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "mascot": {
+      "type": "string"
+    },
+    "abbreviation": {
+      "type": "string"
+    },
+    "record": {
+      "type": "string"
+    },
+    "is_home": {
+      "type": "boolean"
+    },
+    "is_away": {
+      "type": "boolean"
+    },
+    "ranking": {
+      "type": "integer",
+      "nullable": true
+    },
+    "conference": {
+      "$ref": "#/components/schemas/Conference"
+    },
+    "division": {
+      "$ref": "#/components/schemas/Division"
+    }
+  }
+}

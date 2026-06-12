@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/PlayerStats",
+  "title": "PlayerStats",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "integer",
+      "nullable": true
+    },
+    "player": {
+      "$ref": "#/components/schemas/PlayerNormalized"
+    },
+    "stat_id": {
+      "type": "integer",
+      "nullable": true
+    },
+    "stat": {
+      "$ref": "#/components/schemas/StatDefinition"
+    },
+    "season_year": {
+      "type": "integer"
+    },
+    "season_type": {
+      "type": "integer"
+    },
+    "season_type_name": {
+      "type": "string"
+    },
+    "value": {
+      "type": "number"
+    },
+    "display_value": {
+      "type": "string"
+    },
+    "per_game_value": {
+      "type": "number"
+    },
+    "per_game_display_value": {
+      "type": "string"
+    },
+    "rank": {
+      "type": "integer"
+    },
+    "rank_display_value": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    }
+  }
+}

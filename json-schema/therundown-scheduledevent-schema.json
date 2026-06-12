@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/ScheduledEvent",
+  "title": "ScheduledEvent",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "event_uuid": {
+      "type": "string"
+    },
+    "sport_id": {
+      "type": "integer"
+    },
+    "season_type": {
+      "type": "string"
+    },
+    "season_year": {
+      "type": "integer"
+    },
+    "away_team": {
+      "type": "string"
+    },
+    "home_team": {
+      "type": "string"
+    },
+    "date_event": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "neutral_site": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "conference_competition": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "conference_id": {
+      "type": "integer"
+    },
+    "conference_name": {
+      "type": "string"
+    },
+    "league_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "league_id": {
+      "type": "integer"
+    },
+    "event_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "broadcast": {
+      "type": "string",
+      "nullable": true
+    },
+    "event_location": {
+      "type": "string",
+      "nullable": true
+    },
+    "attendance": {
+      "type": "integer",
+      "nullable": true
+    },
+    "status": {
+      "type": "string"
+    },
+    "status_detail": {
+      "type": "string"
+    },
+    "away_score": {
+      "type": "integer",
+      "nullable": true
+    },
+    "home_score": {
+      "type": "integer",
+      "nullable": true
+    }
+  }
+}

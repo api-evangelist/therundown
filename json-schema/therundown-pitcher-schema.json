@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/Pitcher",
+  "title": "Pitcher",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "throws_left_handed": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "throws_right_handed": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "bats_left_handed": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "bats_right_handed": {
+      "type": "boolean",
+      "nullable": true
+    }
+  }
+}

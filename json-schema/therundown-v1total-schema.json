@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/V1Total",
+  "title": "V1Total",
+  "type": "object",
+  "properties": {
+    "total_over": {
+      "type": "number",
+      "example": 47.5
+    },
+    "total_over_delta": {
+      "type": "number"
+    },
+    "total_under": {
+      "type": "number",
+      "example": 47.5
+    },
+    "total_under_delta": {
+      "type": "number"
+    },
+    "total_over_money": {
+      "type": "number",
+      "example": -110
+    },
+    "total_over_money_delta": {
+      "type": "number"
+    },
+    "total_under_money": {
+      "type": "number",
+      "example": -110
+    },
+    "total_under_money_delta": {
+      "type": "number"
+    },
+    "date_updated": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "format": {
+      "type": "string"
+    },
+    "extended_totals": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/V1Total"
+      }
+    }
+  }
+}

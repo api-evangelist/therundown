@@ -1,0 +1,38 @@
+{
+  "summary": "Get the best available line across all sportsbooks for an event",
+  "endpoint": "GET /api/v2/events/{eventID}/best-line",
+  "request": {
+    "method": "GET",
+    "url": "https://therundown.io/api/v2/events/401547418/best-line",
+    "headers": {
+      "X-Therundown-Key": "YOUR_API_KEY"
+    }
+  },
+  "response": {
+    "event_id": "401547418",
+    "best_lines": {
+      "moneyline_away": {
+        "price": 145,
+        "affiliate_id": 3,
+        "affiliate_name": "DraftKings"
+      },
+      "moneyline_home": {
+        "price": -155,
+        "affiliate_id": 2,
+        "affiliate_name": "FanDuel"
+      },
+      "spread_away": {
+        "price": -110,
+        "point": 3.5,
+        "affiliate_id": 1,
+        "affiliate_name": "Pinnacle"
+      },
+      "total_over": {
+        "price": -110,
+        "point": 44.5,
+        "affiliate_id": 4,
+        "affiliate_name": "BetMGM"
+      }
+    }
+  }
+}

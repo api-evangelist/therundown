@@ -1,0 +1,39 @@
+{
+  "summary": "List all sports",
+  "endpoint": "GET /api/v2/sports",
+  "request": {
+    "method": "GET",
+    "url": "https://therundown.io/api/v2/sports",
+    "headers": {
+      "X-Therundown-Key": "YOUR_API_KEY"
+    }
+  },
+  "response": {
+    "sports": [
+      {
+        "sport_id": 2,
+        "sport_name": "NFL",
+        "has_scores": true,
+        "has_odds": true
+      },
+      {
+        "sport_id": 4,
+        "sport_name": "NBA",
+        "has_scores": true,
+        "has_odds": true
+      },
+      {
+        "sport_id": 3,
+        "sport_name": "MLB",
+        "has_scores": true,
+        "has_odds": true
+      },
+      {
+        "sport_id": 6,
+        "sport_name": "NHL",
+        "has_scores": true,
+        "has_odds": true
+      }
+    ]
+  }
+}

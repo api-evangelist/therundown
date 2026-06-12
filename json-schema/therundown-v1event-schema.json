@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/V1Event",
+  "title": "V1Event",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "event_uuid": {
+      "type": "string"
+    },
+    "sport_id": {
+      "type": "integer"
+    },
+    "event_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "rotation_number_away": {
+      "type": "integer"
+    },
+    "rotation_number_home": {
+      "type": "integer"
+    },
+    "score": {
+      "$ref": "#/components/schemas/Score"
+    },
+    "teams": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "team_id": {
+            "type": "integer"
+          },
+          "team_normalized_id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "is_home": {
+            "type": "boolean"
+          },
+          "is_away": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "teams_normalized": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TeamNormalized"
+      }
+    },
+    "schedule": {
+      "$ref": "#/components/schemas/Schedule"
+    },
+    "lines": {
+      "type": "object",
+      "description": "Lines keyed by affiliate ID",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/V1Line"
+      }
+    },
+    "line_periods": {
+      "type": "object",
+      "description": "Period-specific lines keyed by affiliate ID (when `include=all_periods`)",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/V1LinePeriods"
+      }
+    },
+    "pitcher_away": {
+      "$ref": "#/components/schemas/Pitcher"
+    },
+    "pitcher_home": {
+      "$ref": "#/components/schemas/Pitcher"
+    }
+  }
+}

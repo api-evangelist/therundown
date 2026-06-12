@@ -1,0 +1,41 @@
+{
+  "summary": "Get market-based odds for an event",
+  "endpoint": "GET /api/v2/events/{eventID}/markets",
+  "request": {
+    "method": "GET",
+    "url": "https://therundown.io/api/v2/events/401547418/markets",
+    "headers": {
+      "X-Therundown-Key": "YOUR_API_KEY"
+    },
+    "query_params": {
+      "market_id": "0.8.1"
+    }
+  },
+  "response": {
+    "event_id": "401547418",
+    "markets": [
+      {
+        "market_id": "0.8.1",
+        "name": "Full Game Moneyline",
+        "participants": [
+          {
+            "participant_id": "54",
+            "name": "Kansas City Chiefs",
+            "line_prices": [
+              {
+                "affiliate_id": 1,
+                "price": -160,
+                "timestamp": "2024-01-14T17:55:00Z"
+              },
+              {
+                "affiliate_id": 2,
+                "price": -155,
+                "timestamp": "2024-01-14T17:55:00Z"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

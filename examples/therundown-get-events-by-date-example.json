@@ -1,0 +1,46 @@
+{
+  "summary": "Get events with odds for a sport on a specific date",
+  "endpoint": "GET /api/v2/sports/{sportID}/events/{date}",
+  "request": {
+    "method": "GET",
+    "url": "https://therundown.io/api/v2/sports/2/events/2024-01-14",
+    "headers": {
+      "X-Therundown-Key": "YOUR_API_KEY"
+    },
+    "query_params": {
+      "include": "all_periods",
+      "affiliate_ids": "1,2,3"
+    }
+  },
+  "response": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total": 8
+    },
+    "events": [
+      {
+        "event_id": "401547418",
+        "sport_id": 2,
+        "event_date": "2024-01-14T18:00:00Z",
+        "rotation_number_away": 101,
+        "rotation_number_home": 102,
+        "score": {
+          "event_status": "STATUS_SCHEDULED"
+        },
+        "teams": [
+          {
+            "team_id": 54,
+            "team_normalized_id": 54,
+            "name": "Kansas City Chiefs"
+          },
+          {
+            "team_id": 43,
+            "team_normalized_id": 43,
+            "name": "Miami Dolphins"
+          }
+        ]
+      }
+    ]
+  }
+}

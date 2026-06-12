@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/V1Moneyline",
+  "title": "V1Moneyline",
+  "type": "object",
+  "properties": {
+    "moneyline_away": {
+      "type": "number",
+      "description": "Away team moneyline. 0.0001 = off the board.",
+      "example": 150
+    },
+    "moneyline_away_delta": {
+      "type": "number"
+    },
+    "moneyline_home": {
+      "type": "number",
+      "example": -180
+    },
+    "moneyline_home_delta": {
+      "type": "number"
+    },
+    "moneyline_draw": {
+      "type": "number",
+      "description": "Draw moneyline (soccer, UFC)"
+    },
+    "moneyline_draw_delta": {
+      "type": "number"
+    },
+    "date_updated": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "format": {
+      "type": "string",
+      "example": "American"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/MarketResponse",
+  "title": "MarketResponse",
+  "type": "object",
+  "description": "Market with participants and prices for a specific event",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "market_id": {
+      "type": "integer",
+      "example": 1
+    },
+    "period_id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string",
+      "example": "Money Line"
+    },
+    "market_description": {
+      "type": "string"
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MarketParticipantResponse"
+      }
+    }
+  }
+}

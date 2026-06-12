@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/StatsMeta",
+  "title": "StatsMeta",
+  "type": "object",
+  "properties": {
+    "complete": {
+      "type": "boolean"
+    }
+  }
+}

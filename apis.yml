@@ -53,10 +53,16 @@ apis:
         url: https://docs.therundown.io/introduction
       - type: OpenAPI
         url: https://docs.therundown.io/api-reference/generated/v2-sports/list-all-sports
+      - type: OpenAPI
+        url: openapi/therundown-sports-odds-api-openapi.yml
       - type: Authentication
         url: https://docs.therundown.io/authentication
       - type: Pricing
         url: https://therundown.io/pricing/api
+      - type: Vocabulary
+        url: vocabulary/therundown-vocabulary.yml
+      - type: JSONLDContext
+        url: json-ld/therundown-context.jsonld
 
 common:
   - type: Website
@@ -81,6 +87,12 @@ common:
     url: rate-limits/therundown-rate-limits.yml
   - type: FinOps
     url: finops/therundown-finops.yml
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+  - type: Blog
+    url: blogs/blogs.json
 
 maintainers:
   - FN: Kin Lane

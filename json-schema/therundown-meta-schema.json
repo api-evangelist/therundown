@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/Meta",
+  "title": "Meta",
+  "type": "object",
+  "properties": {
+    "delta_last_id": {
+      "type": "string"
+    }
+  }
+}

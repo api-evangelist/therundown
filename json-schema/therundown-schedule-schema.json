@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/Schedule",
+  "title": "Schedule",
+  "type": "object",
+  "properties": {
+    "season_type": {
+      "type": "string",
+      "example": "Regular Season"
+    },
+    "season_year": {
+      "type": "integer",
+      "example": 2026
+    },
+    "conference_competition": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "conference_name": {
+      "type": "string"
+    },
+    "league_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "event_name": {
+      "type": "string"
+    },
+    "attendance": {
+      "type": "string"
+    },
+    "event_headline": {
+      "type": "string"
+    },
+    "week": {
+      "type": "integer"
+    },
+    "week_name": {
+      "type": "string"
+    },
+    "week_detail": {
+      "type": "string"
+    }
+  }
+}

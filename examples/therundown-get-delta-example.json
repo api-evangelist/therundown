@@ -1,0 +1,28 @@
+{
+  "summary": "Get market changes (delta) since a timestamp",
+  "endpoint": "GET /api/v2/markets/delta",
+  "request": {
+    "method": "GET",
+    "url": "https://therundown.io/api/v2/markets/delta",
+    "headers": {
+      "X-Therundown-Key": "YOUR_API_KEY"
+    },
+    "query_params": {
+      "sport_id": "2",
+      "since": "1705258800",
+      "market_ids": "0.8.1,0.8.2"
+    }
+  },
+  "response": {
+    "deltas": [
+      {
+        "event_id": "401547418",
+        "market_id": "0.8.1",
+        "affiliate_id": 1,
+        "participant_id": "54",
+        "price": -155,
+        "timestamp": "2024-01-14T17:58:00Z"
+      }
+    ]
+  }
+}

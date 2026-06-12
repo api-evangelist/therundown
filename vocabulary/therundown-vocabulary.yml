@@ -1,0 +1,158 @@
+vocabulary:
+  name: TheRundown Sports Betting API Vocabulary
+  description: >
+    Terms and concepts used in TheRundown Sports Odds API covering sports
+    betting data, odds formats, market types, and real-time data streaming.
+  url: https://therundown.io/api
+  version: "2.0"
+
+terms:
+
+  - term: sport_id
+    definition: >
+      Numeric identifier for a sport (e.g. 2=NFL, 3=MLB, 4=NBA, 6=NHL).
+      Used as path or query parameter to filter results to a specific league.
+    category: identifier
+
+  - term: event_id
+    definition: >
+      Unique string identifier for a sporting event (game). Stable across
+      the event lifecycle from pre-game through final score.
+    category: identifier
+
+  - term: market_id
+    definition: >
+      Dot-delimited string identifying a specific betting market type,
+      e.g. "0.8.1" for full-game moneyline, "0.8.2" for full-game spread,
+      "0.8.3" for full-game total. Over 600 market types are supported.
+    category: identifier
+
+  - term: affiliate_id
+    definition: >
+      Numeric identifier for a sportsbook or prediction market operator
+      (e.g. DraftKings, FanDuel, BetMGM, Pinnacle, Kalshi, Polymarket).
+    category: identifier
+
+  - term: participant_id
+    definition: >
+      Identifier for a team or player within a specific market context.
+      Maps to team_id or player_id in the reference data endpoints.
+    category: identifier
+
+  - term: moneyline
+    definition: >
+      American-format odds representing the amount won on a $100 bet
+      (positive) or the amount needed to bet to win $100 (negative).
+      Example: -160 means bet $160 to win $100; +145 means bet $100 to win $145.
+    category: odds-format
+
+  - term: spread
+    definition: >
+      Point handicap applied to an event to level the betting field.
+      The favorite gives points (negative spread) and the underdog receives
+      them (positive spread). Also called "line" or "point spread."
+    category: market-type
+
+  - term: total
+    definition: >
+      Over/under betting market where bettors wager on the combined score
+      of both teams being over or under a set number (the "point total").
+    category: market-type
+
+  - term: off-the-board
+    definition: >
+      Sentinel value 0.0001 indicating a sportsbook has temporarily removed
+      pricing from a market, typically due to injury news or late-breaking
+      information. Should be displayed as "Off Board" or "N/A", not as a price.
+    category: data-convention
+
+  - term: delta
+    definition: >
+      A change-feed endpoint that returns only the odds updates since a given
+      Unix timestamp. Used for efficient polling without re-fetching all data.
+      The timestamp is passed as the "since" query parameter.
+    category: data-pattern
+
+  - term: line_price
+    definition: >
+      A single odds quote from one sportsbook (affiliate) for one participant
+      in one market at a specific timestamp. The atomic unit of odds data in V2.
+    category: data-model
+
+  - term: opener
+    definition: >
+      The first odds posted by a sportsbook when a market is made available,
+      before any significant line movement. Available via /openers endpoints.
+    category: market-type
+
+  - term: closing
+    definition: >
+      The final odds offered by a sportsbook immediately before an event starts.
+      Closing lines are used as benchmarks in line-movement analysis.
+    category: market-type
+
+  - term: rotation_number
+    definition: >
+      Numeric identifier assigned to a team for a specific event by sportsbooks,
+      printed in betting sheets. Rotation numbers differ per sportsbook and event.
+    category: data-model
+
+  - term: WebSocket
+    definition: >
+      Real-time streaming connection available at wss://therundown.io/api/v2/ws/markets
+      (V2) or wss://therundown.io/api/v1/ws (V1). Delivers sub-second odds updates
+      as JSON messages without requiring repeated HTTP polling.
+    category: transport
+
+  - term: V1
+    definition: >
+      Legacy API version using line-based data structures with moneyline, spread,
+      and total as top-level objects on each event. Available for backward
+      compatibility; new integrations should use V2.
+    category: versioning
+
+  - term: V2
+    definition: >
+      Current recommended API version using market-based data structures where
+      odds are organized by market_id and participant. Supports 600+ market types
+      including player props, team totals, and futures.
+    category: versioning
+
+  - term: player_prop
+    definition: >
+      A betting market on individual player performance statistics such as
+      passing yards, points scored, or strikeouts. Available via V2 market
+      endpoints with player-level market_id values.
+    category: market-type
+
+  - term: team_total
+    definition: >
+      Over/under market on a single team's score rather than the combined total.
+      Available via V1 /lines/{id}/team_total and via V2 market endpoints.
+    category: market-type
+
+  - term: futures
+    definition: >
+      Long-term betting markets on season outcomes such as championship winners,
+      division titles, or award recipients. Available via V2 market endpoints.
+    category: market-type
+
+  - term: season_type
+    definition: >
+      Classification of events by season phase: preseason, regular season,
+      or postseason/playoffs. Used to filter schedules and stats.
+    category: data-model
+
+  - term: affiliate
+    definition: >
+      A sportsbook or prediction market operator whose odds are aggregated
+      by TheRundown. Includes DraftKings, FanDuel, BetMGM, Pinnacle, Caesars,
+      PointsBet, Kalshi, Polymarket, and others.
+    category: data-model
+
+  - term: normalization
+    definition: >
+      TheRundown's process of mapping each sportsbook's team names, market names,
+      and odds formats to a unified canonical schema so data from 16+ books
+      can be compared in a single response.
+    category: platform-concept

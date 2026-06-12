@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/StatDefinition",
+  "title": "StatDefinition",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "nullable": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "abbreviation": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "sport_id": {
+      "type": "integer"
+    }
+  }
+}

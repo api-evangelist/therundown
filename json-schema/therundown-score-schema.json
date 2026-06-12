@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/Score",
+  "title": "Score",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "event_status": {
+      "type": "string",
+      "description": "Event status. Common values: STATUS_SCHEDULED, STATUS_IN_PROGRESS, STATUS_FINAL, STATUS_POSTPONED, STATUS_CANCELED, STATUS_SUSPENDED, STATUS_DELAYED, STATUS_RAIN_DELAY, STATUS_HALFTIME, STATUS_END_PERIOD, STATUS_END_OF_REGULATION, STATUS_OVERTIME, STATUS_FIRST_HALF, STATUS_SECOND_HALF\n"
+    },
+    "team_id_away": {
+      "type": "integer",
+      "description": "Away team ID. Omitted when zero."
+    },
+    "team_id_home": {
+      "type": "integer",
+      "description": "Home team ID. Omitted when zero."
+    },
+    "score_away": {
+      "type": "integer"
+    },
+    "score_home": {
+      "type": "integer"
+    },
+    "winner_away": {
+      "type": "integer"
+    },
+    "winner_home": {
+      "type": "integer"
+    },
+    "score_away_by_period": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "score_home_by_period": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "venue_name": {
+      "type": "string",
+      "description": "Arena or stadium name. May be an empty string when unavailable from the live feed."
+    },
+    "venue_location": {
+      "type": "string",
+      "description": "City and state. May be an empty string when unavailable from the live feed."
+    },
+    "game_clock": {
+      "type": "integer"
+    },
+    "display_clock": {
+      "type": "string"
+    },
+    "game_period": {
+      "type": "integer"
+    },
+    "broadcast": {
+      "type": "string"
+    },
+    "event_status_detail": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

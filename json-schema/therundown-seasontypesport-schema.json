@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://therundown.io/schemas/SeasonTypeSport",
+  "title": "SeasonTypeSport",
+  "type": "object",
+  "properties": {
+    "sport_id": {
+      "type": "integer"
+    },
+    "sport_name": {
+      "type": "string"
+    },
+    "season_type_id": {
+      "type": "integer"
+    },
+    "season_type_name": {
+      "type": "string"
+    }
+  }
+}

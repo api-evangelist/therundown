@@ -1,0 +1,84 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "trd": "https://therundown.io/vocab#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+
+    "Sport": "schema:SportsOrganization",
+    "Event": "schema:SportsEvent",
+    "Team": "schema:SportsTeam",
+    "Player": "schema:Person",
+
+    "sport_id": {"@id": "trd:sportId", "@type": "xsd:integer"},
+    "sport_name": {"@id": "schema:name"},
+    "has_scores": {"@id": "trd:hasScores", "@type": "xsd:boolean"},
+    "has_odds": {"@id": "trd:hasOdds", "@type": "xsd:boolean"},
+
+    "event_id": {"@id": "trd:eventId"},
+    "event_date": {"@id": "schema:startDate", "@type": "xsd:dateTime"},
+    "sport": {"@id": "trd:sport"},
+    "teams": {"@id": "trd:team", "@container": "@set"},
+    "score": {"@id": "trd:score"},
+
+    "team_id": {"@id": "trd:teamId", "@type": "xsd:integer"},
+    "team_normalized_id": {"@id": "trd:teamNormalizedId", "@type": "xsd:integer"},
+    "name": {"@id": "schema:name"},
+    "abbreviation": {"@id": "schema:alternateName"},
+    "conference": {"@id": "trd:conference"},
+    "division": {"@id": "trd:division"},
+
+    "player_id": {"@id": "trd:playerId", "@type": "xsd:integer"},
+    "player_name": {"@id": "schema:name"},
+    "position": {"@id": "trd:position"},
+    "jersey_number": {"@id": "trd:jerseyNumber"},
+
+    "market_id": {"@id": "trd:marketId"},
+    "market_name": {"@id": "schema:name"},
+    "markets": {"@id": "trd:market", "@container": "@set"},
+    "participants": {"@id": "trd:participant", "@container": "@set"},
+    "line_prices": {"@id": "trd:linePrice", "@container": "@set"},
+
+    "affiliate_id": {"@id": "trd:affiliateId", "@type": "xsd:integer"},
+    "affiliate_name": {"@id": "schema:name"},
+    "price": {"@id": "trd:oddsPrice", "@type": "xsd:decimal"},
+    "point": {"@id": "trd:spread", "@type": "xsd:decimal"},
+    "timestamp": {"@id": "schema:dateModified", "@type": "xsd:dateTime"},
+
+    "moneyline": {"@id": "trd:moneyline"},
+    "spread": {"@id": "trd:pointSpread"},
+    "total": {"@id": "trd:total"},
+    "team_total": {"@id": "trd:teamTotal"},
+    "opener": {"@id": "trd:openingLine"},
+    "closing": {"@id": "trd:closingLine"},
+
+    "rotation_number_away": {"@id": "trd:rotationNumberAway", "@type": "xsd:integer"},
+    "rotation_number_home": {"@id": "trd:rotationNumberHome", "@type": "xsd:integer"},
+
+    "event_status": {"@id": "trd:eventStatus"},
+    "score_away": {"@id": "trd:scoreAway", "@type": "xsd:integer"},
+    "score_home": {"@id": "trd:scoreHome", "@type": "xsd:integer"},
+
+    "season_type": {"@id": "trd:seasonType"},
+    "season_year": {"@id": "trd:seasonYear", "@type": "xsd:integer"},
+
+    "stat_id": {"@id": "trd:statId", "@type": "xsd:integer"},
+    "stat_value": {"@id": "trd:statValue", "@type": "xsd:decimal"},
+    "stat_name": {"@id": "schema:name"},
+
+    "delta": {"@id": "trd:delta"},
+    "since": {"@id": "trd:since", "@type": "xsd:integer"},
+
+    "off_the_board": {"@id": "trd:offTheBoard", "@type": "xsd:boolean"},
+
+    "meta": {
+      "@id": "trd:meta",
+      "@context": {
+        "offset": {"@id": "trd:offset", "@type": "xsd:integer"},
+        "limit": {"@id": "trd:limit", "@type": "xsd:integer"},
+        "total": {"@id": "trd:total", "@type": "xsd:integer"}
+      }
+    }
+  }
+}
