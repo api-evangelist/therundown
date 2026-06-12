@@ -1,0 +1,145 @@
+specificationVersion: "0.1"
+id: therundown-rate-limits
+name: TheRundown API Rate Limits
+description: Rate limits for the TheRundown Sports Odds API, varying by plan tier. Limits are enforced per second and by monthly or daily data point quotas. HTTP 429 is returned when limits are exceeded. All paid plans support adjustable soft and hard limits.
+url: https://docs.therundown.io/introduction
+
+rateLimits:
+  - name: Free Plan Rate Limit
+    description: Free tier allows 1 request per second with a daily cap of 20,000 data points. Returns HTTP 429 once the daily hard cap is reached.
+    plan: Free
+    limit: 1
+    period: second
+    quota:
+      limit: 20000
+      period: day
+    headers:
+      - name: X-TheRundown-Key
+        description: API key passed as a request header (recommended) or as a query parameter named key
+    errors:
+      - code: 429
+        message: Daily data point hard cap exceeded
+
+  - name: Starter Plan Rate Limit
+    description: Starter tier allows 2 requests per second with 5 million data points per month. Adjustable soft and hard usage limits available.
+    plan: Starter
+    limit: 2
+    period: second
+    quota:
+      limit: 5000000
+      period: month
+    overagePrice:
+      amount: 0.002
+      unit: data point
+      currency: USD
+    features:
+      - Soft limit notifications
+      - Hard limit cap
+      - Overage pricing available
+    errors:
+      - code: 429
+        message: Rate limit or hard cap exceeded
+
+  - name: Pro Plan Rate Limit
+    description: Pro tier allows 5 requests per second with 25 million data points per month. Supports adjustable soft and hard usage limits.
+    plan: Pro
+    limit: 5
+    period: second
+    quota:
+      limit: 25000000
+      period: month
+    features:
+      - Soft limit notifications
+      - Hard limit cap
+      - Overage pricing available
+    errors:
+      - code: 429
+        message: Rate limit or hard cap exceeded
+
+  - name: Ultra Plan Rate Limit
+    description: Ultra tier allows 10 requests per second with 100 million data points per month. Includes WebSocket streaming access with real-time delivery.
+    plan: Ultra
+    limit: 10
+    period: second
+    quota:
+      limit: 100000000
+      period: month
+    features:
+      - Soft limit notifications
+      - Hard limit cap
+      - WebSocket streaming
+      - Real-time delivery
+    errors:
+      - code: 429
+        message: Rate limit or hard cap exceeded
+
+  - name: Super Plan Rate Limit
+    description: Super tier allows 15 requests per second with 250 million data points per month.
+    plan: Super
+    limit: 15
+    period: second
+    quota:
+      limit: 250000000
+      period: month
+    features:
+      - Soft limit notifications
+      - Hard limit cap
+      - WebSocket streaming
+    errors:
+      - code: 429
+        message: Rate limit or hard cap exceeded
+
+  - name: Mega Plan Rate Limit
+    description: Mega tier allows 20 requests per second with 500 million data points per month.
+    plan: Mega
+    limit: 20
+    period: second
+    quota:
+      limit: 500000000
+      period: month
+    features:
+      - Soft limit notifications
+      - Hard limit cap
+      - WebSocket streaming
+    errors:
+      - code: 429
+        message: Rate limit or hard cap exceeded
+
+  - name: Max Plan Rate Limit
+    description: Max tier allows 50 requests per second with 2.5 billion data points per month. Highest available rate limit on standard plans.
+    plan: Max
+    limit: 50
+    period: second
+    quota:
+      limit: 2500000000
+      period: month
+    features:
+      - Soft limit notifications
+      - Hard limit cap
+      - WebSocket streaming
+      - Dedicated support
+    errors:
+      - code: 429
+        message: Rate limit or hard cap exceeded
+
+  - name: Enterprise Plan Rate Limit
+    description: Custom rate limits negotiated for enterprise customers with bespoke data volumes and SLA requirements.
+    plan: Enterprise
+    limit: custom
+    period: second
+    quota:
+      limit: custom
+      period: month
+    features:
+      - Custom rate limits
+      - Custom quotas
+      - WebSocket streaming
+      - Dedicated infrastructure
+
+authentication:
+  - type: API Key Header
+    description: Pass your API key in the X-TheRundown-Key request header. Recommended for production use.
+    header: X-TheRundown-Key
+  - type: Query Parameter
+    description: Append key=YOUR_API_KEY to the request URL. Not recommended for production due to exposure risks.
+    parameter: key

@@ -1,0 +1,165 @@
+specificationVersion: "0.1"
+id: therundown-plans-pricing
+name: TheRundown API Plans and Pricing
+description: Pricing tiers for the TheRundown Sports Odds API covering real-time odds, scores, and stats across 30+ sports leagues.
+url: https://therundown.io/pricing/api
+
+plans:
+  - name: Free
+    description: Entry-level plan with access to 3 sportsbooks and pre-match odds only, no credit card required.
+    url: https://therundown.io/pricing/api
+    price: 0
+    currency: USD
+    billing: monthly
+    dataPoints: 20000
+    billingPeriod: day
+    rateLimit:
+      requests: 1
+      period: second
+    features:
+      - 20,000 data points per day
+      - 3 sportsbooks (BetMGM, DraftKings, FanDuel)
+      - Pre-match odds only
+      - 5-minute data delay
+      - No credit card required
+      - REST API access
+      - Reference data included free
+
+  - name: Starter
+    description: Access to all 16+ sportsbooks with live odds and real-time scores.
+    url: https://therundown.io/pricing/api
+    price: 49
+    currency: USD
+    billing: monthly
+    dataPoints: 5000000
+    billingPeriod: month
+    rateLimit:
+      requests: 2
+      period: second
+    features:
+      - 5 million data points per month
+      - All 16+ sportsbooks
+      - Live odds and scores
+      - 60-second data delay
+      - Adjustable soft and hard usage limits
+      - Overage pricing at $0.002 per point
+      - REST API access
+
+  - name: Pro
+    description: Enhanced plan with +EV calculations, opening/closing lines, and 30-day historical data.
+    url: https://therundown.io/pricing/api
+    price: 149
+    currency: USD
+    billing: monthly
+    dataPoints: 25000000
+    billingPeriod: month
+    rateLimit:
+      requests: 5
+      period: second
+    features:
+      - 25 million data points per month
+      - All 16+ sportsbooks
+      - 30-second data delay
+      - +EV calculations
+      - Opening and closing lines
+      - 30-day historical odds
+      - Adjustable usage limits
+      - REST API access
+
+  - name: Ultra
+    description: Real-time WebSocket streaming with 90-day historical data and priority support.
+    url: https://therundown.io/pricing/api
+    price: 399
+    currency: USD
+    billing: monthly
+    dataPoints: 100000000
+    billingPeriod: month
+    rateLimit:
+      requests: 10
+      period: second
+    features:
+      - 100 million data points per month
+      - All 16+ sportsbooks
+      - Real-time delivery (zero delay)
+      - WebSocket streaming
+      - Sub-second updates
+      - 90-day historical odds
+      - Priority support
+      - REST API access
+
+  - name: Super
+    description: High-volume plan with real-time WebSocket delivery and expanded data points.
+    url: https://therundown.io/pricing/api
+    price: 649
+    currency: USD
+    billing: monthly
+    dataPoints: 250000000
+    billingPeriod: month
+    rateLimit:
+      requests: 15
+      period: second
+    features:
+      - 250 million data points per month
+      - All 16+ sportsbooks
+      - Real-time delivery (zero delay)
+      - WebSocket streaming
+      - Extended historical odds
+      - Priority support
+      - REST API access
+
+  - name: Mega
+    description: Large-scale plan for high-frequency data consumers with real-time WebSocket streaming.
+    url: https://therundown.io/pricing/api
+    price: 999
+    currency: USD
+    billing: monthly
+    dataPoints: 500000000
+    billingPeriod: month
+    rateLimit:
+      requests: 20
+      period: second
+    features:
+      - 500 million data points per month
+      - All 16+ sportsbooks
+      - Real-time delivery (zero delay)
+      - WebSocket streaming
+      - Extended historical odds
+      - Priority support
+      - REST API access
+
+  - name: Max
+    description: Maximum capacity plan with 2.5 billion data points and full unlimited historical odds history.
+    url: https://therundown.io/pricing/api
+    price: 2499
+    currency: USD
+    billing: monthly
+    dataPoints: 2500000000
+    billingPeriod: month
+    rateLimit:
+      requests: 50
+      period: second
+    features:
+      - 2.5 billion data points per month
+      - All 16+ sportsbooks
+      - Real-time delivery (zero delay)
+      - WebSocket streaming
+      - Unlimited historical odds
+      - Dedicated support
+      - REST API access
+
+  - name: Enterprise
+    description: Custom plan with tailored data volumes, dedicated infrastructure, and enterprise-grade SLAs.
+    url: https://therundown.io/pricing/api
+    price: custom
+    currency: USD
+    billing: monthly
+    features:
+      - Custom data point volume
+      - All 16+ sportsbooks
+      - Real-time delivery (zero delay)
+      - WebSocket streaming
+      - Unlimited historical odds
+      - Custom rate limits
+      - Dedicated account manager
+      - Enterprise SLA and uptime guarantee
+      - REST API access

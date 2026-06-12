@@ -1,0 +1,127 @@
+specificationVersion: "1.0"
+id: therundown-finops
+name: TheRundown API FinOps
+description: FOCUS-aligned FinOps framework for managing and optimizing TheRundown Sports Odds API spend across plan tiers, data point consumption, and overage charges.
+url: https://therundown.io/pricing/api
+
+framework: FinOps Framework 1.0
+
+billing:
+  provider: TheRundown
+  model: subscription-plus-overage
+  currency: USD
+  billingPeriods:
+    - monthly
+
+costCategories:
+  - name: Subscription Fee
+    description: Fixed monthly cost based on selected plan tier covering the included data point quota.
+    type: fixed
+    examples:
+      - plan: Free
+        amount: 0
+        currency: USD
+        period: month
+      - plan: Starter
+        amount: 49
+        currency: USD
+        period: month
+      - plan: Pro
+        amount: 149
+        currency: USD
+        period: month
+      - plan: Ultra
+        amount: 399
+        currency: USD
+        period: month
+      - plan: Super
+        amount: 649
+        currency: USD
+        period: month
+      - plan: Mega
+        amount: 999
+        currency: USD
+        period: month
+      - plan: Max
+        amount: 2499
+        currency: USD
+        period: month
+
+  - name: Data Point Overage
+    description: Variable charges applied when monthly data point quota is exceeded on paid plans. Rate decreases at higher tiers.
+    type: variable
+    unit: data point
+    examples:
+      - plan: Starter
+        rate: 0.002
+        currency: USD
+        unit: data point
+      - plan: Pro
+        rate: 0.0015
+        currency: USD
+        unit: data point
+      - plan: Ultra
+        rate: 0.001
+        currency: USD
+        unit: data point
+      - plan: Max
+        rate: 0.0001
+        currency: USD
+        unit: data point
+
+  - name: Reference Data
+    description: Reference data (sports list, affiliates list) is provided free of charge on all plans with no data point deduction.
+    type: free
+    note: Reference endpoints such as /api/v2/sports and /api/v2/affiliates are free on all plans.
+
+costDrivers:
+  - name: Data Point Consumption
+    description: Primary cost driver. Each API response consumes data points based on the volume of odds, markets, and events returned. Efficiently scoping requests to only needed sports, books, and markets reduces consumption.
+    unit: data point
+    optimization:
+      - Use the delta endpoint to poll only changed events rather than full refreshes
+      - Filter requests by specific sport IDs to reduce response size
+      - Limit the number of sportsbooks in each request when full coverage is not needed
+      - Use WebSocket streaming (Ultra+) instead of polling to reduce redundant requests
+
+  - name: Request Rate
+    description: Higher request rates require higher plan tiers. Excessive polling at high frequency increases both data point consumption and plan tier requirements.
+    optimization:
+      - Use the delta endpoint to minimize polling overhead
+      - Cache reference data locally to avoid repeated free-endpoint calls that still consume bandwidth
+
+  - name: Historical Data Access
+    description: Historical odds and line movement data are only available on Pro and above plans. Accessing long historical windows requires higher tiers.
+    optimization:
+      - Determine minimum required history window before selecting a plan
+      - Store and archive historical data locally once retrieved to avoid repeated API calls
+
+  - name: Real-Time vs. Delayed Data
+    description: Real-time zero-delay data requires Ultra ($399/mo) or above. For use cases tolerant of 30–60 second delays, Pro or Starter plans offer significant savings.
+    optimization:
+      - Assess whether your application truly requires sub-second data
+      - Use delayed plans for back-testing and analytics use cases
+
+  - name: WebSocket Streaming
+    description: WebSocket connections for real-time push delivery are only available on Ultra ($399/mo) and above plans.
+    optimization:
+      - Reserve WebSocket plans for applications requiring real-time in-play odds
+      - Use REST polling with delta endpoints for near-real-time use cases on lower tiers
+
+usageLimits:
+  - name: Soft Limit
+    description: Configurable threshold that triggers a warning notification when data point consumption approaches the set level. Allows proactive cost management without service interruption.
+    type: warning
+
+  - name: Hard Limit
+    description: Configurable cap that automatically stops API responses once reached to prevent runaway overage charges. Returns HTTP 429 when the hard limit is hit.
+    type: block
+    errorCode: 429
+
+recommendations:
+  - Start on the Free plan for development and testing; upgrade only when production data volumes are known.
+  - Set both soft and hard limits on all paid plans to prevent unexpected overage charges.
+  - Use the delta polling endpoint to minimize data point consumption on REST-based integrations.
+  - Evaluate whether 30-second or 60-second data delay is acceptable before upgrading to Ultra for real-time WebSocket streaming.
+  - Archive historical data locally after initial retrieval to avoid paying for repeated historical queries.
+  - Monitor data point consumption weekly and compare against monthly quota to anticipate upgrade needs before overage charges accumulate.

@@ -1,0 +1,87 @@
+aid: therundown
+name: The Rundown
+description: >
+  The Rundown is a sports betting data API platform providing real-time odds,
+  lines, scores, and results across 30+ sports leagues including NFL, NBA, MLB,
+  NHL, WNBA, MLS, college football and basketball, and international soccer,
+  tennis, cricket, and Formula 1. The API aggregates data from 16+ sportsbooks
+  including DraftKings, FanDuel, BetMGM, and Pinnacle, as well as prediction
+  markets like Kalshi and Polymarket, normalizing everything into a single
+  unified schema with 600+ market types covering moneylines, spreads, totals,
+  player props, team totals, futures, and live in-play odds. Developers can
+  access data via REST endpoints or WebSocket streaming for sub-second
+  real-time updates, with historical odds data and line movement tracking
+  available on higher tiers.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/therundown/refs/heads/main/apis.yml
+created: "2026-06-12"
+modified: "2026-06-12"
+specificationVersion: "0.19"
+tags:
+  - Sports
+  - Betting
+  - Odds
+  - NFL
+  - NBA
+  - MLB
+  - NHL
+  - Soccer
+  - Real-Time
+  - Sports Data
+  - Sportsbook
+
+apis:
+  - aid: therundown:sports-odds-api
+    name: TheRundown Sports Odds API
+    description: >
+      RESTful API providing real-time sports betting odds, lines, scores,
+      schedules, team stats, and player props from 16+ sportsbooks normalized
+      into a single schema. Supports 600+ market types across 30+ leagues
+      including NFL, NBA, MLB, NHL, college sports, and international
+      competitions. Also offers WebSocket streaming for sub-second updates
+      and historical line movement data on higher-tier plans.
+    humanURL: https://therundown.io/api
+    baseURL: https://therundown.io/api/v2
+    tags:
+      - Sports Odds
+      - Real-Time Data
+      - Sportsbook
+      - Betting Lines
+    properties:
+      - type: Documentation
+        url: https://docs.therundown.io/introduction
+      - type: OpenAPI
+        url: https://docs.therundown.io/api-reference/generated/v2-sports/list-all-sports
+      - type: Authentication
+        url: https://docs.therundown.io/authentication
+      - type: Pricing
+        url: https://therundown.io/pricing/api
+
+common:
+  - type: Website
+    url: https://therundown.io
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: GitHubOrg
+    url: https://github.com/TheRundown
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/therundowninc
+  - type: Blog
+    url: https://blog.therundown.io
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: StatusPage
+    url: https://therundown.instatus.com/
+  - type: X
+    url: https://x.com/therundownio
+  - type: Plans
+    url: plans/therundown-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/therundown-rate-limits.yml
+  - type: FinOps
+    url: finops/therundown-finops.yml
+
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
