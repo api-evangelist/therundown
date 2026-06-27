@@ -1,19 +1,14 @@
 {
-  "name": "TheRundown Blog",
-  "description": "Blog and news content from TheRundown sports betting data platform.",
-  "url": "https://blog.therundown.io",
-  "rss": null,
-  "rss_confirmed": false,
-  "last_checked": "2026-06-12",
-  "notes": "blog.therundown.io resolves to an unrelated site via Cloudflare DNS. No RSS/Atom feed confirmed at common paths (/rss, /feed, /rss.xml). Blog may be inactive or hosted elsewhere.",
-  "posts": [],
   "repo": "therundown",
   "feeds": [
     {
-      "source": "https://www.linkedin.com/company/therundowninc",
-      "error": "HTTPError"
+      "source": "https://blog.therundown.io",
+      "feed_url": "",
+      "saved": 0,
+      "method": "agent-scrape"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T13:15:36Z",
+  "agent_pulled": "2026-06-27"
 }
