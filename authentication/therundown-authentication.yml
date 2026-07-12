@@ -1,0 +1,24 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/therundown-sports-odds-api-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  - query
+schemes:
+- name: ApiKeyQuery
+  type: apiKey
+  in: query
+  parameter: key
+  description: API key as query parameter
+  sources:
+  - openapi/therundown-sports-odds-api-openapi.yml
+- name: ApiKeyHeader
+  type: apiKey
+  in: header
+  parameter: X-Therundown-Key
+  description: API key as request header
+  sources:
+  - openapi/therundown-sports-odds-api-openapi.yml

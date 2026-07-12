@@ -65,6 +65,10 @@ apis:
         url: json-ld/therundown-context.jsonld
 
 common:
+  - type: DomainSecurity
+    url: security/therundown-domain-security.yml
+  - type: Authentication
+    url: authentication/therundown-authentication.yml
   - type: Website
     url: https://therundown.io
   - type: Documentation
