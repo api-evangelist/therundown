@@ -65,6 +65,8 @@ apis:
         url: json-ld/therundown-context.jsonld
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/therundown-agentic-access.yml
   - type: DomainSecurity
     url: security/therundown-domain-security.yml
   - type: Authentication
