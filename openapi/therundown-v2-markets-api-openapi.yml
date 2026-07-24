@@ -1,0 +1,935 @@
+openapi: 3.0.3
+info:
+  title: TheRundown Sports V1 Delta V2 Markets API
+  version: 2.0.0
+  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
+
+
+    ## Authentication
+
+    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
+
+    - **Query parameter**: `?key=YOUR_API_KEY`
+
+    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
+
+    ## Off-the-Board Sentinel Value
+
+    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
+
+
+    ## Rate Limiting
+
+    Requests are rate-limited per API key tier. Check response headers for current limits.
+
+
+    ## Data Updates
+
+    - Live odds update in real-time during games
+
+    - Use delta endpoints for efficient polling of changes
+
+    - WebSocket connections available for streaming updates
+
+
+    ## V1 vs V2
+
+    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
+
+    '
+  contact:
+    name: TheRundown API Support
+    url: https://therundown.io
+    email: support@therundown.io
+  termsOfService: https://therundown.io/terms
+servers:
+- url: https://therundown.io
+  description: Production
+security:
+- ApiKeyQuery: []
+- ApiKeyHeader: []
+tags:
+- name: V2 Markets
+  description: Market definitions, odds, deltas, and history (V2)
+paths:
+  /api/v2/sports/{sportID}/markets/{date}:
+    get:
+      operationId: v2GetMarketsBySportAndDate
+      tags:
+      - V2 Markets
+      summary: Get available markets for a sport and date
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      - name: date
+        in: path
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: hide_closed_markets
+        in: query
+        schema:
+          type: string
+          enum:
+          - '1'
+        description: Set to `1` to hide closed markets
+      - $ref: '#/components/parameters/OffsetQuery'
+      responses:
+        '200':
+          description: Markets for this sport
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Market'
+              example:
+                '4':
+                - id: 29
+                  name: points
+                  line_value_is_participant: false
+                  proposition: true
+                  description: 'Points: How many points will this player score?'
+                  short_description: Points
+                  period_id: 0
+                  live_variant_id: 90
+                  updated_at: '2026-01-23T20:38:12Z'
+                - id: 35
+                  name: player_rebounds
+                  line_value_is_participant: false
+                  proposition: true
+                  description: 'Rebounds: How many rebounds will this player record?'
+                  short_description: Rebounds
+                  period_id: 0
+                  live_variant_id: 982
+                  updated_at: '2026-01-23T20:38:12Z'
+  /api/v2/events/{eventID}/markets:
+    get:
+      operationId: v2GetAvailableMarketsByEvent
+      tags:
+      - V2 Markets
+      summary: Get available markets for an event
+      description: Returns the list of market definitions available for this event (not prices — use the event endpoint with market_ids for prices).
+      parameters:
+      - $ref: '#/components/parameters/EventIDPath'
+      - $ref: '#/components/parameters/ParticipantIDsQuery'
+      - $ref: '#/components/parameters/ParticipantTypeQuery'
+      responses:
+        '200':
+          description: Available markets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Market'
+              example:
+              - id: 1
+                name: moneyline
+                line_value_is_participant: true
+                proposition: true
+                description: 'Moneyline: To win outright'
+                short_description: Moneyline
+                period_id: 0
+                live_variant_id: 41
+              - id: 2
+                name: handicap
+                line_value_is_participant: false
+                proposition: true
+                description: 'Spread: Win or lose by margin of points'
+                short_description: Spread
+                period_id: 0
+                live_variant_id: 42
+              - id: 3
+                name: totals
+                line_value_is_participant: false
+                proposition: true
+                description: 'Totals: Total points'
+                short_description: Totals
+                period_id: 0
+                live_variant_id: 43
+              - id: 29
+                name: points
+                line_value_is_participant: false
+                proposition: true
+                description: 'Points: How many points will this player score?'
+                short_description: Points
+                period_id: 0
+                live_variant_id: 90
+  /api/v2/events/{eventID}/markets/history:
+    get:
+      operationId: v2GetMarketHistoryByEvent
+      tags:
+      - V2 Markets
+      summary: Get market price history for an event
+      parameters:
+      - $ref: '#/components/parameters/EventIDPath'
+      - name: market_ids
+        in: query
+        schema:
+          type: string
+        description: Comma-separated market IDs to filter
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Start time (RFC3339)
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: End time (RFC3339)
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 1000
+          maximum: 5000
+      responses:
+        '200':
+          description: Market price history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketHistoryResponse'
+              example:
+                meta:
+                  event_id: 09bfa53f8484a63e584398545c035932
+                  count: 2
+                history:
+                - id: 500001
+                  market_line_price_id: 192868821
+                  event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  affiliate_id: 19
+                  market_participant_id: 45001
+                  market_id: 1
+                  line: ''
+                  price: '-105'
+                  previous_price: null
+                  change_type: new
+                  updated_at: '2026-02-10T14:00:00Z'
+                - id: 500002
+                  market_line_price_id: 192868821
+                  event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  affiliate_id: 19
+                  market_participant_id: 45001
+                  market_id: 1
+                  line: ''
+                  price: '-110'
+                  previous_price: '-105'
+                  change_type: price_change
+                  updated_at: '2026-02-11T09:30:00Z'
+  /api/v2/events/{eventID}/markets/opening:
+    get:
+      operationId: v2GetOpeningPricesByEvent
+      tags:
+      - V2 Markets
+      summary: Get opening prices for an event's markets
+      parameters:
+      - $ref: '#/components/parameters/EventIDPath'
+      - name: market_ids
+        in: query
+        schema:
+          type: string
+        description: Comma-separated market IDs
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      responses:
+        '200':
+          description: Opening prices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpeningPricesResponse'
+              example:
+                meta:
+                  event_id: 09bfa53f8484a63e584398545c035932
+                  count: 2
+                markets:
+                  '1':
+                    market_id: 1
+                    market_name: moneyline
+                    lines:
+                      '45001:':
+                        participant_id: 11
+                        participant_type: TYPE_TEAM
+                        participant_name: Atlanta Hawks
+                        prices:
+                          '19':
+                            price: '-120'
+                            timestamp: '2026-02-10T14:00:00Z'
+                          '23':
+                            price: '-115'
+                            timestamp: '2026-02-10T14:05:00Z'
+  /api/v2/events/{eventID}/markets/{marketID}/history:
+    get:
+      operationId: v2GetMarketLineHistoryByEvent
+      tags:
+      - V2 Markets
+      summary: Get line price chart data for a specific market
+      description: Returns time-series price data suitable for charting line movement.
+      parameters:
+      - $ref: '#/components/parameters/EventIDPath'
+      - name: marketID
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Market ID
+      - name: participant_id
+        in: query
+        schema:
+          type: integer
+        description: Filter by participant ID
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - name: line
+        in: query
+        schema:
+          type: string
+        description: Filter by line value
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Chart series data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChartResponse'
+              example:
+                meta:
+                  event_id: 09bfa53f8484a63e584398545c035932
+                  market_id: 3
+                  market_name: totals
+                series:
+                  '19':
+                    affiliate_name: Affiliate 19
+                    data:
+                    - t: '2026-02-10T14:00:00Z'
+                      p: '-110'
+                    - t: '2026-02-11T09:30:00Z'
+                      p: '-112'
+                    - t: '2026-02-11T22:00:00Z'
+                      p: '-108'
+                  '23':
+                    affiliate_name: Affiliate 23
+                    data:
+                    - t: '2026-02-10T14:05:00Z'
+                      p: '-108'
+                    - t: '2026-02-11T10:00:00Z'
+                      p: '-110'
+  /api/v2/markets:
+    get:
+      operationId: v2GetAllMarkets
+      tags:
+      - V2 Markets
+      summary: List all market definitions
+      description: Returns all canonical market definitions with IDs, names, period info, and whether the line value represents a participant.
+      responses:
+        '200':
+          description: All markets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Market'
+              example:
+              - id: 1
+                name: moneyline
+                line_value_is_participant: true
+                proposition: true
+                description: 'Moneyline: To win outright'
+                short_description: Moneyline
+                period_id: 0
+                live_variant_id: 41
+                updated_at: '2026-01-23T20:38:12Z'
+              - id: 2
+                name: handicap
+                line_value_is_participant: false
+                proposition: true
+                description: 'Spread: Win or lose by margin of points'
+                short_description: Spread
+                period_id: 0
+                live_variant_id: 42
+                updated_at: '2026-01-23T20:42:13Z'
+              - id: 3
+                name: totals
+                line_value_is_participant: false
+                proposition: true
+                description: 'Totals: Total points'
+                short_description: Totals
+                period_id: 0
+                live_variant_id: 43
+                updated_at: '2026-01-23T20:38:12Z'
+              - id: 4
+                name: moneyline_first_half
+                line_value_is_participant: true
+                proposition: true
+                description: 1st half moneyline
+                short_description: 1st half moneyline
+                period_id: 1
+                live_variant_id: 1024
+                updated_at: '2026-01-24T15:49:43Z'
+  /api/v2/markets/delta:
+    get:
+      operationId: v2GetMarketsDelta
+      tags:
+      - V2 Markets
+      summary: Get market price changes since a given ID
+      description: 'Returns market line price changes (new, updated, closed) since the specified `last_id`. Use for efficient polling.
+
+
+        **Bootstrap flow:** To obtain an initial `last_id` cursor, call `GET /api/v2/sports/{sportID}/events/{date}` — the response `meta.delta_last_id` provides the current cursor. Then pass that value as `last_id` to begin polling this endpoint.
+
+
+        **Staleness guard:** Cursors older than 30 minutes are rejected with HTTP 400. If your cursor becomes stale, re-bootstrap from the events endpoint.
+
+        '
+      parameters:
+      - name: last_id
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int64
+        description: Return changes with ID greater than this value. Obtain the initial cursor from the `meta.delta_last_id` field in the v2 events response. Cursors older than 30 minutes are rejected.
+      - name: sport_id
+        in: query
+        schema:
+          type: integer
+        description: Filter by sport ID
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - name: market_ids
+        in: query
+        schema:
+          type: string
+        description: Comma-separated market IDs to filter
+      - name: event_id
+        in: query
+        schema:
+          type: string
+        description: Filter by event ID
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 1000
+          maximum: 5000
+      responses:
+        '200':
+          description: Market deltas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketDeltaResponse'
+              example:
+                meta:
+                  delta_last_id: '193500000'
+                  count: 2
+                  has_more: false
+                deltas:
+                - id: 193499998
+                  event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  affiliate_id: 19
+                  market_id: 1
+                  market_name: moneyline
+                  participant_id: 11
+                  participant_type: TYPE_TEAM
+                  participant_name: Atlanta Hawks
+                  line: ''
+                  price: '-112'
+                  previous_price: '-110'
+                  change_type: price_change
+                  updated_at: '2026-02-12T00:10:43Z'
+                - id: 193499999
+                  event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  affiliate_id: 19
+                  market_id: 3
+                  market_name: totals
+                  participant_id: 1001
+                  participant_type: TYPE_RESULT
+                  participant_name: Over
+                  line: '235.5'
+                  price: '-110'
+                  previous_price: '-108'
+                  change_type: price_change
+                  updated_at: '2026-02-12T00:10:43Z'
+        '400':
+          description: Invalid or stale cursor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                stale_cursor:
+                  summary: Cursor older than 30 minutes
+                  value:
+                    error: last_id is stale (>30 min), re-bootstrap from events endpoint
+                not_found:
+                  summary: Cursor ID not found
+                  value:
+                    error: last_id not found, re-bootstrap from events endpoint
+  /api/v2/markets/history:
+    get:
+      operationId: v2GetMarketLinePriceHistory
+      tags:
+      - V2 Markets
+      summary: Get price history for specific market line prices
+      parameters:
+      - name: market_line_price_ids
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Comma-separated market line price IDs (max 50)
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Start time (RFC3339)
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: End time (RFC3339)
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 1000
+          maximum: 5000
+      responses:
+        '200':
+          description: Price history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketHistoryResponse'
+              example:
+                meta:
+                  count: 2
+                history:
+                - id: 600001
+                  market_line_price_id: 192868821
+                  event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  affiliate_id: 19
+                  market_participant_id: 45001
+                  market_id: 1
+                  line: ''
+                  price: '-105'
+                  change_type: new
+                  updated_at: '2026-02-10T14:00:00Z'
+                - id: 600002
+                  market_line_price_id: 192868821
+                  event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  affiliate_id: 19
+                  market_participant_id: 45001
+                  market_id: 1
+                  line: ''
+                  price: '-110'
+                  previous_price: '-105'
+                  change_type: price_change
+                  updated_at: '2026-02-11T09:30:00Z'
+  /api/v2/markets/participants:
+    get:
+      operationId: v2GetMarketsParticipants
+      tags:
+      - V2 Markets
+      summary: Get market participants
+      description: Returns participants (teams, players, or results) for specified markets and events.
+      parameters:
+      - name: market_ids
+        in: query
+        schema:
+          type: string
+        description: Comma-separated market IDs
+      - name: event_id
+        in: query
+        schema:
+          type: string
+        description: Filter by event ID
+      responses:
+        '200':
+          description: Market participants
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketParticipantsResponse'
+              example:
+                participants:
+                - id: 12345
+                  market_id: 1
+                  type: TYPE_TEAM
+                  name: Atlanta Hawks
+                  team_id: 11
+                - id: 12346
+                  market_id: 1
+                  type: TYPE_TEAM
+                  name: Charlotte Hornets
+                  team_id: 12
+                - id: 12347
+                  market_id: 3
+                  type: TYPE_RESULT
+                  name: Over
+                - id: 12348
+                  market_id: 3
+                  type: TYPE_RESULT
+                  name: Under
+components:
+  schemas:
+    MarketDeltaResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            delta_last_id:
+              type: string
+              description: Use this as `last_id` in the next request
+            count:
+              type: integer
+            has_more:
+              type: boolean
+              description: If true, there are more results — poll again immediately with the returned delta_last_id
+        deltas:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketDeltaEntry'
+    MarketDeltaEntry:
+      type: object
+      description: A single market line price change entry from the delta feed
+      properties:
+        id:
+          type: integer
+          format: int64
+        event_id:
+          type: string
+        sport_id:
+          type: integer
+        affiliate_id:
+          type: integer
+        market_id:
+          type: integer
+          format: int64
+        market_name:
+          type: string
+        participant_id:
+          type: integer
+          description: Normalized participant ID (team_id, player_id, or result_id)
+        participant_type:
+          type: string
+          enum:
+          - TYPE_TEAM
+          - TYPE_PLAYER
+          - TYPE_RESULT
+        participant_name:
+          type: string
+        line:
+          type: string
+          description: Line value (e.g., "-4.5" for spread, "224.5" for total, "" for moneyline)
+        price:
+          type: string
+          description: American odds price as a string (e.g., "-110", "150")
+        previous_price:
+          type: string
+          nullable: true
+          description: Previous price before this change
+        change_type:
+          type: string
+          description: Type of change (e.g., "price_change", "new", "close", "reopen")
+        closed_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+    OpeningPricesResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            event_id:
+              type: string
+            count:
+              type: integer
+        markets:
+          type: object
+          description: Keyed by market ID
+          additionalProperties:
+            type: object
+            properties:
+              market_id:
+                type: integer
+                format: int64
+              market_name:
+                type: string
+              lines:
+                type: object
+                description: Keyed by participant_id:line composite key
+                additionalProperties:
+                  type: object
+                  properties:
+                    participant_id:
+                      type: integer
+                    participant_type:
+                      type: string
+                      enum:
+                      - TYPE_TEAM
+                      - TYPE_PLAYER
+                      - TYPE_RESULT
+                    participant_name:
+                      type: string
+                    prices:
+                      type: object
+                      description: Keyed by affiliate ID
+                      additionalProperties:
+                        type: object
+                        properties:
+                          price:
+                            type: string
+                          timestamp:
+                            type: string
+                            format: date-time
+    Market:
+      type: object
+      description: 'Market definition. The `line_value_is_participant` flag indicates whether the line value represents a participant name (true) or a numeric value like a spread/total (false).
+
+        '
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Money Line
+        description:
+          type: string
+        short_description:
+          type: string
+        line_value_is_participant:
+          type: boolean
+          description: If true, the line "value" field is a participant name rather than a numeric line
+        proposition:
+          type: boolean
+          description: Whether this is a proposition/prop market
+        period_id:
+          type: integer
+          nullable: true
+          description: 'Associated period. 0=Full Game, 1=1st Half, 2=2nd Half, 3-6=Quarters/periods, 7=Live Full Game, 13-18=Live periods. For tennis, 3/4 represent prematch Set 1/Set 2 and 15/16 represent live Set 1/Set 2.
+
+            '
+        live_variant_id:
+          type: integer
+          nullable: true
+          description: ID of the live/in-play variant of this market
+        updated_at:
+          type: string
+          format: date-time
+    MarketParticipant:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        market_event_id:
+          type: integer
+          format: int64
+        participant_id:
+          type: integer
+        participant_type:
+          type: string
+          enum:
+          - TYPE_TEAM
+          - TYPE_PLAYER
+          - TYPE_RESULT
+        participant_name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    MarketLinePriceHistory:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        market_line_price_id:
+          type: integer
+          format: int64
+        event_id:
+          type: string
+        sport_id:
+          type: integer
+        affiliate_id:
+          type: integer
+        market_participant_id:
+          type: integer
+          format: int64
+        market_id:
+          type: integer
+          format: int64
+        line:
+          type: string
+        price:
+          type: string
+        previous_price:
+          type: string
+          nullable: true
+        closed_at:
+          type: string
+          format: date-time
+          nullable: true
+        change_type:
+          type: string
+          description: Type of change (e.g., "price_change", "new", "closed")
+        updated_at:
+          type: string
+          format: date-time
+    ChartResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            event_id:
+              type: string
+            market_id:
+              type: integer
+              format: int64
+            market_name:
+              type: string
+        series:
+          type: object
+          description: Keyed by affiliate ID
+          additionalProperties:
+            $ref: '#/components/schemas/ChartSeries'
+    ChartSeries:
+      type: object
+      properties:
+        affiliate_name:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              t:
+                type: string
+                format: date-time
+                description: Timestamp
+              p:
+                type: string
+                description: Price
+              c:
+                type: string
+                format: date-time
+                nullable: true
+                description: Closed at timestamp
+    MarketParticipantsResponse:
+      type: object
+      properties:
+        participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketParticipant'
+    MarketHistoryResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            event_id:
+              type: string
+            market_id:
+              type: integer
+              format: int64
+            count:
+              type: integer
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketLinePriceHistory'
+  parameters:
+    ParticipantTypeQuery:
+      name: participant_type
+      in: query
+      schema:
+        type: string
+        enum:
+        - TYPE_TEAM
+        - TYPE_PLAYER
+        - TYPE_RESULT
+      description: Filter participants by type
+    EventIDPath:
+      name: eventID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Canonical V2 event ID from the `event_id` field returned by event endpoints
+    AffiliateIDsQuery:
+      name: affiliate_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3).
+    SportIDPath:
+      name: sportID
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: 'Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis
+
+        '
+    ParticipantIDsQuery:
+      name: participant_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated participant IDs to filter (max 99)
+    OffsetQuery:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+        example: 300
+      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: key
+      description: API key as query parameter
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Therundown-Key
+      description: API key as request header

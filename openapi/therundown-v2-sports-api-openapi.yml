@@ -1,0 +1,569 @@
+openapi: 3.0.3
+info:
+  title: TheRundown Sports V1 Delta V2 Sports API
+  version: 2.0.0
+  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
+
+
+    ## Authentication
+
+    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
+
+    - **Query parameter**: `?key=YOUR_API_KEY`
+
+    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
+
+    ## Off-the-Board Sentinel Value
+
+    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
+
+
+    ## Rate Limiting
+
+    Requests are rate-limited per API key tier. Check response headers for current limits.
+
+
+    ## Data Updates
+
+    - Live odds update in real-time during games
+
+    - Use delta endpoints for efficient polling of changes
+
+    - WebSocket connections available for streaming updates
+
+
+    ## V1 vs V2
+
+    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
+
+    '
+  contact:
+    name: TheRundown API Support
+    url: https://therundown.io
+    email: support@therundown.io
+  termsOfService: https://therundown.io/terms
+servers:
+- url: https://therundown.io
+  description: Production
+security:
+- ApiKeyQuery: []
+- ApiKeyHeader: []
+tags:
+- name: V2 Sports
+  description: Sport listings, dates, and teams (V2)
+paths:
+  /api/v2/sports:
+    get:
+      operationId: v2GetSports
+      tags:
+      - V2 Sports
+      summary: List all sports
+      description: Returns all available sports with their IDs. No authentication required.
+      security: []
+      responses:
+        '200':
+          description: List of sports
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SportsResponse'
+              example:
+                sports:
+                - sport_id: 1
+                  sport_name: NCAA Football
+                - sport_id: 2
+                  sport_name: NFL
+                - sport_id: 3
+                  sport_name: MLB
+                - sport_id: 4
+                  sport_name: NBA
+                - sport_id: 5
+                  sport_name: NCAA Men's Basketball
+                - sport_id: 6
+                  sport_name: NHL
+                - sport_id: 7
+                  sport_name: UFC/MMA
+                - sport_id: 8
+                  sport_name: WNBA
+                - sport_id: 10
+                  sport_name: MLS
+                - sport_id: 11
+                  sport_name: EPL
+                - sport_id: 12
+                  sport_name: FRA1
+                - sport_id: 13
+                  sport_name: GER1
+                - sport_id: 14
+                  sport_name: ESP1
+                - sport_id: 15
+                  sport_name: ITA1
+                - sport_id: 16
+                  sport_name: UEFACHAMP
+                - sport_id: 17
+                  sport_name: UEFAEURO
+                - sport_id: 18
+                  sport_name: FIFA
+                - sport_id: 19
+                  sport_name: JPN1
+                - sport_id: 20
+                  sport_name: IPL
+                - sport_id: 21
+                  sport_name: T20
+                - sport_id: 22
+                  sport_name: Politics
+                - sport_id: 23
+                  sport_name: NBA Preseason
+                - sport_id: 24
+                  sport_name: NBA Playoffs
+                - sport_id: 25
+                  sport_name: NFL Preseason
+                - sport_id: 26
+                  sport_name: NFL Playoffs
+                - sport_id: 27
+                  sport_name: NHL Preseason
+                - sport_id: 28
+                  sport_name: NHL Playoffs
+                - sport_id: 30
+                  sport_name: MLB Spring Training
+                - sport_id: 31
+                  sport_name: MLB Playoffs
+                - sport_id: 32
+                  sport_name: NBA Summer League
+                - sport_id: 33
+                  sport_name: UEFA Europa League
+                - sport_id: 38
+                  sport_name: TENNIS.ATP
+                - sport_id: 39
+                  sport_name: TENNIS.WTA
+  /api/v2/sports/dates:
+    get:
+      operationId: v2GetDatesBySportIDs
+      tags:
+      - V2 Sports
+      summary: Get available dates for multiple sports
+      description: Returns dates with events for the specified sport IDs.
+      parameters:
+      - $ref: '#/components/parameters/SportIDsQuery'
+      - $ref: '#/components/parameters/OffsetQuery'
+      - $ref: '#/components/parameters/DateFormatQuery'
+      responses:
+        '200':
+          description: Dates keyed by sport ID
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+                  properties:
+                    dates:
+                      type: array
+                      items:
+                        type: string
+                        format: date
+                        example: '2026-01-15'
+              example:
+                '2':
+                  dates: []
+                '3':
+                  dates: []
+                '4':
+                  dates:
+                  - 2026-02-13T00:30:00+0000
+                '6':
+                  dates:
+                  - 2026-02-13T00:00:00+0000
+  /api/v2/sports/events/{date}:
+    get:
+      operationId: v2GetEventsByDate
+      tags:
+      - V2 Sports
+      summary: Get events across sports for a date
+      description: Returns event IDs grouped by sport for the given date.
+      parameters:
+      - name: date
+        in: path
+        required: true
+        schema:
+          type: string
+          format: date
+          example: '2026-01-15'
+      - $ref: '#/components/parameters/SportIDsQuery'
+      - $ref: '#/components/parameters/OffsetQuery'
+      responses:
+        '200':
+          description: Event IDs by sport
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+              example:
+                '4':
+                - '2026-02-12'
+  /api/v2/sports/markets/{date}:
+    get:
+      operationId: v2GetMarketsByDate
+      tags:
+      - V2 Sports
+      summary: Get available markets by date
+      description: Returns available market definitions for each sport on the given date.
+      parameters:
+      - name: date
+        in: path
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: hide_closed_markets
+        in: query
+        schema:
+          type: string
+          enum:
+          - '1'
+        description: Set to `1` to hide closed markets
+      - $ref: '#/components/parameters/OffsetQuery'
+      responses:
+        '200':
+          description: Markets keyed by sport ID
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Market'
+              example:
+                '4':
+                - id: 1
+                  name: moneyline
+                  line_value_is_participant: true
+                  proposition: true
+                  description: 'Moneyline: To win outright'
+                  short_description: Moneyline
+                  period_id: 0
+                  live_variant_id: 41
+                  updated_at: '2026-01-23T20:38:12Z'
+                - id: 2
+                  name: handicap
+                  line_value_is_participant: false
+                  proposition: true
+                  description: 'Spread: Win or lose by margin of points'
+                  short_description: Spread
+                  period_id: 0
+                  live_variant_id: 42
+                  updated_at: '2026-01-23T20:42:13Z'
+                - id: 3
+                  name: totals
+                  line_value_is_participant: false
+                  proposition: true
+                  description: 'Totals: Total points'
+                  short_description: Totals
+                  period_id: 0
+                  live_variant_id: 43
+                  updated_at: '2026-01-23T20:38:12Z'
+  /api/v2/sports/{sportID}/teams:
+    get:
+      operationId: v2GetTeamsBySport
+      tags:
+      - V2 Sports
+      summary: Get teams for a sport
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      responses:
+        '200':
+          description: List of teams
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamsResponse'
+              example:
+                teams:
+                - team_id: 11
+                  name: Atlanta
+                  mascot: Hawks
+                  abbreviation: ATL
+                  record: 26-30
+                  conference:
+                    conference_id: 39
+                    sport_id: 4
+                    name: Eastern Conference
+                  division:
+                    division_id: 17
+                    conference_id: 39
+                    sport_id: 4
+                    name: Southeast
+                - team_id: 1
+                  name: Boston
+                  mascot: Celtics
+                  abbreviation: BOS
+                  record: 35-19
+                  conference:
+                    conference_id: 39
+                    sport_id: 4
+                    name: Eastern Conference
+                  division:
+                    division_id: 15
+                    conference_id: 39
+                    sport_id: 4
+                    name: Atlantic
+  /api/v2/sports/{sportID}/dates:
+    get:
+      operationId: v2GetDatesBySportID
+      tags:
+      - V2 Sports
+      summary: Get available dates for a sport
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      - $ref: '#/components/parameters/OffsetQuery'
+      - $ref: '#/components/parameters/DateFormatQuery'
+      responses:
+        '200':
+          description: List of dates
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dates:
+                    type: array
+                    items:
+                      type: string
+                      format: date
+              example:
+                dates:
+                - 2026-02-13T00:30:00+0000
+                - 2026-02-14T00:00:00+0000
+                - 2026-02-15T00:00:00+0000
+  /api/v2/sports/{sportID}/divisions:
+    get:
+      operationId: v2GetDivisionsBySport
+      tags:
+      - V2 Sports
+      summary: Get divisions for a sport
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      responses:
+        '200':
+          description: List of divisions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DivisionsResponse'
+              example:
+                divisions:
+                - division_id: 15
+                  conference_id: 39
+                  sport_id: 4
+                  name: Atlantic
+                - division_id: 16
+                  conference_id: 39
+                  sport_id: 4
+                  name: Central
+                - division_id: 17
+                  conference_id: 39
+                  sport_id: 4
+                  name: Southeast
+                - division_id: 18
+                  conference_id: 757
+                  sport_id: 4
+                  name: Northwest
+                - division_id: 19
+                  conference_id: 757
+                  sport_id: 4
+                  name: Pacific
+                - division_id: 20
+                  conference_id: 757
+                  sport_id: 4
+                  name: Southwest
+  /api/v2/sports/{sportID}/conferences:
+    get:
+      operationId: v2GetConferencesBySport
+      tags:
+      - V2 Sports
+      summary: Get conferences for a sport
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      responses:
+        '200':
+          description: List of conferences
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConferencesResponse'
+              example:
+                conferences:
+                - conference_id: 39
+                  sport_id: 4
+                  name: Eastern Conference
+                - conference_id: 757
+                  sport_id: 4
+                  name: Western Conference
+components:
+  schemas:
+    SportsResponse:
+      type: object
+      properties:
+        sports:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sport'
+    Team:
+      type: object
+      properties:
+        team_id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: New England
+        mascot:
+          type: string
+          example: Patriots
+        abbreviation:
+          type: string
+          example: NE
+        ranking:
+          type: integer
+          nullable: true
+        record:
+          type: string
+          example: 10-7
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
+    Market:
+      type: object
+      description: 'Market definition. The `line_value_is_participant` flag indicates whether the line value represents a participant name (true) or a numeric value like a spread/total (false).
+
+        '
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Money Line
+        description:
+          type: string
+        short_description:
+          type: string
+        line_value_is_participant:
+          type: boolean
+          description: If true, the line "value" field is a participant name rather than a numeric line
+        proposition:
+          type: boolean
+          description: Whether this is a proposition/prop market
+        period_id:
+          type: integer
+          nullable: true
+          description: 'Associated period. 0=Full Game, 1=1st Half, 2=2nd Half, 3-6=Quarters/periods, 7=Live Full Game, 13-18=Live periods. For tennis, 3/4 represent prematch Set 1/Set 2 and 15/16 represent live Set 1/Set 2.
+
+            '
+        live_variant_id:
+          type: integer
+          nullable: true
+          description: ID of the live/in-play variant of this market
+        updated_at:
+          type: string
+          format: date-time
+    Conference:
+      type: object
+      properties:
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+    TeamsResponse:
+      type: object
+      properties:
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+    DivisionsResponse:
+      type: object
+      properties:
+        divisions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Division'
+    Sport:
+      type: object
+      properties:
+        sport_id:
+          type: integer
+          example: 4
+        sport_name:
+          type: string
+          example: NBA
+    ConferencesResponse:
+      type: object
+      properties:
+        conferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Conference'
+    Division:
+      type: object
+      properties:
+        division_id:
+          type: integer
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+  parameters:
+    OffsetQuery:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+        example: 300
+      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
+    DateFormatQuery:
+      name: format
+      in: query
+      schema:
+        type: string
+        default: iso8601
+        enum:
+        - iso8601
+        - epoch
+      description: Date format — `iso8601` returns date strings, `epoch` returns Unix timestamps
+    SportIDPath:
+      name: sportID
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: 'Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis
+
+        '
+    SportIDsQuery:
+      name: sport_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated sport IDs
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: key
+      description: API key as query parameter
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Therundown-Key
+      description: API key as request header

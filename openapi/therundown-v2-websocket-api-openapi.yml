@@ -1,0 +1,100 @@
+openapi: 3.0.3
+info:
+  title: TheRundown Sports V1 Delta V2 WebSocket API
+  version: 2.0.0
+  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
+
+
+    ## Authentication
+
+    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
+
+    - **Query parameter**: `?key=YOUR_API_KEY`
+
+    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
+
+    ## Off-the-Board Sentinel Value
+
+    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
+
+
+    ## Rate Limiting
+
+    Requests are rate-limited per API key tier. Check response headers for current limits.
+
+
+    ## Data Updates
+
+    - Live odds update in real-time during games
+
+    - Use delta endpoints for efficient polling of changes
+
+    - WebSocket connections available for streaming updates
+
+
+    ## V1 vs V2
+
+    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
+
+    '
+  contact:
+    name: TheRundown API Support
+    url: https://therundown.io
+    email: support@therundown.io
+  termsOfService: https://therundown.io/terms
+servers:
+- url: https://therundown.io
+  description: Production
+security:
+- ApiKeyQuery: []
+- ApiKeyHeader: []
+tags:
+- name: V2 WebSocket
+  description: Real-time streaming via WebSocket (V2)
+paths:
+  /api/v2/ws/markets:
+    get:
+      operationId: v2WebSocketMarkets
+      tags:
+      - V2 WebSocket
+      summary: Markets WebSocket — stream real-time market price updates
+      description: "Establishes a WebSocket connection for streaming V2 market price changes in real-time.\n\n**Connection**: `wss://therundown.io/api/v2/ws/markets?key=YOUR_API_KEY`\n\n**Filter parameters** (query string):\n- `affiliate_ids` — comma-separated affiliate IDs\n- `sport_ids` — comma-separated sport IDs\n- `event_ids` — comma-separated event IDs\n- `market_ids` — comma-separated market IDs\n\nAll filters are optional. If none are specified, all messages are received.\n\n**Heartbeat**: Server sends `{\"meta\":{\"type\":\"heartbeat\"},\"data\":{\"now\":\"<RFC3339>\"}}` every 15 seconds.\n\n**Message format**:\n```json\n{\n  \"meta\": {...},\n  \"data\": {\n    \"affiliate_id\": 19,\n    \"sport_id\": 4,\n    \"event_id\": \"abc123\",\n    \"market_id\": 1,\n    ...\n  }\n}\n```\n\n**Queue**: 256-message buffer per client. If the client falls behind, messages are dropped.\n"
+      parameters:
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - name: sport_ids
+        in: query
+        schema:
+          type: string
+        description: Comma-separated sport IDs to filter
+      - name: event_ids
+        in: query
+        schema:
+          type: string
+        description: Comma-separated event IDs to filter
+      - name: market_ids
+        in: query
+        schema:
+          type: string
+        description: Comma-separated market IDs to filter
+      responses:
+        '101':
+          description: WebSocket upgrade successful
+components:
+  parameters:
+    AffiliateIDsQuery:
+      name: affiliate_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3).
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: key
+      description: API key as query parameter
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Therundown-Key
+      description: API key as request header

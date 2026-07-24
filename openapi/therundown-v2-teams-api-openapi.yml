@@ -1,0 +1,510 @@
+openapi: 3.0.3
+info:
+  title: TheRundown Sports V1 Delta V2 Teams API
+  version: 2.0.0
+  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
+
+
+    ## Authentication
+
+    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
+
+    - **Query parameter**: `?key=YOUR_API_KEY`
+
+    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
+
+    ## Off-the-Board Sentinel Value
+
+    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
+
+
+    ## Rate Limiting
+
+    Requests are rate-limited per API key tier. Check response headers for current limits.
+
+
+    ## Data Updates
+
+    - Live odds update in real-time during games
+
+    - Use delta endpoints for efficient polling of changes
+
+    - WebSocket connections available for streaming updates
+
+
+    ## V1 vs V2
+
+    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
+
+    '
+  contact:
+    name: TheRundown API Support
+    url: https://therundown.io
+    email: support@therundown.io
+  termsOfService: https://therundown.io/terms
+servers:
+- url: https://therundown.io
+  description: Production
+security:
+- ApiKeyQuery: []
+- ApiKeyHeader: []
+tags:
+- name: V2 Teams
+  description: Team data, players, and stats (V2)
+paths:
+  /api/v2/teams/{teamID}/:
+    get:
+      operationId: v2GetTeamByID
+      tags:
+      - V2 Teams
+      summary: Get a team by ID
+      parameters:
+      - name: teamID
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Normalized team ID
+      responses:
+        '200':
+          description: Team data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamsResponse'
+              example:
+                teams:
+                - team_id: 11
+                  name: Atlanta
+                  mascot: Hawks
+                  abbreviation: ATL
+                  record: 26-30
+                  conference:
+                    conference_id: 39
+                    sport_id: 4
+                    name: Eastern Conference
+                  division:
+                    division_id: 17
+                    conference_id: 39
+                    sport_id: 4
+                    name: Southeast
+        '404':
+          description: Team not found
+  /api/v2/teams/{teamID}/players:
+    get:
+      operationId: v2GetPlayersByTeam
+      tags:
+      - V2 Teams
+      summary: Get players for a team
+      parameters:
+      - name: teamID
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Normalized team ID
+      responses:
+        '200':
+          description: Player list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayersResponse'
+              example:
+                players:
+                - id: 16627
+                  sport_id: 4
+                  team_id: 11
+                  first_name: Trae
+                  last_name: Young
+                  display_name: Trae Young
+                  weight: 164
+                  height: 73
+                  display_weight: 164 lbs
+                  display_height: 6' 1"
+                  age: 27
+                  jersey: '11'
+                  position: Guard
+                  position_abbreviation: G
+                  experience_years: 7
+                  active: true
+                  status: Active
+                - id: 16700
+                  sport_id: 4
+                  team_id: 11
+                  first_name: Jalen
+                  last_name: Johnson
+                  display_name: Jalen Johnson
+                  weight: 220
+                  height: 81
+                  display_weight: 220 lbs
+                  display_height: 6' 9"
+                  age: 23
+                  jersey: '1'
+                  position: Forward
+                  position_abbreviation: F
+                  experience_years: 4
+                  active: true
+                  status: Active
+  /api/v2/teams/{teamID}/stats:
+    get:
+      operationId: v2GetTeamStats
+      tags:
+      - V2 Teams
+      summary: Get season stats for a team
+      parameters:
+      - name: teamID
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: stats_ids
+        in: query
+        schema:
+          type: string
+        description: Comma-separated stat IDs (max 12)
+      - name: year
+        in: query
+        schema:
+          type: integer
+        description: Season year (defaults to current year)
+      - name: season_type
+        in: query
+        schema:
+          type: string
+          default: '2'
+        description: Season type ID (default 2 = regular season)
+      responses:
+        '200':
+          description: Team season stats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamStats'
+              example:
+              - team_id: 11
+                stat_id: 1242
+                stat:
+                  id: 1242
+                  name: avgRebounds
+                  category: general
+                  display_name: Rebounds Per Game
+                  abbreviation: REB
+                  description: The average rebounds per game.
+                  sport_id: 4
+                season_year: 2026
+                season_type: 2
+                season_type_name: Regular Season
+                value: 42.25
+                display_value: '42.3'
+                updated_at: '2025-05-10T16:51:57Z'
+              - team_id: 11
+                stat_id: 1243
+                stat:
+                  id: 1243
+                  name: assistTurnoverRatio
+                  category: general
+                  display_name: Assist To Turnover Ratio
+                  abbreviation: AST/TO
+                  description: The average number of assists per turnover
+                  sport_id: 4
+                season_year: 2026
+                season_type: 2
+                season_type_name: Regular Season
+                value: 2.26
+                display_value: '2.3'
+                rank: 1
+                rank_display_value: 1st
+                updated_at: '2025-05-10T16:51:57Z'
+  /api/v2/teams/{teamID}/players/stats:
+    get:
+      operationId: v2GetPlayerStatsByTeam
+      tags:
+      - V2 Teams
+      summary: Get player season stats for a team
+      parameters:
+      - name: teamID
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: stats_ids
+        in: query
+        schema:
+          type: string
+        description: Comma-separated stat IDs (max 12)
+      - name: player_ids
+        in: query
+        schema:
+          type: string
+        description: Comma-separated player IDs
+      - name: year
+        in: query
+        schema:
+          type: integer
+        description: Season year (defaults to current year)
+      - name: season_type
+        in: query
+        schema:
+          type: string
+          default: '2'
+      responses:
+        '200':
+          description: Player season stats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlayerStatResponse'
+              example:
+              - player:
+                  id: 16627
+                  sport_id: 4
+                  team_id: 11
+                  first_name: Trae
+                  last_name: Young
+                  display_name: Trae Young
+                  jersey: '11'
+                  position: Guard
+                  position_abbreviation: G
+                stats:
+                - player_id: 16627
+                  stat_id: 1288
+                  stat:
+                    id: 1288
+                    name: avgRebounds
+                    display_name: Rebounds Per Game
+                    abbreviation: REB
+                    sport_id: 4
+                  season_year: 2026
+                  season_type: 2
+                  season_type_name: Regular Season
+                  value: 3.2
+                  display_value: '3.2'
+components:
+  schemas:
+    PlayersResponse:
+      type: object
+      properties:
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerNormalized'
+    PlayerNormalized:
+      type: object
+      properties:
+        id:
+          type: integer
+        sport_id:
+          type: integer
+        team_id:
+          type: integer
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+        first_name:
+          type: string
+        last_name:
+          type: string
+        display_name:
+          type: string
+        weight:
+          type: number
+        height:
+          type: number
+        display_weight:
+          type: string
+        display_height:
+          type: string
+        age:
+          type: integer
+        date_of_birth:
+          type: string
+        slug:
+          type: string
+        jersey:
+          type: string
+        position:
+          type: string
+        position_abbreviation:
+          type: string
+        debut_year:
+          type: integer
+        birth_place_city:
+          type: string
+        birth_place_country:
+          type: string
+        experience_years:
+          type: integer
+        active:
+          type: boolean
+        status:
+          type: string
+        bats:
+          type: string
+          description: MLB only — batting side
+        throws:
+          type: string
+          description: MLB only — throwing arm
+    Team:
+      type: object
+      properties:
+        team_id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: New England
+        mascot:
+          type: string
+          example: Patriots
+        abbreviation:
+          type: string
+          example: NE
+        ranking:
+          type: integer
+          nullable: true
+        record:
+          type: string
+          example: 10-7
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
+    StatDefinition:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+        name:
+          type: string
+        category:
+          type: string
+        display_name:
+          type: string
+        abbreviation:
+          type: string
+        description:
+          type: string
+        sport_id:
+          type: integer
+    Conference:
+      type: object
+      properties:
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+    TeamsResponse:
+      type: object
+      properties:
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+    PlayerStats:
+      type: object
+      properties:
+        player_id:
+          type: integer
+          nullable: true
+        player:
+          $ref: '#/components/schemas/PlayerNormalized'
+        stat_id:
+          type: integer
+          nullable: true
+        stat:
+          $ref: '#/components/schemas/StatDefinition'
+        season_year:
+          type: integer
+        season_type:
+          type: integer
+        season_type_name:
+          type: string
+        value:
+          type: number
+        display_value:
+          type: string
+        per_game_value:
+          type: number
+        per_game_display_value:
+          type: string
+        rank:
+          type: integer
+        rank_display_value:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    PlayerStatResponse:
+      type: object
+      properties:
+        player:
+          $ref: '#/components/schemas/PlayerNormalized'
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerStats'
+    Division:
+      type: object
+      properties:
+        division_id:
+          type: integer
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+    TeamStats:
+      type: object
+      properties:
+        team_id:
+          type: integer
+          nullable: true
+        stat_id:
+          type: integer
+          nullable: true
+        stat:
+          $ref: '#/components/schemas/StatDefinition'
+        season_year:
+          type: integer
+        season_type:
+          type: integer
+        season_type_name:
+          type: string
+        value:
+          type: number
+        display_value:
+          type: string
+        per_game_value:
+          type: number
+        per_game_display_value:
+          type: string
+        rank:
+          type: integer
+        rank_display_value:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: key
+      description: API key as query parameter
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Therundown-Key
+      description: API key as request header

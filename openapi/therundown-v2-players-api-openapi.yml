@@ -1,0 +1,173 @@
+openapi: 3.0.3
+info:
+  title: TheRundown Sports V1 Delta V2 Players API
+  version: 2.0.0
+  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
+
+
+    ## Authentication
+
+    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
+
+    - **Query parameter**: `?key=YOUR_API_KEY`
+
+    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
+
+    ## Off-the-Board Sentinel Value
+
+    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
+
+
+    ## Rate Limiting
+
+    Requests are rate-limited per API key tier. Check response headers for current limits.
+
+
+    ## Data Updates
+
+    - Live odds update in real-time during games
+
+    - Use delta endpoints for efficient polling of changes
+
+    - WebSocket connections available for streaming updates
+
+
+    ## V1 vs V2
+
+    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
+
+    '
+  contact:
+    name: TheRundown API Support
+    url: https://therundown.io
+    email: support@therundown.io
+  termsOfService: https://therundown.io/terms
+servers:
+- url: https://therundown.io
+  description: Production
+security:
+- ApiKeyQuery: []
+- ApiKeyHeader: []
+tags:
+- name: V2 Players
+  description: Player data (V2)
+paths:
+  /api/v2/players/{playerID}:
+    get:
+      operationId: v2GetPlayerByID
+      tags:
+      - V2 Players
+      summary: Get a player by ID
+      parameters:
+      - name: playerID
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Player data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayersResponse'
+              example:
+                players:
+                - id: 16627
+                  sport_id: 4
+                  team_id: 11
+                  first_name: Trae
+                  last_name: Young
+                  display_name: Trae Young
+                  weight: 164
+                  height: 73
+                  display_weight: 164 lbs
+                  display_height: 6' 1"
+                  age: 27
+                  date_of_birth: 1998-09-19T07:00Z
+                  slug: trae-young
+                  jersey: '11'
+                  position: Guard
+                  position_abbreviation: G
+                  birth_place_city: Lubbock
+                  birth_place_country: USA
+                  experience_years: 7
+                  active: true
+                  status: Active
+components:
+  schemas:
+    PlayersResponse:
+      type: object
+      properties:
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerNormalized'
+    PlayerNormalized:
+      type: object
+      properties:
+        id:
+          type: integer
+        sport_id:
+          type: integer
+        team_id:
+          type: integer
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+        first_name:
+          type: string
+        last_name:
+          type: string
+        display_name:
+          type: string
+        weight:
+          type: number
+        height:
+          type: number
+        display_weight:
+          type: string
+        display_height:
+          type: string
+        age:
+          type: integer
+        date_of_birth:
+          type: string
+        slug:
+          type: string
+        jersey:
+          type: string
+        position:
+          type: string
+        position_abbreviation:
+          type: string
+        debut_year:
+          type: integer
+        birth_place_city:
+          type: string
+        birth_place_country:
+          type: string
+        experience_years:
+          type: integer
+        active:
+          type: boolean
+        status:
+          type: string
+        bats:
+          type: string
+          description: MLB only — batting side
+        throws:
+          type: string
+          description: MLB only — throwing arm
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: key
+      description: API key as query parameter
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Therundown-Key
+      description: API key as request header

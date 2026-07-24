@@ -1,0 +1,516 @@
+openapi: 3.0.3
+info:
+  title: TheRundown Sports V1 Delta V1 Lines API
+  version: 2.0.0
+  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
+
+
+    ## Authentication
+
+    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
+
+    - **Query parameter**: `?key=YOUR_API_KEY`
+
+    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
+
+    ## Off-the-Board Sentinel Value
+
+    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
+
+
+    ## Rate Limiting
+
+    Requests are rate-limited per API key tier. Check response headers for current limits.
+
+
+    ## Data Updates
+
+    - Live odds update in real-time during games
+
+    - Use delta endpoints for efficient polling of changes
+
+    - WebSocket connections available for streaming updates
+
+
+    ## V1 vs V2
+
+    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
+
+    '
+  contact:
+    name: TheRundown API Support
+    url: https://therundown.io
+    email: support@therundown.io
+  termsOfService: https://therundown.io/terms
+servers:
+- url: https://therundown.io
+  description: Production
+security:
+- ApiKeyQuery: []
+- ApiKeyHeader: []
+tags:
+- name: V1 Lines
+  description: Moneyline, spread, total, best-line endpoints (V1 legacy)
+paths:
+  /api/v1/lines/best:
+    get:
+      operationId: v1GetBestLineMulti
+      tags:
+      - V1 Lines
+      summary: Get best lines for multiple events
+      parameters:
+      - name: event_ids
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Comma-separated event IDs
+      - name: period
+        in: query
+        schema:
+          type: string
+          default: period_full_game
+          enum:
+          - period_full_game
+          - period_first_half
+          - period_second_half
+          - period_first_period
+          - period_second_period
+          - period_third_period
+          - period_fourth_period
+          - period_live_full_game
+          - period_live_first_half
+          - period_live_second_half
+          - period_live_first_period
+          - period_live_second_period
+          - period_live_third_period
+          - period_live_fourth_period
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      responses:
+        '200':
+          description: Best lines keyed by event ID
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/BestLineResponse'
+              example:
+                09bfa53f8484a63e584398545c035932:
+                  event_id: 09bfa53f8484a63e584398545c035932
+                  moneyline:
+                    moneyline_away: 155
+                    moneyline_home: -170
+                    best_affiliate_away:
+                      affiliate_id: 23
+                      affiliate_name: FanDuel
+                      updated_at: '2026-02-12T00:10:00Z'
+                    best_affiliate_home:
+                      affiliate_id: 19
+                      affiliate_name: DraftKings
+                      updated_at: '2026-02-12T00:10:00Z'
+                  spread:
+                    point_spread_away: 4.5
+                    point_spread_home: -4.5
+                    point_spread_away_money: -105
+                    point_spread_home_money: -108
+                    best_affiliate_away:
+                      affiliate_id: 3
+                      affiliate_name: Pinnacle
+                      updated_at: '2026-02-12T00:08:00Z'
+                    best_affiliate_home:
+                      affiliate_id: 23
+                      affiliate_name: FanDuel
+                      updated_at: '2026-02-12T00:10:00Z'
+                  total:
+                    total_over: 224.5
+                    total_under: 224.5
+                    total_over_money: -108
+                    total_under_money: -105
+                    best_affiliate_over:
+                      affiliate_id: 19
+                      affiliate_name: DraftKings
+                      updated_at: '2026-02-12T00:10:00Z'
+                    best_affiliate_under:
+                      affiliate_id: 3
+                      affiliate_name: Pinnacle
+                      updated_at: '2026-02-12T00:08:00Z'
+  /api/v1/lines/{id}/moneyline:
+    get:
+      operationId: v1GetMoneylines
+      tags:
+      - V1 Lines
+      summary: Get moneylines for an event
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Event ID
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - all_periods
+      responses:
+        '200':
+          description: Moneylines
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  moneylines:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/V1Moneyline'
+              example:
+                moneylines:
+                - affiliate_id: 4
+                  moneyline_away: -105
+                  moneyline_away_delta: 5
+                  moneyline_home: -115
+                  moneyline_home_delta: -5
+                  moneyline_draw: 0.0001
+                  date_updated: '2026-02-11T22:00:00Z'
+                - affiliate_id: 19
+                  moneyline_away: -110
+                  moneyline_away_delta: 0
+                  moneyline_home: -110
+                  moneyline_home_delta: 0
+                  moneyline_draw: 0.0001
+                  date_updated: '2026-02-11T21:30:00Z'
+        '404':
+          description: Not found
+  /api/v1/lines/{id}/spread:
+    get:
+      operationId: v1GetSpreads
+      tags:
+      - V1 Lines
+      summary: Get spreads for an event
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - all_periods
+      responses:
+        '200':
+          description: Spreads
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  spreads:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/V1Spread'
+              example:
+                spreads:
+                - affiliate_id: 4
+                  point_spread_away: 1.5
+                  point_spread_away_money: -110
+                  point_spread_home: -1.5
+                  point_spread_home_money: -110
+                  date_updated: '2026-02-11T22:00:00Z'
+                - affiliate_id: 19
+                  point_spread_away: 2
+                  point_spread_away_money: -108
+                  point_spread_home: -2
+                  point_spread_home_money: -112
+                  date_updated: '2026-02-11T21:30:00Z'
+        '404':
+          description: Not found
+  /api/v1/lines/{id}/total:
+    get:
+      operationId: v1GetTotals
+      tags:
+      - V1 Lines
+      summary: Get totals (over/under) for an event
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - all_periods
+      responses:
+        '200':
+          description: Totals
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totals:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/V1Total'
+              example:
+                totals:
+                - affiliate_id: 4
+                  total_over: 235.5
+                  total_over_money: -110
+                  total_under: 235.5
+                  total_under_money: -110
+                  date_updated: '2026-02-11T22:00:00Z'
+                - affiliate_id: 19
+                  total_over: 234.5
+                  total_over_money: -108
+                  total_under: 234.5
+                  total_under_money: -112
+                  date_updated: '2026-02-11T21:30:00Z'
+        '404':
+          description: Not found
+  /api/v1/lines/{id}/team_total:
+    get:
+      operationId: v1GetTeamTotals
+      tags:
+      - V1 Lines
+      summary: Get team totals for an event
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - all_periods
+      responses:
+        '200':
+          description: Team totals
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                team_totals:
+                - affiliate_id: 4
+                  team_total_away_over: 118.5
+                  team_total_away_over_money: -110
+                  team_total_away_under: 118.5
+                  team_total_away_under_money: -110
+                  team_total_home_over: 117
+                  team_total_home_over_money: -110
+                  team_total_home_under: 117
+                  team_total_home_under_money: -110
+                  date_updated: '2026-02-11T22:00:00Z'
+components:
+  schemas:
+    V1Moneyline:
+      type: object
+      properties:
+        moneyline_away:
+          type: number
+          description: Away team moneyline. 0.0001 = off the board.
+          example: 150
+        moneyline_away_delta:
+          type: number
+        moneyline_home:
+          type: number
+          example: -180
+        moneyline_home_delta:
+          type: number
+        moneyline_draw:
+          type: number
+          description: Draw moneyline (soccer, UFC)
+        moneyline_draw_delta:
+          type: number
+        date_updated:
+          type: string
+          format: date-time
+          nullable: true
+        format:
+          type: string
+          example: American
+    BestLineResponse:
+      type: object
+      properties:
+        event_id:
+          type: string
+        moneyline:
+          $ref: '#/components/schemas/BestMoneyline'
+        spread:
+          $ref: '#/components/schemas/BestSpread'
+        total:
+          $ref: '#/components/schemas/BestTotal'
+        periods:
+          type: object
+          description: Period-specific best lines keyed by period name
+          additionalProperties:
+            type: object
+            properties:
+              moneyline:
+                $ref: '#/components/schemas/BestMoneyline'
+              spread:
+                $ref: '#/components/schemas/BestSpread'
+              total:
+                $ref: '#/components/schemas/BestTotal'
+    V1Spread:
+      type: object
+      properties:
+        point_spread_away:
+          type: number
+          example: 3.5
+        point_spread_away_delta:
+          type: number
+        point_spread_home:
+          type: number
+          example: -3.5
+        point_spread_home_delta:
+          type: number
+        point_spread_away_money:
+          type: number
+          example: -110
+        point_spread_away_money_delta:
+          type: number
+        point_spread_home_money:
+          type: number
+          example: -110
+        point_spread_home_money_delta:
+          type: number
+        date_updated:
+          type: string
+          format: date-time
+          nullable: true
+        format:
+          type: string
+        extended_spreads:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Spread'
+    BestAffiliateInfo:
+      type: object
+      properties:
+        affiliate_id:
+          type: integer
+        affiliate_name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    BestSpread:
+      type: object
+      properties:
+        point_spread_home:
+          type: number
+          nullable: true
+        point_spread_away:
+          type: number
+          nullable: true
+        point_spread_home_money:
+          type: number
+          nullable: true
+        point_spread_away_money:
+          type: number
+          nullable: true
+        best_affiliate_home:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_away:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+    BestMoneyline:
+      type: object
+      properties:
+        moneyline_home:
+          type: number
+          nullable: true
+        moneyline_away:
+          type: number
+          nullable: true
+        moneyline_draw:
+          type: number
+          nullable: true
+        best_affiliate_home:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_away:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_draw:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+    V1Total:
+      type: object
+      properties:
+        total_over:
+          type: number
+          example: 47.5
+        total_over_delta:
+          type: number
+        total_under:
+          type: number
+          example: 47.5
+        total_under_delta:
+          type: number
+        total_over_money:
+          type: number
+          example: -110
+        total_over_money_delta:
+          type: number
+        total_under_money:
+          type: number
+          example: -110
+        total_under_money_delta:
+          type: number
+        date_updated:
+          type: string
+          format: date-time
+          nullable: true
+        format:
+          type: string
+        extended_totals:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Total'
+    BestTotal:
+      type: object
+      properties:
+        total_over:
+          type: number
+          nullable: true
+        total_under:
+          type: number
+          nullable: true
+        total_over_money:
+          type: number
+          nullable: true
+        total_under_money:
+          type: number
+          nullable: true
+        best_affiliate_over:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_under:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+  parameters:
+    AffiliateIDsQuery:
+      name: affiliate_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3).
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: key
+      description: API key as query parameter
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Therundown-Key
+      description: API key as request header

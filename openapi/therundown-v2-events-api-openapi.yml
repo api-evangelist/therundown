@@ -1,0 +1,1034 @@
+openapi: 3.0.3
+info:
+  title: TheRundown Sports V1 Delta V2 Events API
+  version: 2.0.0
+  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
+
+
+    ## Authentication
+
+    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
+
+    - **Query parameter**: `?key=YOUR_API_KEY`
+
+    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
+
+    ## Off-the-Board Sentinel Value
+
+    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
+
+
+    ## Rate Limiting
+
+    Requests are rate-limited per API key tier. Check response headers for current limits.
+
+
+    ## Data Updates
+
+    - Live odds update in real-time during games
+
+    - Use delta endpoints for efficient polling of changes
+
+    - WebSocket connections available for streaming updates
+
+
+    ## V1 vs V2
+
+    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
+
+    '
+  contact:
+    name: TheRundown API Support
+    url: https://therundown.io
+    email: support@therundown.io
+  termsOfService: https://therundown.io/terms
+servers:
+- url: https://therundown.io
+  description: Production
+security:
+- ApiKeyQuery: []
+- ApiKeyHeader: []
+tags:
+- name: V2 Events
+  description: Events with market-based odds (V2)
+paths:
+  /api/v2/sports/{sportID}/events/{date}:
+    get:
+      operationId: v2GetEventsBySportAndDate
+      tags:
+      - V2 Events
+      summary: Get events with markets for a sport and date
+      description: 'Returns events with full market/odds data for the specified sport and date. This is the primary endpoint for building odds screens.
+
+
+        The response includes `meta.delta_last_id` which serves as the bootstrap cursor for the `/api/v2/markets/delta` polling endpoint.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      - name: date
+        in: path
+        required: true
+        schema:
+          type: string
+          format: date
+          example: '2026-01-15'
+      - $ref: '#/components/parameters/OffsetQuery'
+      - $ref: '#/components/parameters/MarketIDsQuery'
+      - $ref: '#/components/parameters/ParticipantIDsQuery'
+      - $ref: '#/components/parameters/ParticipantTypeQuery'
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - $ref: '#/components/parameters/MainLineQuery'
+      - name: hide_no_markets
+        in: query
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          default: 'false'
+        description: Hide events with no market data
+      - name: exclude_status
+        in: query
+        schema:
+          type: string
+        description: Comma-separated event status strings to exclude
+      responses:
+        '200':
+          description: Events with markets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsV2Response'
+              example:
+                meta:
+                  delta_last_id: 11ef-abcd-1234-5678-9012-abcdef123456
+                events:
+                - event_id: 816efd1e5767d7133b5bc70c77173a18
+                  sport_id: 4
+                  event_uuid: 11f1-197d-e93ea800-8c2a-ef6a554ca62d
+                  event_date: '2026-01-15T00:00:00Z'
+                  score:
+                    event_status: STATUS_SCHEDULED
+                    score_away: 0
+                    score_home: 0
+                    game_period: 0
+                    game_clock: 0
+                  teams:
+                  - team_id: 145
+                    name: Los Angeles
+                    mascot: Lakers
+                    abbreviation: LAL
+                    record: 38-18
+                    is_away: true
+                    is_home: false
+                  - team_id: 153
+                    name: Boston
+                    mascot: Celtics
+                    abbreviation: BOS
+                    record: 42-14
+                    is_away: false
+                    is_home: true
+                  schedule:
+                    event_name: Los Angeles Lakers at Boston Celtics
+                    season_type: Regular Season
+                    season_year: 2026
+                  markets:
+                  - market_id: 1
+                    period_id: 0
+                    name: moneyline
+                    participants:
+                    - id: 145
+                      type: TYPE_TEAM
+                      name: Los Angeles Lakers
+                      lines:
+                      - value: ''
+                        prices:
+                          '19':
+                            price: 150
+                            is_main_line: true
+                            updated_at: '2026-01-14T22:30:00Z'
+                          '23':
+                            price: 155
+                            is_main_line: true
+                            updated_at: '2026-01-14T22:28:00Z'
+                    - id: 153
+                      type: TYPE_TEAM
+                      name: Boston Celtics
+                      lines:
+                      - value: ''
+                        prices:
+                          '19':
+                            price: -180
+                            is_main_line: true
+                            updated_at: '2026-01-14T22:30:00Z'
+                          '23':
+                            price: -185
+                            is_main_line: true
+                            updated_at: '2026-01-14T22:28:00Z'
+                  - market_id: 2
+                    period_id: 0
+                    name: handicap
+                    participants:
+                    - id: 145
+                      type: TYPE_TEAM
+                      name: Los Angeles Lakers
+                      lines:
+                      - value: '4.5'
+                        prices:
+                          '19':
+                            price: -110
+                            is_main_line: true
+                            updated_at: '2026-01-14T22:30:00Z'
+                          '23':
+                            price: -108
+                            is_main_line: true
+                            updated_at: '2026-01-14T22:28:00Z'
+                    - id: 153
+                      type: TYPE_TEAM
+                      name: Boston Celtics
+                      lines:
+                      - value: '-4.5'
+                        prices:
+                          '19':
+                            price: -110
+                            is_main_line: true
+                            updated_at: '2026-01-14T22:30:00Z'
+                          '23':
+                            price: -112
+                            is_main_line: true
+                            updated_at: '2026-01-14T22:28:00Z'
+                  - market_id: 3
+                    period_id: 0
+                    name: totals
+                    participants:
+                    - id: 1001
+                      type: TYPE_RESULT
+                      name: Over
+                      lines:
+                      - value: '224.5'
+                        prices:
+                          '19':
+                            price: -110
+                            is_main_line: true
+                            updated_at: '2026-01-14T22:30:00Z'
+                    - id: 1002
+                      type: TYPE_RESULT
+                      name: Under
+                      lines:
+                      - value: '224.5'
+                        prices:
+                          '19':
+                            price: -110
+                            is_main_line: true
+                            updated_at: '2026-01-14T22:30:00Z'
+  /api/v2/sports/{sportID}/openers/{date}:
+    get:
+      operationId: v2GetOpenersBySportAndDate
+      tags:
+      - V2 Events
+      summary: Get opening lines for a sport and date
+      description: Returns events with the earliest recorded market prices (opening lines).
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      - name: date
+        in: path
+        required: true
+        schema:
+          type: string
+          format: date
+      - $ref: '#/components/parameters/OffsetQuery'
+      - $ref: '#/components/parameters/MarketIDsQuery'
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - $ref: '#/components/parameters/MainLineQuery'
+      - name: hide_closed
+        in: query
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        description: Hide closed lines
+      responses:
+        '200':
+          description: Events with opening market prices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsV2Response'
+              example:
+                meta: null
+                events:
+                - event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  event_date: '2026-02-12T00:00:00Z'
+                  teams:
+                  - team_id: 11
+                    name: Atlanta
+                    mascot: Hawks
+                    abbreviation: ATL
+                    is_away: true
+                    is_home: false
+                  - team_id: 12
+                    name: Charlotte
+                    mascot: Hornets
+                    abbreviation: CHA
+                    is_away: false
+                    is_home: true
+                  markets:
+                  - market_id: 1
+                    name: moneyline
+                    participants:
+                    - name: Atlanta Hawks
+                      type: TYPE_TEAM
+                      lines:
+                      - value: '0'
+                        prices:
+                          '19':
+                            price: -105
+                            is_main_line: true
+                            updated_at: '2026-02-11T22:00:00Z'
+  /api/v2/events/{eventID}:
+    get:
+      operationId: v2GetEventByID
+      tags:
+      - V2 Events
+      summary: Get a single event with markets
+      parameters:
+      - $ref: '#/components/parameters/EventIDPath'
+      - $ref: '#/components/parameters/MarketIDsQuery'
+      - $ref: '#/components/parameters/ParticipantIDsQuery'
+      - $ref: '#/components/parameters/ParticipantTypeQuery'
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - $ref: '#/components/parameters/MainLineQuery'
+      responses:
+        '200':
+          description: Event with markets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsV2Response'
+              example:
+                meta: null
+                events:
+                - event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  event_date: '2026-02-12T00:00:00Z'
+                  rotation_number_away: 529
+                  rotation_number_home: 530
+                  score:
+                    event_status: STATUS_FINAL
+                    score_away: 107
+                    score_home: 110
+                    score_away_by_period:
+                    - 27
+                    - 22
+                    - 26
+                    - 32
+                    score_home_by_period:
+                    - 35
+                    - 23
+                    - 31
+                    - 21
+                    venue_name: Spectrum Center
+                    venue_location: Charlotte, NC
+                    broadcast: FanDuel SN SE
+                    event_status_detail: Final
+                  teams:
+                  - team_id: 11
+                    name: Atlanta
+                    mascot: Hawks
+                    abbreviation: ATL
+                    record: 26-30
+                    is_away: true
+                    is_home: false
+                  - team_id: 12
+                    name: Charlotte
+                    mascot: Hornets
+                    abbreviation: CHA
+                    record: 26-29
+                    is_away: false
+                    is_home: true
+                  schedule:
+                    league_name: National Basketball Association
+                    season_type: Regular Season
+                    season_year: 2026
+                  markets:
+                  - id: 2518418
+                    market_id: 1
+                    name: moneyline
+                    participants:
+                    - name: Atlanta Hawks
+                      type: TYPE_TEAM
+                      lines:
+                      - value: '0'
+                        prices:
+                          '19':
+                            price: -105
+                            is_main_line: true
+                            updated_at: '2026-02-11T22:00:00Z'
+                  - id: 2518419
+                    market_id: 2
+                    name: handicap
+                    participants:
+                    - name: Atlanta Hawks
+                      type: TYPE_TEAM
+                      lines:
+                      - value: '4.5'
+                        prices:
+                          '19':
+                            price: -110
+                            is_main_line: true
+                            updated_at: '2026-02-11T22:00:00Z'
+                  - id: 2518420
+                    market_id: 3
+                    name: totals
+                    participants:
+                    - name: Over
+                      type: TYPE_RESULT
+                      lines:
+                      - value: '235.5'
+                        prices:
+                          '19':
+                            price: -110
+                            is_main_line: true
+                            updated_at: '2026-02-12T00:10:43Z'
+        '404':
+          description: Event not found
+  /api/v2/events/{eventID}/openers:
+    get:
+      operationId: v2GetEventOpeners
+      tags:
+      - V2 Events
+      summary: Get opening prices for an event
+      parameters:
+      - $ref: '#/components/parameters/EventIDPath'
+      - $ref: '#/components/parameters/MarketIDsQuery'
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - $ref: '#/components/parameters/MainLineQuery'
+      - name: hide_closed
+        in: query
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      responses:
+        '200':
+          description: Event with opening prices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsV2Response'
+              example:
+                meta: null
+                events:
+                - event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  event_date: '2026-02-12T00:00:00Z'
+                  teams:
+                  - team_id: 11
+                    name: Atlanta
+                    mascot: Hawks
+                    abbreviation: ATL
+                    is_away: true
+                    is_home: false
+                  - team_id: 12
+                    name: Charlotte
+                    mascot: Hornets
+                    abbreviation: CHA
+                    is_away: false
+                    is_home: true
+                  markets:
+                  - market_id: 1
+                    name: moneyline
+                    participants:
+                    - name: Atlanta Hawks
+                      type: TYPE_TEAM
+                      lines:
+                      - value: '0'
+                        prices:
+                          '19':
+                            price: -120
+                            is_main_line: true
+                            updated_at: '2026-02-10T15:00:00Z'
+  /api/v2/events/{eventID}/best-line:
+    get:
+      operationId: v2GetBestLineByEvent
+      tags:
+      - V2 Events
+      summary: Get best available line for an event
+      description: Returns the best moneyline, spread, and total across all sportsbooks.
+      parameters:
+      - $ref: '#/components/parameters/EventIDPath'
+      - name: period
+        in: query
+        schema:
+          type: string
+          default: period_full_game
+          enum:
+          - period_full_game
+          - period_first_half
+          - period_second_half
+          - period_first_period
+          - period_second_period
+          - period_third_period
+          - period_fourth_period
+          - period_live_full_game
+          - period_live_first_half
+          - period_live_second_half
+          - period_live_first_period
+          - period_live_second_period
+          - period_live_third_period
+          - period_live_fourth_period
+        description: Period to get best line for
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      responses:
+        '200':
+          description: Best lines
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BestLineResponse'
+              example:
+                event_id: 09bfa53f8484a63e584398545c035932
+                moneyline:
+                  moneyline_away: 155
+                  moneyline_home: -170
+                  best_affiliate_away:
+                    affiliate_id: 23
+                    affiliate_name: FanDuel
+                    updated_at: '2026-02-12T00:10:00Z'
+                  best_affiliate_home:
+                    affiliate_id: 19
+                    affiliate_name: DraftKings
+                    updated_at: '2026-02-12T00:10:00Z'
+                spread:
+                  point_spread_away: 4.5
+                  point_spread_home: -4.5
+                  point_spread_away_money: -105
+                  point_spread_home_money: -108
+                  best_affiliate_away:
+                    affiliate_id: 3
+                    affiliate_name: Pinnacle
+                    updated_at: '2026-02-12T00:08:00Z'
+                  best_affiliate_home:
+                    affiliate_id: 23
+                    affiliate_name: FanDuel
+                    updated_at: '2026-02-12T00:10:00Z'
+                total:
+                  total_over: 224.5
+                  total_under: 224.5
+                  total_over_money: -108
+                  total_under_money: -105
+                  best_affiliate_over:
+                    affiliate_id: 19
+                    affiliate_name: DraftKings
+                    updated_at: '2026-02-12T00:10:00Z'
+                  best_affiliate_under:
+                    affiliate_id: 3
+                    affiliate_name: Pinnacle
+                    updated_at: '2026-02-12T00:08:00Z'
+  /api/v2/delta:
+    get:
+      operationId: v2GetDelta
+      tags:
+      - V2 Events
+      summary: Get event changes since a delta ID
+      description: 'Returns raw JSON delta payloads for events that changed since `last_id`. Each delta entry is a raw JSON string containing the full event update — the `data` field is a serialized JSON string, not a parsed object.
+
+
+        The response is wrapped in a `meta` object containing the `delta_last_id` cursor for subsequent polling.
+
+        '
+      parameters:
+      - name: last_id
+        in: query
+        required: true
+        schema:
+          type: string
+          minLength: 36
+          maxLength: 36
+        description: Delta cursor (36-character UUID). Use `00000000-0000-0000-0000-000000000000` for initial fetch, then pass the `delta_last_id` from the previous response.
+      - name: sport_id
+        in: query
+        schema:
+          type: integer
+        description: Filter by sport ID
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      responses:
+        '200':
+          description: Delta updates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeltasResponse'
+              example:
+                meta:
+                  delta_last_id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                deltas:
+                - data: '{"event_id":"09bfa53f8484a63e584398545c035932","sport_id":4,"event_date":"2026-02-12T00:00:00Z","lines":{...}}'
+                - data: '{"event_id":"b9c4e2a1f3d5670089ab12cd34ef5678","sport_id":4,"event_date":"2026-02-12T00:00:00Z","lines":{...}}'
+components:
+  schemas:
+    Pitcher:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        throws_left_handed:
+          type: boolean
+          nullable: true
+        throws_right_handed:
+          type: boolean
+          nullable: true
+        bats_left_handed:
+          type: boolean
+          nullable: true
+        bats_right_handed:
+          type: boolean
+          nullable: true
+    MarketResponse:
+      type: object
+      description: Market with participants and prices for a specific event
+      properties:
+        id:
+          type: integer
+          format: int64
+        market_id:
+          type: integer
+          example: 1
+        period_id:
+          type: integer
+        name:
+          type: string
+          example: Money Line
+        market_description:
+          type: string
+        participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketParticipantResponse'
+    EventV2:
+      type: object
+      properties:
+        event_id:
+          type: string
+          description: Canonical event identifier string used by V2 endpoints, filters, and delta feeds.
+          example: 816efd1e5767d7133b5bc70c77173a18
+        event_uuid:
+          type: string
+          description: Compatibility identifier retained for older integrations. Do not assume it matches `event_id`.
+          example: 11f1-197d-e93ea800-8c2a-ef6a554ca62d
+        sport_id:
+          type: integer
+          example: 4
+        event_date:
+          type: string
+          format: date-time
+        rotation_number_away:
+          type: integer
+        rotation_number_home:
+          type: integer
+        score:
+          $ref: '#/components/schemas/Score'
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamNormalized'
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        pitcher_away:
+          $ref: '#/components/schemas/Pitcher'
+        pitcher_home:
+          $ref: '#/components/schemas/Pitcher'
+        markets:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketResponse'
+    BestAffiliateInfo:
+      type: object
+      properties:
+        affiliate_id:
+          type: integer
+        affiliate_name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    BestMoneyline:
+      type: object
+      properties:
+        moneyline_home:
+          type: number
+          nullable: true
+        moneyline_away:
+          type: number
+          nullable: true
+        moneyline_draw:
+          type: number
+          nullable: true
+        best_affiliate_home:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_away:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_draw:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+    Meta:
+      type: object
+      properties:
+        delta_last_id:
+          type: string
+    Score:
+      type: object
+      properties:
+        event_id:
+          type: string
+        event_status:
+          type: string
+          description: 'Event status. Common values: STATUS_SCHEDULED, STATUS_IN_PROGRESS, STATUS_FINAL, STATUS_POSTPONED, STATUS_CANCELED, STATUS_SUSPENDED, STATUS_DELAYED, STATUS_RAIN_DELAY, STATUS_HALFTIME, STATUS_END_PERIOD, STATUS_END_OF_REGULATION, STATUS_OVERTIME, STATUS_FIRST_HALF, STATUS_SECOND_HALF
+
+            '
+        team_id_away:
+          type: integer
+          description: Away team ID. Omitted when zero.
+        team_id_home:
+          type: integer
+          description: Home team ID. Omitted when zero.
+        score_away:
+          type: integer
+        score_home:
+          type: integer
+        winner_away:
+          type: integer
+        winner_home:
+          type: integer
+        score_away_by_period:
+          type: array
+          items:
+            type: integer
+        score_home_by_period:
+          type: array
+          items:
+            type: integer
+        venue_name:
+          type: string
+          description: Arena or stadium name. May be an empty string when unavailable from the live feed.
+        venue_location:
+          type: string
+          description: City and state. May be an empty string when unavailable from the live feed.
+        game_clock:
+          type: integer
+        display_clock:
+          type: string
+        game_period:
+          type: integer
+        broadcast:
+          type: string
+        event_status_detail:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    Schedule:
+      type: object
+      properties:
+        season_type:
+          type: string
+          example: Regular Season
+        season_year:
+          type: integer
+          example: 2026
+        conference_competition:
+          type: boolean
+          nullable: true
+        conference_name:
+          type: string
+        league_name:
+          type: string
+          nullable: true
+        event_name:
+          type: string
+        attendance:
+          type: string
+        event_headline:
+          type: string
+        week:
+          type: integer
+        week_name:
+          type: string
+        week_detail:
+          type: string
+    BestTotal:
+      type: object
+      properties:
+        total_over:
+          type: number
+          nullable: true
+        total_under:
+          type: number
+          nullable: true
+        total_over_money:
+          type: number
+          nullable: true
+        total_under_money:
+          type: number
+          nullable: true
+        best_affiliate_over:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_under:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+    BestLineResponse:
+      type: object
+      properties:
+        event_id:
+          type: string
+        moneyline:
+          $ref: '#/components/schemas/BestMoneyline'
+        spread:
+          $ref: '#/components/schemas/BestSpread'
+        total:
+          $ref: '#/components/schemas/BestTotal'
+        periods:
+          type: object
+          description: Period-specific best lines keyed by period name
+          additionalProperties:
+            type: object
+            properties:
+              moneyline:
+                $ref: '#/components/schemas/BestMoneyline'
+              spread:
+                $ref: '#/components/schemas/BestSpread'
+              total:
+                $ref: '#/components/schemas/BestTotal'
+    BestSpread:
+      type: object
+      properties:
+        point_spread_home:
+          type: number
+          nullable: true
+        point_spread_away:
+          type: number
+          nullable: true
+        point_spread_home_money:
+          type: number
+          nullable: true
+        point_spread_away_money:
+          type: number
+          nullable: true
+        best_affiliate_home:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_away:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+    TeamNormalized:
+      type: object
+      properties:
+        team_id:
+          type: integer
+        name:
+          type: string
+        mascot:
+          type: string
+        abbreviation:
+          type: string
+        record:
+          type: string
+        is_home:
+          type: boolean
+        is_away:
+          type: boolean
+        ranking:
+          type: integer
+          nullable: true
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
+    EventsV2Response:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventV2'
+    Conference:
+      type: object
+      properties:
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+    MarketParticipantResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Participant ID
+        type:
+          type: string
+          enum:
+          - TYPE_TEAM
+          - TYPE_PLAYER
+          - TYPE_RESULT
+        name:
+          type: string
+          example: New England Patriots
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketLinesResponse'
+    MarketLinesResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+          description: Line value (numeric for spreads/totals, participant name if `line_value_is_participant` is true)
+        selection:
+          type: string
+        handicap:
+          type: string
+        prices:
+          type: object
+          description: Prices keyed by affiliate ID
+          additionalProperties:
+            $ref: '#/components/schemas/MarketLinePriceResponse'
+    MarketLinePriceResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        price:
+          type: number
+          description: American odds price. Value of 0.0001 means "off the board".
+          example: -110
+        price_delta:
+          type: number
+          nullable: true
+          description: Change from previous price
+        is_main_line:
+          type: boolean
+          description: Whether this is the primary/main line
+        updated_at:
+          type: string
+          format: date-time
+        closed_at:
+          type: string
+          format: date-time
+          nullable: true
+    DeltasResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        deltas:
+          type: array
+          items:
+            type: object
+            properties:
+              data:
+                type: string
+                description: Raw JSON string of the delta payload
+    Division:
+      type: object
+      properties:
+        division_id:
+          type: integer
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+  parameters:
+    EventIDPath:
+      name: eventID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Canonical V2 event ID from the `event_id` field returned by event endpoints
+    AffiliateIDsQuery:
+      name: affiliate_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3).
+    MarketIDsQuery:
+      name: market_ids
+      in: query
+      schema:
+        type: string
+        default: 1,2,3
+      description: 'Comma-separated market IDs. Defaults to `1,2,3` (Moneyline, Spread, Total).
+
+        **Limit: 12 market IDs per request.** IDs beyond the 12th are silently ignored.
+
+        Common IDs: 1=Moneyline, 2=Spread, 3=Total, 29=Player Points, 35=Player Rebounds, 38=Three Pointers, 39=Player Assists, 93=Player PRA, 94=Team Totals.
+
+        Live variants: 41=Live ML, 42=Live Spread, 43=Live Total.
+
+        If you need more than 12 markets, make multiple requests.
+
+        '
+    MainLineQuery:
+      name: main_line
+      in: query
+      schema:
+        type: string
+        enum:
+        - 'true'
+        - 'false'
+        default: 'false'
+      description: Only return main lines (primary odds, not alternates)
+    ParticipantIDsQuery:
+      name: participant_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated participant IDs to filter (max 99)
+    ParticipantTypeQuery:
+      name: participant_type
+      in: query
+      schema:
+        type: string
+        enum:
+        - TYPE_TEAM
+        - TYPE_PLAYER
+        - TYPE_RESULT
+      description: Filter participants by type
+    OffsetQuery:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+        example: 300
+      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
+    SportIDPath:
+      name: sportID
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: 'Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis
+
+        '
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: key
+      description: API key as query parameter
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Therundown-Key
+      description: API key as request header

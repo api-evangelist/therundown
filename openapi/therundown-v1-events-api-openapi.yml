@@ -1,0 +1,890 @@
+openapi: 3.0.3
+info:
+  title: TheRundown Sports V1 Delta V1 Events API
+  version: 2.0.0
+  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
+
+
+    ## Authentication
+
+    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
+
+    - **Query parameter**: `?key=YOUR_API_KEY`
+
+    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
+
+    ## Off-the-Board Sentinel Value
+
+    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
+
+
+    ## Rate Limiting
+
+    Requests are rate-limited per API key tier. Check response headers for current limits.
+
+
+    ## Data Updates
+
+    - Live odds update in real-time during games
+
+    - Use delta endpoints for efficient polling of changes
+
+    - WebSocket connections available for streaming updates
+
+
+    ## V1 vs V2
+
+    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
+
+    '
+  contact:
+    name: TheRundown API Support
+    url: https://therundown.io
+    email: support@therundown.io
+  termsOfService: https://therundown.io/terms
+servers:
+- url: https://therundown.io
+  description: Production
+security:
+- ApiKeyQuery: []
+- ApiKeyHeader: []
+tags:
+- name: V1 Events
+  description: Events with line-based odds (V1 legacy)
+paths:
+  /api/v1/events/{eventId}:
+    get:
+      operationId: v1GetEventByID
+      tags:
+      - V1 Events
+      summary: Get a single event with lines
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - all_periods
+        description: Set to `all_periods` to include period-specific lines
+      - name: affiliate_ids
+        in: query
+        schema:
+          type: string
+        description: Comma-separated affiliate IDs
+      responses:
+        '200':
+          description: Event with lines
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1Event'
+              example:
+                event_id: 09bfa53f8484a63e584398545c035932
+                sport_id: 4
+                event_date: '2026-02-12T00:00:00Z'
+                score:
+                  event_status: STATUS_FINAL
+                  score_away: 107
+                  score_home: 110
+                  venue_name: Spectrum Center
+                  venue_location: Charlotte, NC
+                  event_status_detail: Final
+                teams:
+                - team_id: 178
+                  team_normalized_id: 11
+                  name: Atlanta Hawks
+                  is_away: true
+                  is_home: false
+                - team_id: 164
+                  team_normalized_id: 12
+                  name: Charlotte Hornets
+                  is_away: false
+                  is_home: true
+                teams_normalized:
+                - team_id: 11
+                  name: Atlanta
+                  mascot: Hawks
+                  abbreviation: ATL
+                  record: 26-30
+                  is_away: true
+                  is_home: false
+                - team_id: 12
+                  name: Charlotte
+                  mascot: Hornets
+                  abbreviation: CHA
+                  record: 26-29
+                  is_away: false
+                  is_home: true
+                lines:
+                  '4':
+                    line_id: 17980122
+                    moneyline:
+                      moneyline_away: -105
+                      moneyline_home: -115
+                      moneyline_draw: 0.0001
+                    spread:
+                      point_spread_away: 1.5
+                      point_spread_away_money: -110
+                      point_spread_home: -1.5
+                      point_spread_home_money: -110
+                    total:
+                      total_over: 235.5
+                      total_over_money: -110
+                      total_under: 235.5
+                      total_under_money: -110
+  /api/v1/events/{eventId}/lines/{lineId}:
+    get:
+      operationId: v1GetByLineID
+      tags:
+      - V1 Events
+      summary: Get event by line ID
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: lineId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - all_periods
+      responses:
+        '200':
+          description: Event for the line
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1Event'
+              example:
+                event_id: 09bfa53f8484a63e584398545c035932
+                sport_id: 4
+                event_date: '2026-02-12T00:00:00Z'
+                teams_normalized:
+                - team_id: 11
+                  name: Atlanta
+                  mascot: Hawks
+                  abbreviation: ATL
+                  is_away: true
+                  is_home: false
+  /api/v1/sports/{sportID}/events/{date}:
+    get:
+      operationId: v1GetEventsBySportAndDate
+      tags:
+      - V1 Events
+      summary: Get events with lines for a sport and date
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      - name: date
+        in: path
+        required: true
+        schema:
+          type: string
+          format: date
+      - $ref: '#/components/parameters/OffsetQuery'
+      - name: conference_id
+        in: query
+        schema:
+          type: integer
+      - name: division_id
+        in: query
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - name: exclude_status
+        in: query
+        schema:
+          type: string
+        description: Comma-separated event statuses to exclude
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - all_periods
+      responses:
+        '200':
+          description: Events with lines
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1EventsResponse'
+              example:
+                events:
+                - event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  event_date: '2026-02-12T00:00:00Z'
+                  teams_normalized:
+                  - team_id: 11
+                    name: Atlanta
+                    mascot: Hawks
+                    abbreviation: ATL
+                    record: 26-30
+                    is_away: true
+                    is_home: false
+                  - team_id: 12
+                    name: Charlotte
+                    mascot: Hornets
+                    abbreviation: CHA
+                    record: 26-29
+                    is_away: false
+                    is_home: true
+                  lines:
+                    '4':
+                      line_id: 17980122
+                      moneyline:
+                        moneyline_away: -105
+                        moneyline_home: -115
+                      spread:
+                        point_spread_away: 1.5
+                        point_spread_away_money: -110
+                        point_spread_home: -1.5
+                        point_spread_home_money: -110
+                      total:
+                        total_over: 235.5
+                        total_over_money: -110
+                        total_under: 235.5
+                        total_under_money: -110
+  /api/v1/sports/{sportID}/openers/{date}:
+    get:
+      operationId: v1GetOpenersBySportAndDate
+      tags:
+      - V1 Events
+      summary: Get opening lines for a sport and date
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      - name: date
+        in: path
+        required: true
+        schema:
+          type: string
+          format: date
+      - $ref: '#/components/parameters/OffsetQuery'
+      - name: conference_id
+        in: query
+        schema:
+          type: integer
+      - name: division_id
+        in: query
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - name: exclude_status
+        in: query
+        schema:
+          type: string
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - all_periods
+      responses:
+        '200':
+          description: Events with opening lines
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1EventsResponse'
+              example:
+                events:
+                - event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  event_date: '2026-02-12T00:00:00Z'
+                  teams_normalized:
+                  - team_id: 11
+                    name: Atlanta
+                    mascot: Hawks
+                    abbreviation: ATL
+                    is_away: true
+                    is_home: false
+                  lines:
+                    '4':
+                      moneyline:
+                        moneyline_away: -120
+                        moneyline_home: 100
+  /api/v1/sports/{sportID}/closing/{date}:
+    get:
+      operationId: v1GetClosingBySportAndDate
+      tags:
+      - V1 Events
+      summary: Get closing lines for a sport and date
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      - name: date
+        in: path
+        required: true
+        schema:
+          type: string
+          format: date
+      - $ref: '#/components/parameters/OffsetQuery'
+      - name: conference_id
+        in: query
+        schema:
+          type: integer
+      - name: division_id
+        in: query
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - name: exclude_status
+        in: query
+        schema:
+          type: string
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - all_periods
+      responses:
+        '200':
+          description: Events with closing lines
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1EventsResponse'
+              example:
+                events:
+                - event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  event_date: '2026-02-12T00:00:00Z'
+                  teams_normalized:
+                  - team_id: 11
+                    name: Atlanta
+                    mascot: Hawks
+                    abbreviation: ATL
+                    is_away: true
+                    is_home: false
+                  lines:
+                    '4':
+                      moneyline:
+                        moneyline_away: -105
+                        moneyline_home: -115
+  /api/v1/sports/{sportID}/widget/events:
+    get:
+      operationId: v1GetWidgetEvents
+      tags:
+      - V1 Events
+      summary: Get events for widget display
+      description: Internal widget endpoint. Returns events with pagination.
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      - name: last_id
+        in: query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 10
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - all_periods
+      responses:
+        '200':
+          description: Events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1EventsResponse'
+              example:
+                events:
+                - event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  event_date: '2026-02-12T00:00:00Z'
+  /api/v1/sports/{sportID}/widget/opening:
+    get:
+      operationId: v1GetWidgetOpening
+      tags:
+      - V1 Events
+      summary: Get opening lines for widget
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - all_periods
+      responses:
+        '200':
+          description: Events with opening lines
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1EventsResponse'
+              example:
+                events:
+                - event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  event_date: '2026-02-12T00:00:00Z'
+  /api/v1/sports/{sportID}/widget/closing:
+    get:
+      operationId: v1GetWidgetClosing
+      tags:
+      - V1 Events
+      summary: Get closing lines for widget
+      parameters:
+      - $ref: '#/components/parameters/SportIDPath'
+      - $ref: '#/components/parameters/AffiliateIDsQuery'
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - all_periods
+      responses:
+        '200':
+          description: Events with closing lines
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1EventsResponse'
+              example:
+                events:
+                - event_id: 09bfa53f8484a63e584398545c035932
+                  sport_id: 4
+                  event_date: '2026-02-12T00:00:00Z'
+components:
+  schemas:
+    Pitcher:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        throws_left_handed:
+          type: boolean
+          nullable: true
+        throws_right_handed:
+          type: boolean
+          nullable: true
+        bats_left_handed:
+          type: boolean
+          nullable: true
+        bats_right_handed:
+          type: boolean
+          nullable: true
+    V1LinePeriods:
+      type: object
+      properties:
+        period_full_game:
+          $ref: '#/components/schemas/V1Line'
+        period_first_half:
+          $ref: '#/components/schemas/V1Line'
+        period_second_half:
+          $ref: '#/components/schemas/V1Line'
+        period_first_period:
+          $ref: '#/components/schemas/V1Line'
+        period_second_period:
+          $ref: '#/components/schemas/V1Line'
+        period_third_period:
+          $ref: '#/components/schemas/V1Line'
+        period_fourth_period:
+          $ref: '#/components/schemas/V1Line'
+        period_live_full_game:
+          $ref: '#/components/schemas/V1Line'
+        period_live_first_half:
+          $ref: '#/components/schemas/V1Line'
+        period_live_second_half:
+          $ref: '#/components/schemas/V1Line'
+        period_live_first_period:
+          $ref: '#/components/schemas/V1Line'
+        period_live_second_period:
+          $ref: '#/components/schemas/V1Line'
+        period_live_third_period:
+          $ref: '#/components/schemas/V1Line'
+        period_live_fourth_period:
+          $ref: '#/components/schemas/V1Line'
+    Meta:
+      type: object
+      properties:
+        delta_last_id:
+          type: string
+    Schedule:
+      type: object
+      properties:
+        season_type:
+          type: string
+          example: Regular Season
+        season_year:
+          type: integer
+          example: 2026
+        conference_competition:
+          type: boolean
+          nullable: true
+        conference_name:
+          type: string
+        league_name:
+          type: string
+          nullable: true
+        event_name:
+          type: string
+        attendance:
+          type: string
+        event_headline:
+          type: string
+        week:
+          type: integer
+        week_name:
+          type: string
+        week_detail:
+          type: string
+    Score:
+      type: object
+      properties:
+        event_id:
+          type: string
+        event_status:
+          type: string
+          description: 'Event status. Common values: STATUS_SCHEDULED, STATUS_IN_PROGRESS, STATUS_FINAL, STATUS_POSTPONED, STATUS_CANCELED, STATUS_SUSPENDED, STATUS_DELAYED, STATUS_RAIN_DELAY, STATUS_HALFTIME, STATUS_END_PERIOD, STATUS_END_OF_REGULATION, STATUS_OVERTIME, STATUS_FIRST_HALF, STATUS_SECOND_HALF
+
+            '
+        team_id_away:
+          type: integer
+          description: Away team ID. Omitted when zero.
+        team_id_home:
+          type: integer
+          description: Home team ID. Omitted when zero.
+        score_away:
+          type: integer
+        score_home:
+          type: integer
+        winner_away:
+          type: integer
+        winner_home:
+          type: integer
+        score_away_by_period:
+          type: array
+          items:
+            type: integer
+        score_home_by_period:
+          type: array
+          items:
+            type: integer
+        venue_name:
+          type: string
+          description: Arena or stadium name. May be an empty string when unavailable from the live feed.
+        venue_location:
+          type: string
+          description: City and state. May be an empty string when unavailable from the live feed.
+        game_clock:
+          type: integer
+        display_clock:
+          type: string
+        game_period:
+          type: integer
+        broadcast:
+          type: string
+        event_status_detail:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    V1Moneyline:
+      type: object
+      properties:
+        moneyline_away:
+          type: number
+          description: Away team moneyline. 0.0001 = off the board.
+          example: 150
+        moneyline_away_delta:
+          type: number
+        moneyline_home:
+          type: number
+          example: -180
+        moneyline_home_delta:
+          type: number
+        moneyline_draw:
+          type: number
+          description: Draw moneyline (soccer, UFC)
+        moneyline_draw_delta:
+          type: number
+        date_updated:
+          type: string
+          format: date-time
+          nullable: true
+        format:
+          type: string
+          example: American
+    TeamNormalized:
+      type: object
+      properties:
+        team_id:
+          type: integer
+        name:
+          type: string
+        mascot:
+          type: string
+        abbreviation:
+          type: string
+        record:
+          type: string
+        is_home:
+          type: boolean
+        is_away:
+          type: boolean
+        ranking:
+          type: integer
+          nullable: true
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
+    Affiliate:
+      type: object
+      properties:
+        affiliate_id:
+          type: integer
+          example: 19
+        affiliate_name:
+          type: string
+          example: Draftkings
+        affiliate_url:
+          type: string
+          example: https://draftkings.com
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+    V1Spread:
+      type: object
+      properties:
+        point_spread_away:
+          type: number
+          example: 3.5
+        point_spread_away_delta:
+          type: number
+        point_spread_home:
+          type: number
+          example: -3.5
+        point_spread_home_delta:
+          type: number
+        point_spread_away_money:
+          type: number
+          example: -110
+        point_spread_away_money_delta:
+          type: number
+        point_spread_home_money:
+          type: number
+          example: -110
+        point_spread_home_money_delta:
+          type: number
+        date_updated:
+          type: string
+          format: date-time
+          nullable: true
+        format:
+          type: string
+        extended_spreads:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Spread'
+    Conference:
+      type: object
+      properties:
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+    V1Event:
+      type: object
+      properties:
+        event_id:
+          type: string
+        event_uuid:
+          type: string
+        sport_id:
+          type: integer
+        event_date:
+          type: string
+          format: date-time
+        rotation_number_away:
+          type: integer
+        rotation_number_home:
+          type: integer
+        score:
+          $ref: '#/components/schemas/Score'
+        teams:
+          type: array
+          items:
+            type: object
+            properties:
+              team_id:
+                type: integer
+              team_normalized_id:
+                type: integer
+              name:
+                type: string
+              is_home:
+                type: boolean
+              is_away:
+                type: boolean
+        teams_normalized:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamNormalized'
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        lines:
+          type: object
+          description: Lines keyed by affiliate ID
+          additionalProperties:
+            $ref: '#/components/schemas/V1Line'
+        line_periods:
+          type: object
+          description: Period-specific lines keyed by affiliate ID (when `include=all_periods`)
+          additionalProperties:
+            $ref: '#/components/schemas/V1LinePeriods'
+        pitcher_away:
+          $ref: '#/components/schemas/Pitcher'
+        pitcher_home:
+          $ref: '#/components/schemas/Pitcher'
+    V1Line:
+      type: object
+      properties:
+        line_id:
+          type: integer
+        moneyline:
+          $ref: '#/components/schemas/V1Moneyline'
+        spread:
+          $ref: '#/components/schemas/V1Spread'
+        total:
+          $ref: '#/components/schemas/V1Total'
+        affiliate:
+          $ref: '#/components/schemas/Affiliate'
+        teams:
+          type: array
+          items:
+            type: object
+            properties:
+              team_id:
+                type: integer
+              team_normalized_id:
+                type: integer
+              name:
+                type: string
+              is_home:
+                type: boolean
+              is_away:
+                type: boolean
+        period_id:
+          type: integer
+        period_description:
+          type: string
+    V1Total:
+      type: object
+      properties:
+        total_over:
+          type: number
+          example: 47.5
+        total_over_delta:
+          type: number
+        total_under:
+          type: number
+          example: 47.5
+        total_under_delta:
+          type: number
+        total_over_money:
+          type: number
+          example: -110
+        total_over_money_delta:
+          type: number
+        total_under_money:
+          type: number
+          example: -110
+        total_under_money_delta:
+          type: number
+        date_updated:
+          type: string
+          format: date-time
+          nullable: true
+        format:
+          type: string
+        extended_totals:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Total'
+    V1EventsResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Event'
+    Region:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    Division:
+      type: object
+      properties:
+        division_id:
+          type: integer
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+  parameters:
+    AffiliateIDsQuery:
+      name: affiliate_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3).
+    OffsetQuery:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+        example: 300
+      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
+    SportIDPath:
+      name: sportID
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: 'Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis
+
+        '
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: key
+      description: API key as query parameter
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Therundown-Key
+      description: API key as request header
