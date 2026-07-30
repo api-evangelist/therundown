@@ -13,7 +13,20 @@ description: >
   real-time updates, with historical odds data and line movement tracking
   available on higher tiers.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/therundown.png
 url: https://raw.githubusercontent.com/api-evangelist/therundown/refs/heads/main/apis.yml
 created: "2026-06-12"
 modified: "2026-06-12"
@@ -32,38 +45,286 @@ tags:
   - Sportsbook
 
 apis:
-  - aid: therundown:sports-odds-api
-    name: TheRundown Sports Odds API
-    description: >
-      RESTful API providing real-time sports betting odds, lines, scores,
-      schedules, team stats, and player props from 16+ sportsbooks normalized
-      into a single schema. Supports 600+ market types across 30+ leagues
-      including NFL, NBA, MLB, NHL, college sports, and international
-      competitions. Also offers WebSocket streaming for sub-second updates
-      and historical line movement data on higher-tier plans.
-    humanURL: https://therundown.io/api
-    baseURL: https://therundown.io/api/v2
-    tags:
-      - Sports Odds
-      - Real-Time Data
-      - Sportsbook
-      - Betting Lines
-    properties:
-      - type: Documentation
-        url: https://docs.therundown.io/introduction
-      - type: OpenAPI
-        url: https://docs.therundown.io/api-reference/generated/v2-sports/list-all-sports
-      - type: OpenAPI
-        url: openapi/therundown-sports-odds-api-openapi.yml
-      - type: Authentication
-        url: https://docs.therundown.io/authentication
-      - type: Pricing
-        url: https://therundown.io/pricing/api
-      - type: Vocabulary
-        url: vocabulary/therundown-vocabulary.yml
-      - type: JSONLDContext
-        url: json-ld/therundown-context.jsonld
-
+- aid: therundown:therundown-v1-delta-api
+  name: The Rundown V1 Delta API
+  description: Delta/change feeds (V1 legacy)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V1 Delta
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v1-delta-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v1-events-api
+  name: The Rundown V1 Events API
+  description: Events with line-based odds (V1 legacy)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V1 Events
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v1-events-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v1-lines-api
+  name: The Rundown V1 Lines API
+  description: Moneyline, spread, total, best-line endpoints (V1 legacy)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V1 Lines
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v1-lines-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v1-reference-api
+  name: The Rundown V1 Reference API
+  description: Reference data (V1 legacy)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V1 Reference
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v1-reference-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v1-sports-api
+  name: The Rundown V1 Sports API
+  description: Sport listings, dates, events, schedules (V1 legacy)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V1 Sports
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v1-sports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v1-websocket-api
+  name: The Rundown V1 WebSocket API
+  description: Real-time streaming via WebSocket (V1 legacy)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V1 WebSocket
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v1-websocket-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v2-events-api
+  name: The Rundown V2 Events API
+  description: Events with market-based odds (V2)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V2 Events
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v2-events-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v2-markets-api
+  name: The Rundown V2 Markets API
+  description: Market definitions, odds, deltas, and history (V2)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V2 Markets
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v2-markets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v2-players-api
+  name: The Rundown V2 Players API
+  description: Player data (V2)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V2 Players
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v2-players-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v2-reference-api
+  name: The Rundown V2 Reference API
+  description: Reference data — affiliates, sportsbooks, season types (V2)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V2 Reference
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v2-reference-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v2-sports-api
+  name: The Rundown V2 Sports API
+  description: Sport listings, dates, and teams (V2)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V2 Sports
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v2-sports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v2-stats-api
+  name: The Rundown V2 Stats API
+  description: Team and player statistics (V2)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V2 Stats
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v2-stats-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v2-teams-api
+  name: The Rundown V2 Teams API
+  description: Team data, players, and stats (V2)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V2 Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v2-teams-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
+- aid: therundown:therundown-v2-websocket-api
+  name: The Rundown V2 WebSocket API
+  description: Real-time streaming via WebSocket (V2)
+  humanURL: https://therundown.io/api
+  baseURL: https://therundown.io/api/v2
+  tags:
+  - V2 WebSocket
+  properties:
+  - type: OpenAPI
+    url: openapi/therundown-v2-websocket-api-openapi.yml
+  - type: Documentation
+    url: https://docs.therundown.io/introduction
+  - type: Authentication
+    url: https://docs.therundown.io/authentication
+  - type: Pricing
+    url: https://therundown.io/pricing/api
+  - type: Vocabulary
+    url: vocabulary/therundown-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/therundown-context.jsonld
 common:
   - type: AgenticAccess
     url: agentic-access/therundown-agentic-access.yml
