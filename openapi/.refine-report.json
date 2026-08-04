@@ -1,0 +1,40 @@
+{
+  "provider": "therundown",
+  "sources": [
+    "therundown-v1-delta-api-openapi.yml",
+    "therundown-v1-events-api-openapi.yml",
+    "therundown-v1-lines-api-openapi.yml",
+    "therundown-v1-reference-api-openapi.yml",
+    "therundown-v1-sports-api-openapi.yml",
+    "therundown-v1-websocket-api-openapi.yml",
+    "therundown-v2-events-api-openapi.yml",
+    "therundown-v2-markets-api-openapi.yml",
+    "therundown-v2-players-api-openapi.yml",
+    "therundown-v2-reference-api-openapi.yml",
+    "therundown-v2-sports-api-openapi.yml",
+    "therundown-v2-stats-api-openapi.yml",
+    "therundown-v2-teams-api-openapi.yml",
+    "therundown-v2-websocket-api-openapi.yml"
+  ],
+  "outputs": [
+    "therundown-v1-delta-api-openapi.yml",
+    "therundown-v1-events-api-openapi.yml",
+    "therundown-v1-lines-api-openapi.yml",
+    "therundown-v1-reference-api-openapi.yml",
+    "therundown-v1-sports-api-openapi.yml",
+    "therundown-v1-websocket-api-openapi.yml",
+    "therundown-v2-events-api-openapi.yml",
+    "therundown-v2-markets-api-openapi.yml",
+    "therundown-v2-players-api-openapi.yml",
+    "therundown-v2-reference-api-openapi.yml",
+    "therundown-v2-sports-api-openapi.yml",
+    "therundown-v2-stats-api-openapi.yml",
+    "therundown-v2-teams-api-openapi.yml",
+    "therundown-v2-websocket-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
