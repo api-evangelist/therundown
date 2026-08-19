@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TheRundown Sports V1 Delta V1 Lines API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "V1 Lines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get best lines for multiple events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/lines/best",
+            "params": [
+              {
+                "name": "event_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated event IDs"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              }
+            ]
+          },
+          "docs": "Get best lines for multiple events"
+        },
+        {
+          "info": {
+            "name": "Get moneylines for an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/lines/:id/moneyline",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Event ID"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get moneylines for an event"
+        },
+        {
+          "info": {
+            "name": "Get spreads for an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/lines/:id/spread",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get spreads for an event"
+        },
+        {
+          "info": {
+            "name": "Get totals (over/under) for an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/lines/:id/total",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get totals (over/under) for an event"
+        },
+        {
+          "info": {
+            "name": "Get team totals for an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/lines/:id/team_total",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get team totals for an event"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

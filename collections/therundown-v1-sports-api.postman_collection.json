@@ -1,0 +1,719 @@
+{
+  "item": [
+    {
+      "id": "95336189-dd6b-487c-9465-6a46f1b863ec",
+      "name": "V1 Sports",
+      "description": {
+        "content": "Sport listings, dates, events, schedules (V1 legacy)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3863d680-aaba-4f06-a65c-cf1c7cfc9b5d",
+          "name": "List all sports",
+          "request": {
+            "name": "List all sports",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e602965f-1d93-42b9-99cf-950747f6bc2a",
+              "name": "List of sports",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sports\": [\n    {\n      \"sport_id\": 1,\n      \"sport_name\": \"NCAA Football\"\n    },\n    {\n      \"sport_id\": 2,\n      \"sport_name\": \"NFL\"\n    },\n    {\n      \"sport_id\": 3,\n      \"sport_name\": \"MLB\"\n    },\n    {\n      \"sport_id\": 4,\n      \"sport_name\": \"NBA\"\n    },\n    {\n      \"sport_id\": 5,\n      \"sport_name\": \"NCAA Men's Basketball\"\n    },\n    {\n      \"sport_id\": 6,\n      \"sport_name\": \"NHL\"\n    },\n    {\n      \"sport_id\": 7,\n      \"sport_name\": \"UFC/MMA\"\n    },\n    {\n      \"sport_id\": 8,\n      \"sport_name\": \"WNBA\"\n    },\n    {\n      \"sport_id\": 10,\n      \"sport_name\": \"MLS\"\n    },\n    {\n      \"sport_id\": 11,\n      \"sport_name\": \"EPL\"\n    },\n    {\n      \"sport_id\": 12,\n      \"sport_name\": \"FRA1\"\n    },\n    {\n      \"sport_id\": 13,\n      \"sport_name\": \"GER1\"\n    },\n    {\n      \"sport_id\": 14,\n      \"sport_name\": \"ESP1\"\n    },\n    {\n      \"sport_id\": 15,\n      \"sport_name\": \"ITA1\"\n    },\n    {\n      \"sport_id\": 16,\n      \"sport_name\": \"UEFACHAMP\"\n    },\n    {\n      \"sport_id\": 17,\n      \"sport_name\": \"UEFAEURO\"\n    },\n    {\n      \"sport_id\": 18,\n      \"sport_name\": \"FIFA\"\n    },\n    {\n      \"sport_id\": 19,\n      \"sport_name\": \"JPN1\"\n    },\n    {\n      \"sport_id\": 20,\n      \"sport_name\": \"IPL\"\n    },\n    {\n      \"sport_id\": 21,\n      \"sport_name\": \"T20\"\n    },\n    {\n      \"sport_id\": 22,\n      \"sport_name\": \"Politics\"\n    },\n    {\n      \"sport_id\": 23,\n      \"sport_name\": \"NBA Preseason\"\n    },\n    {\n      \"sport_id\": 24,\n      \"sport_name\": \"NBA Playoffs\"\n    },\n    {\n      \"sport_id\": 25,\n      \"sport_name\": \"NFL Preseason\"\n    },\n    {\n      \"sport_id\": 26,\n      \"sport_name\": \"NFL Playoffs\"\n    },\n    {\n      \"sport_id\": 27,\n      \"sport_name\": \"NHL Preseason\"\n    },\n    {\n      \"sport_id\": 28,\n      \"sport_name\": \"NHL Playoffs\"\n    },\n    {\n      \"sport_id\": 30,\n      \"sport_name\": \"MLB Spring Training\"\n    },\n    {\n      \"sport_id\": 31,\n      \"sport_name\": \"MLB Playoffs\"\n    },\n    {\n      \"sport_id\": 32,\n      \"sport_name\": \"NBA Summer League\"\n    },\n    {\n      \"sport_id\": 33,\n      \"sport_name\": \"UEFA Europa League\"\n    },\n    {\n      \"sport_id\": 38,\n      \"sport_name\": \"TENNIS.ATP\"\n    },\n    {\n      \"sport_id\": 39,\n      \"sport_name\": \"TENNIS.WTA\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3224eaa1-3cd2-41d4-a8ba-f025fb5f294f",
+          "name": "Get teams for a sport",
+          "request": {
+            "name": "Get teams for a sport",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sports",
+                ":sportID",
+                "teams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef2e0e51-b2a5-4634-bd4a-3aef233354d7",
+              "name": "Teams",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sports",
+                    ":sportID",
+                    "teams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"teams\": [\n    {\n      \"team_id\": 11,\n      \"name\": \"Atlanta\",\n      \"mascot\": \"Hawks\",\n      \"abbreviation\": \"ATL\",\n      \"record\": \"26-30\"\n    },\n    {\n      \"team_id\": 1,\n      \"name\": \"Boston\",\n      \"mascot\": \"Celtics\",\n      \"abbreviation\": \"BOS\",\n      \"record\": \"35-19\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ba8191f0-bd73-419a-8840-856529111ae8",
+          "name": "Get divisions for a sport",
+          "request": {
+            "name": "Get divisions for a sport",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sports",
+                ":sportID",
+                "divisions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "71ef695c-ac08-43ce-90bf-2aa148561cd2",
+              "name": "Divisions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sports",
+                    ":sportID",
+                    "divisions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"divisions\": [\n    {\n      \"division_id\": 15,\n      \"conference_id\": 39,\n      \"sport_id\": 4,\n      \"name\": \"Atlantic\"\n    },\n    {\n      \"division_id\": 16,\n      \"conference_id\": 39,\n      \"sport_id\": 4,\n      \"name\": \"Central\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1a0e3863-ee38-48a2-992b-4267982fcff8",
+          "name": "Get conferences for a sport",
+          "request": {
+            "name": "Get conferences for a sport",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sports",
+                ":sportID",
+                "conferences"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c7dabf94-a053-468d-851f-c885fab37f2f",
+              "name": "Conferences",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sports",
+                    ":sportID",
+                    "conferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"conferences\": [\n    {\n      \"conference_id\": 39,\n      \"sport_id\": 4,\n      \"name\": \"Eastern Conference\"\n    },\n    {\n      \"conference_id\": 757,\n      \"sport_id\": 4,\n      \"name\": \"Western Conference\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "318f2dc9-0cfd-42bc-b9dd-24761f8aafce",
+          "name": "Get available dates for a sport",
+          "request": {
+            "name": "Get available dates for a sport",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sports",
+                ":sportID",
+                "dates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "iso8601",
+                  "description": "Date format — `iso8601` returns date strings, `epoch` returns Unix timestamps"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "510ad5e3-7ccc-42db-bfda-e969128ae8c7",
+              "name": "Dates",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sports",
+                    ":sportID",
+                    "dates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "300"
+                    },
+                    {
+                      "key": "format",
+                      "value": "iso8601"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dates\": [\n    \"2026-02-13T00:30:00+0000\",\n    \"2026-02-14T00:00:00+0000\",\n    \"2026-02-15T00:00:00+0000\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59e33768-9bc5-4014-8ab7-9cdf2a388ee1",
+          "name": "Get event schedule for a sport",
+          "request": {
+            "name": "Get event schedule for a sport",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sports",
+                ":sportID",
+                "schedule"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "season_year",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "season_type_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "team_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "last_event_uuid",
+                  "value": "<string>",
+                  "description": "Cursor for pagination — pass the last event UUID from previous page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "asc"
+                },
+                {
+                  "disabled": false,
+                  "key": "conference_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "division_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_teams",
+                  "value": "<string>",
+                  "description": "Include team details when present"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b130e579-16ab-41d6-a560-959a31421836",
+              "name": "Schedule",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sports",
+                    ":sportID",
+                    "schedule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "season_year",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "season_type_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "team_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "last_event_uuid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "conference_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "division_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "include_teams",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"schedules\": [\n    {\n      \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n      \"event_uuid\": \"11f1-07a5-c61d4000-867b-48b2af0d735d\",\n      \"sport_id\": 4,\n      \"event_date\": \"2026-02-12T00:00:00Z\",\n      \"league_name\": \"National Basketball Association\",\n      \"season_type\": \"Regular Season\",\n      \"season_year\": 2026,\n      \"event_name\": \"Atlanta at Charlotte\",\n      \"teams_normalized\": [\n        {\n          \"team_id\": 11,\n          \"name\": \"Atlanta\",\n          \"mascot\": \"Hawks\",\n          \"abbreviation\": \"ATL\",\n          \"is_away\": true,\n          \"is_home\": false\n        },\n        {\n          \"team_id\": 12,\n          \"name\": \"Charlotte\",\n          \"mascot\": \"Hornets\",\n          \"abbreviation\": \"CHA\",\n          \"is_away\": false,\n          \"is_home\": true\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://therundown.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "619c0aa5-3ea8-447e-8df4-cc9a51a2a3a5",
+    "name": "TheRundown Sports V1 Delta V1 Sports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.\n\n## Authentication\nAll endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:\n- **Query parameter**: `?key=YOUR_API_KEY`\n- **Header**: `X-Therundown-Key: YOUR_API_KEY`\n## Off-the-Board Sentinel Value\nThe value **0.0001** indicates a line is \"off the board\" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as \"Off Board\" or \"N/A\" in your UI.\n\n## Rate Limiting\nRequests are rate-limited per API key tier. Check response headers for current limits.\n\n## Data Updates\n- Live odds update in real-time during games\n- Use delta endpoints for efficient polling of changes\n- WebSocket connections available for streaming updates\n\n## V1 vs V2\nV2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.\n\n\nContact Support:\n Name: TheRundown API Support\n Email: support@therundown.io",
+      "type": "text/plain"
+    }
+  }
+}

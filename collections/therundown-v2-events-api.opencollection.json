@@ -1,0 +1,305 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TheRundown Sports V1 Delta V2 Events API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "V2 Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get events with markets for a sport and date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/sports/:sportID/events/:date",
+            "params": [
+              {
+                "name": "sportID",
+                "value": "",
+                "type": "path",
+                "description": "Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC."
+              },
+              {
+                "name": "market_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated market IDs. Defaults to `1,2,3` (Moneyline, Spread, Total).\n**Limit: 12 market IDs per request.** IDs beyond the 12th are silently ignored.\nCommon IDs: 1=Moneyline, 2=Spread, 3=Total, 29=Player Points, 35=Player Rebounds, 38=Three Pointers, 39=Player Assists, 93=Player PRA, 94=Team Totals.\nLive variants: 41=Live ML, 42=Live Spread, 43=Live Total.\nIf you need more than 12 markets, make multiple requests.\n"
+              },
+              {
+                "name": "participant_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated participant IDs to filter (max 99)"
+              },
+              {
+                "name": "participant_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter participants by type"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              },
+              {
+                "name": "main_line",
+                "value": "",
+                "type": "query",
+                "description": "Only return main lines (primary odds, not alternates)"
+              },
+              {
+                "name": "hide_no_markets",
+                "value": "",
+                "type": "query",
+                "description": "Hide events with no market data"
+              },
+              {
+                "name": "exclude_status",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated event status strings to exclude"
+              }
+            ]
+          },
+          "docs": "Returns events with full market/odds data for the specified sport and date. This is the primary endpoint for building odds screens.\n\nThe response includes `meta.delta_last_id` which serves as the bootstrap cursor for the `/api/v2/markets/delta` polling endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Get opening lines for a sport and date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/sports/:sportID/openers/:date",
+            "params": [
+              {
+                "name": "sportID",
+                "value": "",
+                "type": "path",
+                "description": "Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC."
+              },
+              {
+                "name": "market_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated market IDs. Defaults to `1,2,3` (Moneyline, Spread, Total).\n**Limit: 12 market IDs per request.** IDs beyond the 12th are silently ignored.\nCommon IDs: 1=Moneyline, 2=Spread, 3=Total, 29=Player Points, 35=Player Rebounds, 38=Three Pointers, 39=Player Assists, 93=Player PRA, 94=Team Totals.\nLive variants: 41=Live ML, 42=Live Spread, 43=Live Total.\nIf you need more than 12 markets, make multiple requests.\n"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              },
+              {
+                "name": "main_line",
+                "value": "",
+                "type": "query",
+                "description": "Only return main lines (primary odds, not alternates)"
+              },
+              {
+                "name": "hide_closed",
+                "value": "",
+                "type": "query",
+                "description": "Hide closed lines"
+              }
+            ]
+          },
+          "docs": "Returns events with the earliest recorded market prices (opening lines)."
+        },
+        {
+          "info": {
+            "name": "Get a single event with markets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/events/:eventID",
+            "params": [
+              {
+                "name": "eventID",
+                "value": "",
+                "type": "path",
+                "description": "Canonical V2 event ID from the `event_id` field returned by event endpoints"
+              },
+              {
+                "name": "market_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated market IDs. Defaults to `1,2,3` (Moneyline, Spread, Total).\n**Limit: 12 market IDs per request.** IDs beyond the 12th are silently ignored.\nCommon IDs: 1=Moneyline, 2=Spread, 3=Total, 29=Player Points, 35=Player Rebounds, 38=Three Pointers, 39=Player Assists, 93=Player PRA, 94=Team Totals.\nLive variants: 41=Live ML, 42=Live Spread, 43=Live Total.\nIf you need more than 12 markets, make multiple requests.\n"
+              },
+              {
+                "name": "participant_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated participant IDs to filter (max 99)"
+              },
+              {
+                "name": "participant_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter participants by type"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              },
+              {
+                "name": "main_line",
+                "value": "",
+                "type": "query",
+                "description": "Only return main lines (primary odds, not alternates)"
+              }
+            ]
+          },
+          "docs": "Get a single event with markets"
+        },
+        {
+          "info": {
+            "name": "Get opening prices for an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/events/:eventID/openers",
+            "params": [
+              {
+                "name": "eventID",
+                "value": "",
+                "type": "path",
+                "description": "Canonical V2 event ID from the `event_id` field returned by event endpoints"
+              },
+              {
+                "name": "market_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated market IDs. Defaults to `1,2,3` (Moneyline, Spread, Total).\n**Limit: 12 market IDs per request.** IDs beyond the 12th are silently ignored.\nCommon IDs: 1=Moneyline, 2=Spread, 3=Total, 29=Player Points, 35=Player Rebounds, 38=Three Pointers, 39=Player Assists, 93=Player PRA, 94=Team Totals.\nLive variants: 41=Live ML, 42=Live Spread, 43=Live Total.\nIf you need more than 12 markets, make multiple requests.\n"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              },
+              {
+                "name": "main_line",
+                "value": "",
+                "type": "query",
+                "description": "Only return main lines (primary odds, not alternates)"
+              },
+              {
+                "name": "hide_closed",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get opening prices for an event"
+        },
+        {
+          "info": {
+            "name": "Get best available line for an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/events/:eventID/best-line",
+            "params": [
+              {
+                "name": "eventID",
+                "value": "",
+                "type": "path",
+                "description": "Canonical V2 event ID from the `event_id` field returned by event endpoints"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "Period to get best line for"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              }
+            ]
+          },
+          "docs": "Returns the best moneyline, spread, and total across all sportsbooks."
+        },
+        {
+          "info": {
+            "name": "Get event changes since a delta ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/delta",
+            "params": [
+              {
+                "name": "last_id",
+                "value": "",
+                "type": "query",
+                "description": "Delta cursor (36-character UUID). Use `00000000-0000-0000-0000-000000000000` for initial fetch, then pass the `delta_last_id` from the previous response."
+              },
+              {
+                "name": "sport_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by sport ID"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              }
+            ]
+          },
+          "docs": "Returns raw JSON delta payloads for events that changed since `last_id`. Each delta entry is a raw JSON string containing the full event update — the `data` field is a serialized JSON string, not a parsed object.\n\nThe response is wrapped in a `meta` object containing the `delta_last_id` cursor for subsequent polling.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

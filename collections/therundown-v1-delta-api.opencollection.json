@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TheRundown Sports V1 Delta API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "V1 Delta",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get event deltas (V1 format)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/delta",
+            "params": [
+              {
+                "name": "last_id",
+                "value": "",
+                "type": "query",
+                "description": "Delta cursor (36-character UUID)"
+              },
+              {
+                "name": "sport_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get event deltas (V1 format)"
+        },
+        {
+          "info": {
+            "name": "Get event deltas (V2 format via V1 path)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/deltaV2",
+            "params": [
+              {
+                "name": "last_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sport_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              }
+            ]
+          },
+          "docs": "Get event deltas (V2 format via V1 path)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

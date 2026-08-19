@@ -1,0 +1,113 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TheRundown Sports V1 Delta V2 Stats API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "V2 Stats",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get team game stats for an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/events/:eventID/stats",
+            "params": [
+              {
+                "name": "eventID",
+                "value": "",
+                "type": "path",
+                "description": "Canonical V2 event ID from the `event_id` field returned by event endpoints"
+              },
+              {
+                "name": "stats_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated stat IDs (max 12)"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by team ID"
+              }
+            ]
+          },
+          "docs": "Get team game stats for an event"
+        },
+        {
+          "info": {
+            "name": "Get player game stats for an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/events/:eventID/players/stats",
+            "params": [
+              {
+                "name": "eventID",
+                "value": "",
+                "type": "path",
+                "description": "Canonical V2 event ID from the `event_id` field returned by event endpoints"
+              },
+              {
+                "name": "stats_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated stat IDs (max 12)"
+              },
+              {
+                "name": "player_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated player IDs (max 6)"
+              }
+            ]
+          },
+          "docs": "Get player game stats for an event"
+        },
+        {
+          "info": {
+            "name": "List all stat definitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/stats",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by stat ID"
+              },
+              {
+                "name": "sport_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by sport ID"
+              }
+            ]
+          },
+          "docs": "List all stat definitions"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,345 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TheRundown Sports V1 Delta V2 Markets API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "V2 Markets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get available markets for a sport and date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/sports/:sportID/markets/:date",
+            "params": [
+              {
+                "name": "sportID",
+                "value": "",
+                "type": "path",
+                "description": "Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "hide_closed_markets",
+                "value": "",
+                "type": "query",
+                "description": "Set to `1` to hide closed markets"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC."
+              }
+            ]
+          },
+          "docs": "Get available markets for a sport and date"
+        },
+        {
+          "info": {
+            "name": "Get available markets for an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/events/:eventID/markets",
+            "params": [
+              {
+                "name": "eventID",
+                "value": "",
+                "type": "path",
+                "description": "Canonical V2 event ID from the `event_id` field returned by event endpoints"
+              },
+              {
+                "name": "participant_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated participant IDs to filter (max 99)"
+              },
+              {
+                "name": "participant_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter participants by type"
+              }
+            ]
+          },
+          "docs": "Returns the list of market definitions available for this event (not prices — use the event endpoint with market_ids for prices)."
+        },
+        {
+          "info": {
+            "name": "Get market price history for an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/events/:eventID/markets/history",
+            "params": [
+              {
+                "name": "eventID",
+                "value": "",
+                "type": "path",
+                "description": "Canonical V2 event ID from the `event_id` field returned by event endpoints"
+              },
+              {
+                "name": "market_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated market IDs to filter"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start time (RFC3339)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End time (RFC3339)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get market price history for an event"
+        },
+        {
+          "info": {
+            "name": "Get opening prices for an event's markets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/events/:eventID/markets/opening",
+            "params": [
+              {
+                "name": "eventID",
+                "value": "",
+                "type": "path",
+                "description": "Canonical V2 event ID from the `event_id` field returned by event endpoints"
+              },
+              {
+                "name": "market_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated market IDs"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              }
+            ]
+          },
+          "docs": "Get opening prices for an event's markets"
+        },
+        {
+          "info": {
+            "name": "Get line price chart data for a specific market",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/events/:eventID/markets/:marketID/history",
+            "params": [
+              {
+                "name": "eventID",
+                "value": "",
+                "type": "path",
+                "description": "Canonical V2 event ID from the `event_id` field returned by event endpoints"
+              },
+              {
+                "name": "marketID",
+                "value": "",
+                "type": "path",
+                "description": "Market ID"
+              },
+              {
+                "name": "participant_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by participant ID"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              },
+              {
+                "name": "line",
+                "value": "",
+                "type": "query",
+                "description": "Filter by line value"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns time-series price data suitable for charting line movement."
+        },
+        {
+          "info": {
+            "name": "List all market definitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/markets"
+          },
+          "docs": "Returns all canonical market definitions with IDs, names, period info, and whether the line value represents a participant."
+        },
+        {
+          "info": {
+            "name": "Get market price changes since a given ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/markets/delta",
+            "params": [
+              {
+                "name": "last_id",
+                "value": "",
+                "type": "query",
+                "description": "Return changes with ID greater than this value. Obtain the initial cursor from the `meta.delta_last_id` field in the v2 events response. Cursors older than 30 minutes are rejected."
+              },
+              {
+                "name": "sport_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by sport ID"
+              },
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              },
+              {
+                "name": "market_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated market IDs to filter"
+              },
+              {
+                "name": "event_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by event ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns market line price changes (new, updated, closed) since the specified `last_id`. Use for efficient polling.\n\n**Bootstrap flow:** To obtain an initial `last_id` cursor, call `GET /api/v2/sports/{sportID}/events/{date}` — the response `meta.delta_last_id` provides the current cursor. Then pass that value as `last_id` to begin polling this endpoint.\n\n**Staleness guard:** Cursors older than 30 minutes are rejected with HTTP 400. If your cursor becomes stale, re-bootstrap from the events endpo"
+        },
+        {
+          "info": {
+            "name": "Get price history for specific market line prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/markets/history",
+            "params": [
+              {
+                "name": "market_line_price_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated market line price IDs (max 50)"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start time (RFC3339)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End time (RFC3339)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get price history for specific market line prices"
+        },
+        {
+          "info": {
+            "name": "Get market participants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/markets/participants",
+            "params": [
+              {
+                "name": "market_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated market IDs"
+              },
+              {
+                "name": "event_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by event ID"
+              }
+            ]
+          },
+          "docs": "Returns participants (teams, players, or results) for specified markets and events."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

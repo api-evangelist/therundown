@@ -1,0 +1,382 @@
+{
+  "item": [
+    {
+      "id": "e96a66a2-3e26-4d11-b6f0-c58e39d5cdc1",
+      "name": "V2 Stats",
+      "description": {
+        "content": "Team and player statistics (V2)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "74c48d8a-ce65-4b52-a8fa-2dc66deb4cd7",
+          "name": "Get team game stats for an event",
+          "request": {
+            "name": "Get team game stats for an event",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "events",
+                ":eventID",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "stats_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated stat IDs (max 12)"
+                },
+                {
+                  "disabled": false,
+                  "key": "team_id",
+                  "value": "<integer>",
+                  "description": "Filter by team ID"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eventID",
+                  "description": "(Required) Canonical V2 event ID from the `event_id` field returned by event endpoints"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9c97ea5a-2624-4128-a2bb-8aec62ba6a56",
+              "name": "Team game stats",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "events",
+                    ":eventID",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "stats_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "team_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventID",
+                      "description": "(Required) Canonical V2 event ID from the `event_id` field returned by event endpoints"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"team\": {\n      \"team_id\": 11,\n      \"name\": \"Atlanta Hawks\",\n      \"mascot\": \"Hawks\",\n      \"abbreviation\": \"ATL\"\n    },\n    \"meta\": {\n      \"complete\": true\n    },\n    \"stats\": [\n      {\n        \"team_id\": 11,\n        \"stat_id\": 1242,\n        \"stat\": {\n          \"id\": 1242,\n          \"name\": \"avgRebounds\",\n          \"display_name\": \"Rebounds Per Game\",\n          \"abbreviation\": \"REB\",\n          \"sport_id\": 4\n        },\n        \"event_id\": \"5a0c9d5d8d3e2c0001a1b2c3\",\n        \"value\": \"42\"\n      },\n      {\n        \"team_id\": 11,\n        \"stat_id\": 1243,\n        \"stat\": {\n          \"id\": 1243,\n          \"name\": \"assistTurnoverRatio\",\n          \"display_name\": \"Assist To Turnover Ratio\",\n          \"abbreviation\": \"AST/TO\",\n          \"sport_id\": 4\n        },\n        \"event_id\": \"5a0c9d5d8d3e2c0001a1b2c3\",\n        \"value\": \"2.26\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5fd94e9f-07bc-4dcb-9604-8975f9058266",
+          "name": "Get player game stats for an event",
+          "request": {
+            "name": "Get player game stats for an event",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "events",
+                ":eventID",
+                "players",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "stats_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated stat IDs (max 12)"
+                },
+                {
+                  "disabled": false,
+                  "key": "player_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated player IDs (max 6)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eventID",
+                  "description": "(Required) Canonical V2 event ID from the `event_id` field returned by event endpoints"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "97ec0a73-f3bb-40d3-98cf-a4dd343c079a",
+              "name": "Player game stats",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "events",
+                    ":eventID",
+                    "players",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "stats_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "player_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventID",
+                      "description": "(Required) Canonical V2 event ID from the `event_id` field returned by event endpoints"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"player\": {\n      \"id\": 16627,\n      \"sport_id\": 4,\n      \"team_id\": 11,\n      \"first_name\": \"Trae\",\n      \"last_name\": \"Young\",\n      \"display_name\": \"Trae Young\",\n      \"jersey\": \"11\",\n      \"position\": \"Guard\",\n      \"position_abbreviation\": \"G\"\n    },\n    \"meta\": {\n      \"complete\": true\n    },\n    \"stats\": [\n      {\n        \"stat\": {\n          \"id\": 1288,\n          \"name\": \"points\",\n          \"display_name\": \"Points\",\n          \"abbreviation\": \"PTS\",\n          \"sport_id\": 4\n        },\n        \"value\": \"28\"\n      },\n      {\n        \"stat\": {\n          \"id\": 1289,\n          \"name\": \"assists\",\n          \"display_name\": \"Assists\",\n          \"abbreviation\": \"AST\",\n          \"sport_id\": 4\n        },\n        \"value\": \"11\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e462566-8512-4b3a-ab78-7a24e7aa5e86",
+          "name": "List all stat definitions",
+          "request": {
+            "name": "List all stat definitions",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<integer>",
+                  "description": "Filter by stat ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "sport_id",
+                  "value": "<integer>",
+                  "description": "Filter by sport ID"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cc67d2f4-a292-421d-8627-614fcbcf596a",
+              "name": "Stat definitions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sport_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"completionPct\",\n    \"display_name\": \"Completion Percentage\",\n    \"abbreviation\": \"CMP%\",\n    \"description\": \"The percentage of completed passes.\",\n    \"sport_id\": 2\n  },\n  {\n    \"id\": 2,\n    \"name\": \"completions\",\n    \"display_name\": \"Completions\",\n    \"abbreviation\": \"CMP\",\n    \"description\": \"The times a player completes a pass to another player.\",\n    \"sport_id\": 2\n  },\n  {\n    \"id\": 1242,\n    \"name\": \"avgRebounds\",\n    \"display_name\": \"Rebounds Per Game\",\n    \"abbreviation\": \"REB\",\n    \"description\": \"The average rebounds per game.\",\n    \"sport_id\": 4\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://therundown.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "758276e1-6927-41de-bfab-5b98443d654b",
+    "name": "TheRundown Sports V1 Delta V2 Stats API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.\n\n## Authentication\nAll endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:\n- **Query parameter**: `?key=YOUR_API_KEY`\n- **Header**: `X-Therundown-Key: YOUR_API_KEY`\n## Off-the-Board Sentinel Value\nThe value **0.0001** indicates a line is \"off the board\" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as \"Off Board\" or \"N/A\" in your UI.\n\n## Rate Limiting\nRequests are rate-limited per API key tier. Check response headers for current limits.\n\n## Data Updates\n- Live odds update in real-time during games\n- Use delta endpoints for efficient polling of changes\n- WebSocket connections available for streaming updates\n\n## V1 vs V2\nV2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.\n\n\nContact Support:\n Name: TheRundown API Support\n Email: support@therundown.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,270 @@
+{
+  "item": [
+    {
+      "id": "2e5b93e0-6b88-4e01-9052-6cdbc1cc1fc2",
+      "name": "V1 Delta",
+      "description": {
+        "content": "Delta/change feeds (V1 legacy)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "195ce690-4086-45e2-803a-2c5d9ea323f2",
+          "name": "Get event deltas (V1 format)",
+          "request": {
+            "name": "Get event deltas (V1 format)",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "delta"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "last_id",
+                  "value": "<string>",
+                  "description": "(Required) Delta cursor (36-character UUID)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sport_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "29881ce0-5ae9-45d3-86dc-e61fe72c40b2",
+              "name": "Events with changes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "delta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sport_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"delta_last_id\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"\n  },\n  \"events\": [\n    {\n      \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n      \"sport_id\": 4,\n      \"event_date\": \"2026-02-12T00:00:00Z\",\n      \"lines\": {\n        \"4\": {\n          \"moneyline\": {\n            \"moneyline_away\": -112,\n            \"moneyline_home\": -108\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f3125507-53de-488b-92cb-0df72412441e",
+          "name": "Get event deltas (V2 format via V1 path)",
+          "request": {
+            "name": "Get event deltas (V2 format via V1 path)",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "deltaV2"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "last_id",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "sport_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "877320f8-b1e8-4cfd-9e92-bab4346af681",
+              "name": "Delta updates",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "deltaV2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sport_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"delta_last_id\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"\n  },\n  \"deltas\": [\n    {\n      \"data\": \"{\\\"event_id\\\":\\\"09bfa53f8484a63e584398545c035932\\\",\\\"sport_id\\\":4,\\\"event_date\\\":\\\"2026-02-12T00:00:00Z\\\",\\\"lines\\\":{...}}\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://therundown.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b2bc7d0e-4c68-4338-a980-3ae09094f996",
+    "name": "TheRundown Sports V1 Delta API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.\n\n## Authentication\nAll endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:\n- **Query parameter**: `?key=YOUR_API_KEY`\n- **Header**: `X-Therundown-Key: YOUR_API_KEY`\n## Off-the-Board Sentinel Value\nThe value **0.0001** indicates a line is \"off the board\" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as \"Off Board\" or \"N/A\" in your UI.\n\n## Rate Limiting\nRequests are rate-limited per API key tier. Check response headers for current limits.\n\n## Data Updates\n- Live odds update in real-time during games\n- Use delta endpoints for efficient polling of changes\n- WebSocket connections available for streaming updates\n\n## V1 vs V2\nV2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.\n\n\nContact Support:\n Name: TheRundown API Support\n Email: support@therundown.io",
+      "type": "text/plain"
+    }
+  }
+}

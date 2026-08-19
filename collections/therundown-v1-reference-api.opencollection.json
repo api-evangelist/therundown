@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TheRundown Sports V1 Delta V1 Reference API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "V1 Reference",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all sportsbooks/affiliates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/affiliates",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all sportsbooks/affiliates"
+        },
+        {
+          "info": {
+            "name": "List all sportsbooks (alias)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/sportsbooks",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all sportsbooks (alias)"
+        },
+        {
+          "info": {
+            "name": "List season types per sport",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/season_types"
+          },
+          "docs": "List season types per sport"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

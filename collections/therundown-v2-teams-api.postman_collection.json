@@ -1,0 +1,552 @@
+{
+  "item": [
+    {
+      "id": "adc08c79-744d-47c8-802e-097f6d9fefe8",
+      "name": "V2 Teams",
+      "description": {
+        "content": "Team data, players, and stats (V2)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4226bc18-84e8-4670-b41d-02ac1ef0ddf8",
+          "name": "Get a team by ID",
+          "request": {
+            "name": "Get a team by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "teams",
+                ":teamID",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "teamID",
+                  "description": "(Required) Normalized team ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "06eb5fab-4ede-4d44-bb88-f05034ba124f",
+              "name": "Team data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "teams",
+                    ":teamID",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "teamID",
+                      "description": "(Required) Normalized team ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"teams\": [\n    {\n      \"team_id\": 11,\n      \"name\": \"Atlanta\",\n      \"mascot\": \"Hawks\",\n      \"abbreviation\": \"ATL\",\n      \"record\": \"26-30\",\n      \"conference\": {\n        \"conference_id\": 39,\n        \"sport_id\": 4,\n        \"name\": \"Eastern Conference\"\n      },\n      \"division\": {\n        \"division_id\": 17,\n        \"conference_id\": 39,\n        \"sport_id\": 4,\n        \"name\": \"Southeast\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1da34d8b-d998-4053-b116-07f738e7df15",
+              "name": "Team not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "teams",
+                    ":teamID",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "teamID",
+                      "description": "(Required) Normalized team ID"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ac7da882-c0ce-4ce6-a36f-d76db8232eab",
+          "name": "Get players for a team",
+          "request": {
+            "name": "Get players for a team",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "teams",
+                ":teamID",
+                "players"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "teamID",
+                  "description": "(Required) Normalized team ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1194da1e-16e7-4ccb-82f4-595f45eb60cb",
+              "name": "Player list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "teams",
+                    ":teamID",
+                    "players"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "teamID",
+                      "description": "(Required) Normalized team ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"players\": [\n    {\n      \"id\": 16627,\n      \"sport_id\": 4,\n      \"team_id\": 11,\n      \"first_name\": \"Trae\",\n      \"last_name\": \"Young\",\n      \"display_name\": \"Trae Young\",\n      \"weight\": 164,\n      \"height\": 73,\n      \"display_weight\": \"164 lbs\",\n      \"display_height\": \"6' 1\\\"\",\n      \"age\": 27,\n      \"jersey\": \"11\",\n      \"position\": \"Guard\",\n      \"position_abbreviation\": \"G\",\n      \"experience_years\": 7,\n      \"active\": true,\n      \"status\": \"Active\"\n    },\n    {\n      \"id\": 16700,\n      \"sport_id\": 4,\n      \"team_id\": 11,\n      \"first_name\": \"Jalen\",\n      \"last_name\": \"Johnson\",\n      \"display_name\": \"Jalen Johnson\",\n      \"weight\": 220,\n      \"height\": 81,\n      \"display_weight\": \"220 lbs\",\n      \"display_height\": \"6' 9\\\"\",\n      \"age\": 23,\n      \"jersey\": \"1\",\n      \"position\": \"Forward\",\n      \"position_abbreviation\": \"F\",\n      \"experience_years\": 4,\n      \"active\": true,\n      \"status\": \"Active\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49738371-9908-487a-9a3e-68afab0078fa",
+          "name": "Get season stats for a team",
+          "request": {
+            "name": "Get season stats for a team",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "teams",
+                ":teamID",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "stats_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated stat IDs (max 12)"
+                },
+                {
+                  "disabled": false,
+                  "key": "year",
+                  "value": "<integer>",
+                  "description": "Season year (defaults to current year)"
+                },
+                {
+                  "disabled": false,
+                  "key": "season_type",
+                  "value": "2",
+                  "description": "Season type ID (default 2 = regular season)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "teamID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5ccb406d-601d-4b60-ae4f-f7193a7f43ec",
+              "name": "Team season stats",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "teams",
+                    ":teamID",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "stats_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "year",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "season_type",
+                      "value": "2"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "teamID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"team_id\": 11,\n    \"stat_id\": 1242,\n    \"stat\": {\n      \"id\": 1242,\n      \"name\": \"avgRebounds\",\n      \"category\": \"general\",\n      \"display_name\": \"Rebounds Per Game\",\n      \"abbreviation\": \"REB\",\n      \"description\": \"The average rebounds per game.\",\n      \"sport_id\": 4\n    },\n    \"season_year\": 2026,\n    \"season_type\": 2,\n    \"season_type_name\": \"Regular Season\",\n    \"value\": 42.25,\n    \"display_value\": \"42.3\",\n    \"updated_at\": \"2025-05-10T16:51:57Z\"\n  },\n  {\n    \"team_id\": 11,\n    \"stat_id\": 1243,\n    \"stat\": {\n      \"id\": 1243,\n      \"name\": \"assistTurnoverRatio\",\n      \"category\": \"general\",\n      \"display_name\": \"Assist To Turnover Ratio\",\n      \"abbreviation\": \"AST/TO\",\n      \"description\": \"The average number of assists per turnover\",\n      \"sport_id\": 4\n    },\n    \"season_year\": 2026,\n    \"season_type\": 2,\n    \"season_type_name\": \"Regular Season\",\n    \"value\": 2.26,\n    \"display_value\": \"2.3\",\n    \"rank\": 1,\n    \"rank_display_value\": \"1st\",\n    \"updated_at\": \"2025-05-10T16:51:57Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f3090ca9-aa68-4d40-9396-c4296bd24317",
+          "name": "Get player season stats for a team",
+          "request": {
+            "name": "Get player season stats for a team",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "teams",
+                ":teamID",
+                "players",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "stats_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated stat IDs (max 12)"
+                },
+                {
+                  "disabled": false,
+                  "key": "player_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated player IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "year",
+                  "value": "<integer>",
+                  "description": "Season year (defaults to current year)"
+                },
+                {
+                  "disabled": false,
+                  "key": "season_type",
+                  "value": "2"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "teamID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eef35537-1a17-49ed-843f-ae2d7416247a",
+              "name": "Player season stats",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "teams",
+                    ":teamID",
+                    "players",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "stats_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "player_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "year",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "season_type",
+                      "value": "2"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "teamID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"player\": {\n      \"id\": 16627,\n      \"sport_id\": 4,\n      \"team_id\": 11,\n      \"first_name\": \"Trae\",\n      \"last_name\": \"Young\",\n      \"display_name\": \"Trae Young\",\n      \"jersey\": \"11\",\n      \"position\": \"Guard\",\n      \"position_abbreviation\": \"G\"\n    },\n    \"stats\": [\n      {\n        \"player_id\": 16627,\n        \"stat_id\": 1288,\n        \"stat\": {\n          \"id\": 1288,\n          \"name\": \"avgRebounds\",\n          \"display_name\": \"Rebounds Per Game\",\n          \"abbreviation\": \"REB\",\n          \"sport_id\": 4\n        },\n        \"season_year\": 2026,\n        \"season_type\": 2,\n        \"season_type_name\": \"Regular Season\",\n        \"value\": 3.2,\n        \"display_value\": \"3.2\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://therundown.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "38538303-8a41-46cf-a098-a4cf6d35bab4",
+    "name": "TheRundown Sports V1 Delta V2 Teams API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.\n\n## Authentication\nAll endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:\n- **Query parameter**: `?key=YOUR_API_KEY`\n- **Header**: `X-Therundown-Key: YOUR_API_KEY`\n## Off-the-Board Sentinel Value\nThe value **0.0001** indicates a line is \"off the board\" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as \"Off Board\" or \"N/A\" in your UI.\n\n## Rate Limiting\nRequests are rate-limited per API key tier. Check response headers for current limits.\n\n## Data Updates\n- Live odds update in real-time during games\n- Use delta endpoints for efficient polling of changes\n- WebSocket connections available for streaming updates\n\n## V1 vs V2\nV2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.\n\n\nContact Support:\n Name: TheRundown API Support\n Email: support@therundown.io",
+      "type": "text/plain"
+    }
+  }
+}

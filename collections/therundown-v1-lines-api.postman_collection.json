@@ -1,0 +1,731 @@
+{
+  "item": [
+    {
+      "id": "a820cb09-7b5a-45b2-a8df-e16bff2f1ee6",
+      "name": "V1 Lines",
+      "description": {
+        "content": "Moneyline, spread, total, best-line endpoints (V1 legacy)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d740e429-2901-4ff3-9031-b07191f2d806",
+          "name": "Get best lines for multiple events",
+          "request": {
+            "name": "Get best lines for multiple events",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "lines",
+                "best"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "event_ids",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated event IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "period_full_game"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "74426a90-bab1-4c2a-8066-a7de4120db70",
+              "name": "Best lines keyed by event ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "lines",
+                    "best"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "period_full_game"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"09bfa53f8484a63e584398545c035932\": {\n    \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n    \"moneyline\": {\n      \"moneyline_away\": 155,\n      \"moneyline_home\": -170,\n      \"best_affiliate_away\": {\n        \"affiliate_id\": 23,\n        \"affiliate_name\": \"FanDuel\",\n        \"updated_at\": \"2026-02-12T00:10:00Z\"\n      },\n      \"best_affiliate_home\": {\n        \"affiliate_id\": 19,\n        \"affiliate_name\": \"DraftKings\",\n        \"updated_at\": \"2026-02-12T00:10:00Z\"\n      }\n    },\n    \"spread\": {\n      \"point_spread_away\": 4.5,\n      \"point_spread_home\": -4.5,\n      \"point_spread_away_money\": -105,\n      \"point_spread_home_money\": -108,\n      \"best_affiliate_away\": {\n        \"affiliate_id\": 3,\n        \"affiliate_name\": \"Pinnacle\",\n        \"updated_at\": \"2026-02-12T00:08:00Z\"\n      },\n      \"best_affiliate_home\": {\n        \"affiliate_id\": 23,\n        \"affiliate_name\": \"FanDuel\",\n        \"updated_at\": \"2026-02-12T00:10:00Z\"\n      }\n    },\n    \"total\": {\n      \"total_over\": 224.5,\n      \"total_under\": 224.5,\n      \"total_over_money\": -108,\n      \"total_under_money\": -105,\n      \"best_affiliate_over\": {\n        \"affiliate_id\": 19,\n        \"affiliate_name\": \"DraftKings\",\n        \"updated_at\": \"2026-02-12T00:10:00Z\"\n      },\n      \"best_affiliate_under\": {\n        \"affiliate_id\": 3,\n        \"affiliate_name\": \"Pinnacle\",\n        \"updated_at\": \"2026-02-12T00:08:00Z\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b78eb45b-e751-451e-ba01-899bbe64d310",
+          "name": "Get moneylines for an event",
+          "request": {
+            "name": "Get moneylines for an event",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "lines",
+                ":id",
+                "moneyline"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Event ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "53cbb447-d909-4518-a8c4-cb5575d8bcd5",
+              "name": "Moneylines",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "lines",
+                    ":id",
+                    "moneyline"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Event ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"moneylines\": [\n    {\n      \"affiliate_id\": 4,\n      \"moneyline_away\": -105,\n      \"moneyline_away_delta\": 5,\n      \"moneyline_home\": -115,\n      \"moneyline_home_delta\": -5,\n      \"moneyline_draw\": 0.0001,\n      \"date_updated\": \"2026-02-11T22:00:00Z\"\n    },\n    {\n      \"affiliate_id\": 19,\n      \"moneyline_away\": -110,\n      \"moneyline_away_delta\": 0,\n      \"moneyline_home\": -110,\n      \"moneyline_home_delta\": 0,\n      \"moneyline_draw\": 0.0001,\n      \"date_updated\": \"2026-02-11T21:30:00Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c380c543-ab7a-44c9-b4bc-67597f129877",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "lines",
+                    ":id",
+                    "moneyline"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Event ID"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35debd3d-f3f0-46a2-84bb-7b4d98d0e5a4",
+          "name": "Get spreads for an event",
+          "request": {
+            "name": "Get spreads for an event",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "lines",
+                ":id",
+                "spread"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "955140a1-aad9-474b-a9ad-7c5b21669f5c",
+              "name": "Spreads",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "lines",
+                    ":id",
+                    "spread"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"spreads\": [\n    {\n      \"affiliate_id\": 4,\n      \"point_spread_away\": 1.5,\n      \"point_spread_away_money\": -110,\n      \"point_spread_home\": -1.5,\n      \"point_spread_home_money\": -110,\n      \"date_updated\": \"2026-02-11T22:00:00Z\"\n    },\n    {\n      \"affiliate_id\": 19,\n      \"point_spread_away\": 2,\n      \"point_spread_away_money\": -108,\n      \"point_spread_home\": -2,\n      \"point_spread_home_money\": -112,\n      \"date_updated\": \"2026-02-11T21:30:00Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78ed47dc-1053-46e8-b509-87295df479cb",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "lines",
+                    ":id",
+                    "spread"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "51d87c69-f517-4f46-bf61-24f7f11791c7",
+          "name": "Get totals (over/under) for an event",
+          "request": {
+            "name": "Get totals (over/under) for an event",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "lines",
+                ":id",
+                "total"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fe9c24d2-d7e4-49f2-a929-e6ffca347d4c",
+              "name": "Totals",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "lines",
+                    ":id",
+                    "total"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totals\": [\n    {\n      \"affiliate_id\": 4,\n      \"total_over\": 235.5,\n      \"total_over_money\": -110,\n      \"total_under\": 235.5,\n      \"total_under_money\": -110,\n      \"date_updated\": \"2026-02-11T22:00:00Z\"\n    },\n    {\n      \"affiliate_id\": 19,\n      \"total_over\": 234.5,\n      \"total_over_money\": -108,\n      \"total_under\": 234.5,\n      \"total_under_money\": -112,\n      \"date_updated\": \"2026-02-11T21:30:00Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4465a67-24a7-4ca5-b987-e723df1834f3",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "lines",
+                    ":id",
+                    "total"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e66d6cb3-ce9d-43a6-a2ad-c91fdd5891a6",
+          "name": "Get team totals for an event",
+          "request": {
+            "name": "Get team totals for an event",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "lines",
+                ":id",
+                "team_total"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ea6afa56-06da-481d-8b61-36f8e38c8049",
+              "name": "Team totals",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "lines",
+                    ":id",
+                    "team_total"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"team_totals\": [\n    {\n      \"affiliate_id\": 4,\n      \"team_total_away_over\": 118.5,\n      \"team_total_away_over_money\": -110,\n      \"team_total_away_under\": 118.5,\n      \"team_total_away_under_money\": -110,\n      \"team_total_home_over\": 117,\n      \"team_total_home_over_money\": -110,\n      \"team_total_home_under\": 117,\n      \"team_total_home_under_money\": -110,\n      \"date_updated\": \"2026-02-11T22:00:00Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://therundown.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8112e6b5-1ed7-401d-b19b-bfff1e4c4fbe",
+    "name": "TheRundown Sports V1 Delta V1 Lines API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.\n\n## Authentication\nAll endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:\n- **Query parameter**: `?key=YOUR_API_KEY`\n- **Header**: `X-Therundown-Key: YOUR_API_KEY`\n## Off-the-Board Sentinel Value\nThe value **0.0001** indicates a line is \"off the board\" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as \"Off Board\" or \"N/A\" in your UI.\n\n## Rate Limiting\nRequests are rate-limited per API key tier. Check response headers for current limits.\n\n## Data Updates\n- Live odds update in real-time during games\n- Use delta endpoints for efficient polling of changes\n- WebSocket connections available for streaming updates\n\n## V1 vs V2\nV2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.\n\n\nContact Support:\n Name: TheRundown API Support\n Email: support@therundown.io",
+      "type": "text/plain"
+    }
+  }
+}

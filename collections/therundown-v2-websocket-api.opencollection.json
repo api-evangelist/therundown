@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TheRundown Sports V1 Delta V2 WebSocket API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "V2 WebSocket",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Markets WebSocket — stream real-time market price updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/ws/markets",
+            "params": [
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              },
+              {
+                "name": "sport_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sport IDs to filter"
+              },
+              {
+                "name": "event_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated event IDs to filter"
+              },
+              {
+                "name": "market_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated market IDs to filter"
+              }
+            ]
+          },
+          "docs": "Establishes a WebSocket connection for streaming V2 market price changes in real-time.\n\n**Connection**: `wss://therundown.io/api/v2/ws/markets?key=YOUR_API_KEY`\n\n**Filter parameters** (query string):\n- `affiliate_ids` — comma-separated affiliate IDs\n- `sport_ids` — comma-separated sport IDs\n- `event_ids` — comma-separated event IDs\n- `market_ids` — comma-separated market IDs\n\nAll filters are optional. If none are specified, all messages are received.\n\n**Heartbeat**: Server sends `{\"meta\":{\"type\""
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

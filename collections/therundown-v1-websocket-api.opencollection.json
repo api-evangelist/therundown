@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TheRundown Sports V1 Delta V1 WebSocket API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "V1 WebSocket",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "V1 WebSocket — stream real-time event and market updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/ws",
+            "params": [
+              {
+                "name": "affiliate_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+              },
+              {
+                "name": "sport_ids",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "event_ids",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Establishes a WebSocket connection for streaming V1 event updates and V2 market price deltas.\n\n**Connection**: `wss://therundown.io/api/v1/ws?key=YOUR_API_KEY`\n\n**Filter parameters** (query string):\n- `affiliate_ids` — comma-separated affiliate IDs\n- `sport_ids` — comma-separated sport IDs (V1 messages only)\n- `event_ids` — comma-separated event IDs\n- `date` — date filter in YYYY-MM-DD format (V1 messages only)\n\n**Heartbeat**: Every 15 seconds.\n\n**Message queue**: 256-message buffer. Messages dr"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

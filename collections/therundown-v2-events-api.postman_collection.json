@@ -1,0 +1,987 @@
+{
+  "item": [
+    {
+      "id": "623d7409-38bd-40ac-acb8-64a7bc608e8f",
+      "name": "V2 Events",
+      "description": {
+        "content": "Events with market-based odds (V2)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "90bab7f9-d05f-4823-b537-50a58adfeeb2",
+          "name": "Get events with markets for a sport and date",
+          "request": {
+            "name": "Get events with markets for a sport and date",
+            "description": {
+              "content": "Returns events with full market/odds data for the specified sport and date. This is the primary endpoint for building odds screens.\n\nThe response includes `meta.delta_last_id` which serves as the bootstrap cursor for the `/api/v2/markets/delta` polling endpoint.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "sports",
+                ":sportID",
+                "events",
+                ":date"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC."
+                },
+                {
+                  "disabled": false,
+                  "key": "market_ids",
+                  "value": "1,2,3",
+                  "description": "Comma-separated market IDs. Defaults to `1,2,3` (Moneyline, Spread, Total).\n**Limit: 12 market IDs per request.** IDs beyond the 12th are silently ignored.\nCommon IDs: 1=Moneyline, 2=Spread, 3=Total, 29=Player Points, 35=Player Rebounds, 38=Three Pointers, 39=Player Assists, 93=Player PRA, 94=Team Totals.\nLive variants: 41=Live ML, 42=Live Spread, 43=Live Total.\nIf you need more than 12 markets, make multiple requests.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "participant_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated participant IDs to filter (max 99)"
+                },
+                {
+                  "disabled": false,
+                  "key": "participant_type",
+                  "value": "<string>",
+                  "description": "Filter participants by type"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "main_line",
+                  "value": "false",
+                  "description": "Only return main lines (primary odds, not alternates)"
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_no_markets",
+                  "value": "false",
+                  "description": "Hide events with no market data"
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_status",
+                  "value": "<string>",
+                  "description": "Comma-separated event status strings to exclude"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<date>",
+                  "key": "date",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b1f54ce7-b0fc-4254-8e05-e21f0240c169",
+              "name": "Events with markets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "sports",
+                    ":sportID",
+                    "events",
+                    ":date"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "300"
+                    },
+                    {
+                      "key": "market_ids",
+                      "value": "1,2,3"
+                    },
+                    {
+                      "key": "participant_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "participant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "main_line",
+                      "value": "false"
+                    },
+                    {
+                      "key": "hide_no_markets",
+                      "value": "false"
+                    },
+                    {
+                      "key": "exclude_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<date>",
+                      "key": "date",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"delta_last_id\": \"11ef-abcd-1234-5678-9012-abcdef123456\"\n  },\n  \"events\": [\n    {\n      \"event_id\": \"816efd1e5767d7133b5bc70c77173a18\",\n      \"sport_id\": 4,\n      \"event_uuid\": \"11f1-197d-e93ea800-8c2a-ef6a554ca62d\",\n      \"event_date\": \"2026-01-15T00:00:00Z\",\n      \"score\": {\n        \"event_status\": \"STATUS_SCHEDULED\",\n        \"score_away\": 0,\n        \"score_home\": 0,\n        \"game_period\": 0,\n        \"game_clock\": 0\n      },\n      \"teams\": [\n        {\n          \"team_id\": 145,\n          \"name\": \"Los Angeles\",\n          \"mascot\": \"Lakers\",\n          \"abbreviation\": \"LAL\",\n          \"record\": \"38-18\",\n          \"is_away\": true,\n          \"is_home\": false\n        },\n        {\n          \"team_id\": 153,\n          \"name\": \"Boston\",\n          \"mascot\": \"Celtics\",\n          \"abbreviation\": \"BOS\",\n          \"record\": \"42-14\",\n          \"is_away\": false,\n          \"is_home\": true\n        }\n      ],\n      \"schedule\": {\n        \"event_name\": \"Los Angeles Lakers at Boston Celtics\",\n        \"season_type\": \"Regular Season\",\n        \"season_year\": 2026\n      },\n      \"markets\": [\n        {\n          \"market_id\": 1,\n          \"period_id\": 0,\n          \"name\": \"moneyline\",\n          \"participants\": [\n            {\n              \"id\": 145,\n              \"type\": \"TYPE_TEAM\",\n              \"name\": \"Los Angeles Lakers\",\n              \"lines\": [\n                {\n                  \"value\": \"\",\n                  \"prices\": {\n                    \"19\": {\n                      \"price\": 150,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-01-14T22:30:00Z\"\n                    },\n                    \"23\": {\n                      \"price\": 155,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-01-14T22:28:00Z\"\n                    }\n                  }\n                }\n              ]\n            },\n            {\n              \"id\": 153,\n              \"type\": \"TYPE_TEAM\",\n              \"name\": \"Boston Celtics\",\n              \"lines\": [\n                {\n                  \"value\": \"\",\n                  \"prices\": {\n                    \"19\": {\n                      \"price\": -180,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-01-14T22:30:00Z\"\n                    },\n                    \"23\": {\n                      \"price\": -185,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-01-14T22:28:00Z\"\n                    }\n                  }\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"market_id\": 2,\n          \"period_id\": 0,\n          \"name\": \"handicap\",\n          \"participants\": [\n            {\n              \"id\": 145,\n              \"type\": \"TYPE_TEAM\",\n              \"name\": \"Los Angeles Lakers\",\n              \"lines\": [\n                {\n                  \"value\": \"4.5\",\n                  \"prices\": {\n                    \"19\": {\n                      \"price\": -110,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-01-14T22:30:00Z\"\n                    },\n                    \"23\": {\n                      \"price\": -108,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-01-14T22:28:00Z\"\n                    }\n                  }\n                }\n              ]\n            },\n            {\n              \"id\": 153,\n              \"type\": \"TYPE_TEAM\",\n              \"name\": \"Boston Celtics\",\n              \"lines\": [\n                {\n                  \"value\": \"-4.5\",\n                  \"prices\": {\n                    \"19\": {\n                      \"price\": -110,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-01-14T22:30:00Z\"\n                    },\n                    \"23\": {\n                      \"price\": -112,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-01-14T22:28:00Z\"\n                    }\n                  }\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"market_id\": 3,\n          \"period_id\": 0,\n          \"name\": \"totals\",\n          \"participants\": [\n            {\n              \"id\": 1001,\n              \"type\": \"TYPE_RESULT\",\n              \"name\": \"Over\",\n              \"lines\": [\n                {\n                  \"value\": \"224.5\",\n                  \"prices\": {\n                    \"19\": {\n                      \"price\": -110,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-01-14T22:30:00Z\"\n                    }\n                  }\n                }\n              ]\n            },\n            {\n              \"id\": 1002,\n              \"type\": \"TYPE_RESULT\",\n              \"name\": \"Under\",\n              \"lines\": [\n                {\n                  \"value\": \"224.5\",\n                  \"prices\": {\n                    \"19\": {\n                      \"price\": -110,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-01-14T22:30:00Z\"\n                    }\n                  }\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7e56d9a-2921-4d19-a279-30f57810a828",
+          "name": "Get opening lines for a sport and date",
+          "request": {
+            "name": "Get opening lines for a sport and date",
+            "description": {
+              "content": "Returns events with the earliest recorded market prices (opening lines).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "sports",
+                ":sportID",
+                "openers",
+                ":date"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC."
+                },
+                {
+                  "disabled": false,
+                  "key": "market_ids",
+                  "value": "1,2,3",
+                  "description": "Comma-separated market IDs. Defaults to `1,2,3` (Moneyline, Spread, Total).\n**Limit: 12 market IDs per request.** IDs beyond the 12th are silently ignored.\nCommon IDs: 1=Moneyline, 2=Spread, 3=Total, 29=Player Points, 35=Player Rebounds, 38=Three Pointers, 39=Player Assists, 93=Player PRA, 94=Team Totals.\nLive variants: 41=Live ML, 42=Live Spread, 43=Live Total.\nIf you need more than 12 markets, make multiple requests.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "main_line",
+                  "value": "false",
+                  "description": "Only return main lines (primary odds, not alternates)"
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_closed",
+                  "value": "<string>",
+                  "description": "Hide closed lines"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<date>",
+                  "key": "date",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b9a39983-7177-44cb-bcf3-9fbd69ac493e",
+              "name": "Events with opening market prices",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "sports",
+                    ":sportID",
+                    "openers",
+                    ":date"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "300"
+                    },
+                    {
+                      "key": "market_ids",
+                      "value": "1,2,3"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "main_line",
+                      "value": "false"
+                    },
+                    {
+                      "key": "hide_closed",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<date>",
+                      "key": "date",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": null,\n  \"events\": [\n    {\n      \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n      \"sport_id\": 4,\n      \"event_date\": \"2026-02-12T00:00:00Z\",\n      \"teams\": [\n        {\n          \"team_id\": 11,\n          \"name\": \"Atlanta\",\n          \"mascot\": \"Hawks\",\n          \"abbreviation\": \"ATL\",\n          \"is_away\": true,\n          \"is_home\": false\n        },\n        {\n          \"team_id\": 12,\n          \"name\": \"Charlotte\",\n          \"mascot\": \"Hornets\",\n          \"abbreviation\": \"CHA\",\n          \"is_away\": false,\n          \"is_home\": true\n        }\n      ],\n      \"markets\": [\n        {\n          \"market_id\": 1,\n          \"name\": \"moneyline\",\n          \"participants\": [\n            {\n              \"name\": \"Atlanta Hawks\",\n              \"type\": \"TYPE_TEAM\",\n              \"lines\": [\n                {\n                  \"value\": \"0\",\n                  \"prices\": {\n                    \"19\": {\n                      \"price\": -105,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-02-11T22:00:00Z\"\n                    }\n                  }\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "869afbd8-2402-42bb-a664-cde01cfea628",
+          "name": "Get a single event with markets",
+          "request": {
+            "name": "Get a single event with markets",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "events",
+                ":eventID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "market_ids",
+                  "value": "1,2,3",
+                  "description": "Comma-separated market IDs. Defaults to `1,2,3` (Moneyline, Spread, Total).\n**Limit: 12 market IDs per request.** IDs beyond the 12th are silently ignored.\nCommon IDs: 1=Moneyline, 2=Spread, 3=Total, 29=Player Points, 35=Player Rebounds, 38=Three Pointers, 39=Player Assists, 93=Player PRA, 94=Team Totals.\nLive variants: 41=Live ML, 42=Live Spread, 43=Live Total.\nIf you need more than 12 markets, make multiple requests.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "participant_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated participant IDs to filter (max 99)"
+                },
+                {
+                  "disabled": false,
+                  "key": "participant_type",
+                  "value": "<string>",
+                  "description": "Filter participants by type"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "main_line",
+                  "value": "false",
+                  "description": "Only return main lines (primary odds, not alternates)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eventID",
+                  "description": "(Required) Canonical V2 event ID from the `event_id` field returned by event endpoints"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7cf6915a-aa75-4345-93bc-ecc5001a5bcc",
+              "name": "Event with markets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "events",
+                    ":eventID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "market_ids",
+                      "value": "1,2,3"
+                    },
+                    {
+                      "key": "participant_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "participant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "main_line",
+                      "value": "false"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventID",
+                      "description": "(Required) Canonical V2 event ID from the `event_id` field returned by event endpoints"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": null,\n  \"events\": [\n    {\n      \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n      \"sport_id\": 4,\n      \"event_date\": \"2026-02-12T00:00:00Z\",\n      \"rotation_number_away\": 529,\n      \"rotation_number_home\": 530,\n      \"score\": {\n        \"event_status\": \"STATUS_FINAL\",\n        \"score_away\": 107,\n        \"score_home\": 110,\n        \"score_away_by_period\": [\n          27,\n          22,\n          26,\n          32\n        ],\n        \"score_home_by_period\": [\n          35,\n          23,\n          31,\n          21\n        ],\n        \"venue_name\": \"Spectrum Center\",\n        \"venue_location\": \"Charlotte, NC\",\n        \"broadcast\": \"FanDuel SN SE\",\n        \"event_status_detail\": \"Final\"\n      },\n      \"teams\": [\n        {\n          \"team_id\": 11,\n          \"name\": \"Atlanta\",\n          \"mascot\": \"Hawks\",\n          \"abbreviation\": \"ATL\",\n          \"record\": \"26-30\",\n          \"is_away\": true,\n          \"is_home\": false\n        },\n        {\n          \"team_id\": 12,\n          \"name\": \"Charlotte\",\n          \"mascot\": \"Hornets\",\n          \"abbreviation\": \"CHA\",\n          \"record\": \"26-29\",\n          \"is_away\": false,\n          \"is_home\": true\n        }\n      ],\n      \"schedule\": {\n        \"league_name\": \"National Basketball Association\",\n        \"season_type\": \"Regular Season\",\n        \"season_year\": 2026\n      },\n      \"markets\": [\n        {\n          \"id\": 2518418,\n          \"market_id\": 1,\n          \"name\": \"moneyline\",\n          \"participants\": [\n            {\n              \"name\": \"Atlanta Hawks\",\n              \"type\": \"TYPE_TEAM\",\n              \"lines\": [\n                {\n                  \"value\": \"0\",\n                  \"prices\": {\n                    \"19\": {\n                      \"price\": -105,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-02-11T22:00:00Z\"\n                    }\n                  }\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"id\": 2518419,\n          \"market_id\": 2,\n          \"name\": \"handicap\",\n          \"participants\": [\n            {\n              \"name\": \"Atlanta Hawks\",\n              \"type\": \"TYPE_TEAM\",\n              \"lines\": [\n                {\n                  \"value\": \"4.5\",\n                  \"prices\": {\n                    \"19\": {\n                      \"price\": -110,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-02-11T22:00:00Z\"\n                    }\n                  }\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"id\": 2518420,\n          \"market_id\": 3,\n          \"name\": \"totals\",\n          \"participants\": [\n            {\n              \"name\": \"Over\",\n              \"type\": \"TYPE_RESULT\",\n              \"lines\": [\n                {\n                  \"value\": \"235.5\",\n                  \"prices\": {\n                    \"19\": {\n                      \"price\": -110,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-02-12T00:10:43Z\"\n                    }\n                  }\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a5c5afe-fd97-44b9-83f1-9c48cf24bd17",
+              "name": "Event not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "events",
+                    ":eventID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "market_ids",
+                      "value": "1,2,3"
+                    },
+                    {
+                      "key": "participant_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "participant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "main_line",
+                      "value": "false"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventID",
+                      "description": "(Required) Canonical V2 event ID from the `event_id` field returned by event endpoints"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "810c2612-b733-4642-8f08-212513187a0e",
+          "name": "Get opening prices for an event",
+          "request": {
+            "name": "Get opening prices for an event",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "events",
+                ":eventID",
+                "openers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "market_ids",
+                  "value": "1,2,3",
+                  "description": "Comma-separated market IDs. Defaults to `1,2,3` (Moneyline, Spread, Total).\n**Limit: 12 market IDs per request.** IDs beyond the 12th are silently ignored.\nCommon IDs: 1=Moneyline, 2=Spread, 3=Total, 29=Player Points, 35=Player Rebounds, 38=Three Pointers, 39=Player Assists, 93=Player PRA, 94=Team Totals.\nLive variants: 41=Live ML, 42=Live Spread, 43=Live Total.\nIf you need more than 12 markets, make multiple requests.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "main_line",
+                  "value": "false",
+                  "description": "Only return main lines (primary odds, not alternates)"
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_closed",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eventID",
+                  "description": "(Required) Canonical V2 event ID from the `event_id` field returned by event endpoints"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e2c1ecc8-4dbe-4563-93ea-f26bba480b5e",
+              "name": "Event with opening prices",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "events",
+                    ":eventID",
+                    "openers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "market_ids",
+                      "value": "1,2,3"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "main_line",
+                      "value": "false"
+                    },
+                    {
+                      "key": "hide_closed",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventID",
+                      "description": "(Required) Canonical V2 event ID from the `event_id` field returned by event endpoints"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": null,\n  \"events\": [\n    {\n      \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n      \"sport_id\": 4,\n      \"event_date\": \"2026-02-12T00:00:00Z\",\n      \"teams\": [\n        {\n          \"team_id\": 11,\n          \"name\": \"Atlanta\",\n          \"mascot\": \"Hawks\",\n          \"abbreviation\": \"ATL\",\n          \"is_away\": true,\n          \"is_home\": false\n        },\n        {\n          \"team_id\": 12,\n          \"name\": \"Charlotte\",\n          \"mascot\": \"Hornets\",\n          \"abbreviation\": \"CHA\",\n          \"is_away\": false,\n          \"is_home\": true\n        }\n      ],\n      \"markets\": [\n        {\n          \"market_id\": 1,\n          \"name\": \"moneyline\",\n          \"participants\": [\n            {\n              \"name\": \"Atlanta Hawks\",\n              \"type\": \"TYPE_TEAM\",\n              \"lines\": [\n                {\n                  \"value\": \"0\",\n                  \"prices\": {\n                    \"19\": {\n                      \"price\": -120,\n                      \"is_main_line\": true,\n                      \"updated_at\": \"2026-02-10T15:00:00Z\"\n                    }\n                  }\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e76f703f-803d-46cf-9beb-bca3c1afba9e",
+          "name": "Get best available line for an event",
+          "request": {
+            "name": "Get best available line for an event",
+            "description": {
+              "content": "Returns the best moneyline, spread, and total across all sportsbooks.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "events",
+                ":eventID",
+                "best-line"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "period_full_game",
+                  "description": "Period to get best line for"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eventID",
+                  "description": "(Required) Canonical V2 event ID from the `event_id` field returned by event endpoints"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "494cd5b5-0de6-4396-9636-08b9213afd4d",
+              "name": "Best lines",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "events",
+                    ":eventID",
+                    "best-line"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "period_full_game"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventID",
+                      "description": "(Required) Canonical V2 event ID from the `event_id` field returned by event endpoints"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n  \"moneyline\": {\n    \"moneyline_away\": 155,\n    \"moneyline_home\": -170,\n    \"best_affiliate_away\": {\n      \"affiliate_id\": 23,\n      \"affiliate_name\": \"FanDuel\",\n      \"updated_at\": \"2026-02-12T00:10:00Z\"\n    },\n    \"best_affiliate_home\": {\n      \"affiliate_id\": 19,\n      \"affiliate_name\": \"DraftKings\",\n      \"updated_at\": \"2026-02-12T00:10:00Z\"\n    }\n  },\n  \"spread\": {\n    \"point_spread_away\": 4.5,\n    \"point_spread_home\": -4.5,\n    \"point_spread_away_money\": -105,\n    \"point_spread_home_money\": -108,\n    \"best_affiliate_away\": {\n      \"affiliate_id\": 3,\n      \"affiliate_name\": \"Pinnacle\",\n      \"updated_at\": \"2026-02-12T00:08:00Z\"\n    },\n    \"best_affiliate_home\": {\n      \"affiliate_id\": 23,\n      \"affiliate_name\": \"FanDuel\",\n      \"updated_at\": \"2026-02-12T00:10:00Z\"\n    }\n  },\n  \"total\": {\n    \"total_over\": 224.5,\n    \"total_under\": 224.5,\n    \"total_over_money\": -108,\n    \"total_under_money\": -105,\n    \"best_affiliate_over\": {\n      \"affiliate_id\": 19,\n      \"affiliate_name\": \"DraftKings\",\n      \"updated_at\": \"2026-02-12T00:10:00Z\"\n    },\n    \"best_affiliate_under\": {\n      \"affiliate_id\": 3,\n      \"affiliate_name\": \"Pinnacle\",\n      \"updated_at\": \"2026-02-12T00:08:00Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3a741f1b-47f0-4161-b472-2cffc6c3be22",
+          "name": "Get event changes since a delta ID",
+          "request": {
+            "name": "Get event changes since a delta ID",
+            "description": {
+              "content": "Returns raw JSON delta payloads for events that changed since `last_id`. Each delta entry is a raw JSON string containing the full event update — the `data` field is a serialized JSON string, not a parsed object.\n\nThe response is wrapped in a `meta` object containing the `delta_last_id` cursor for subsequent polling.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "delta"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "last_id",
+                  "value": "<string>",
+                  "description": "(Required) Delta cursor (36-character UUID). Use `00000000-0000-0000-0000-000000000000` for initial fetch, then pass the `delta_last_id` from the previous response."
+                },
+                {
+                  "disabled": false,
+                  "key": "sport_id",
+                  "value": "<integer>",
+                  "description": "Filter by sport ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7349d178-ce43-4367-bc7a-5574598896a8",
+              "name": "Delta updates",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "delta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sport_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"delta_last_id\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"\n  },\n  \"deltas\": [\n    {\n      \"data\": \"{\\\"event_id\\\":\\\"09bfa53f8484a63e584398545c035932\\\",\\\"sport_id\\\":4,\\\"event_date\\\":\\\"2026-02-12T00:00:00Z\\\",\\\"lines\\\":{...}}\"\n    },\n    {\n      \"data\": \"{\\\"event_id\\\":\\\"b9c4e2a1f3d5670089ab12cd34ef5678\\\",\\\"sport_id\\\":4,\\\"event_date\\\":\\\"2026-02-12T00:00:00Z\\\",\\\"lines\\\":{...}}\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://therundown.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b8bef52a-741f-4ff0-b2a2-a5b6bbc89c9c",
+    "name": "TheRundown Sports V1 Delta V2 Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.\n\n## Authentication\nAll endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:\n- **Query parameter**: `?key=YOUR_API_KEY`\n- **Header**: `X-Therundown-Key: YOUR_API_KEY`\n## Off-the-Board Sentinel Value\nThe value **0.0001** indicates a line is \"off the board\" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as \"Off Board\" or \"N/A\" in your UI.\n\n## Rate Limiting\nRequests are rate-limited per API key tier. Check response headers for current limits.\n\n## Data Updates\n- Live odds update in real-time during games\n- Use delta endpoints for efficient polling of changes\n- WebSocket connections available for streaming updates\n\n## V1 vs V2\nV2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.\n\n\nContact Support:\n Name: TheRundown API Support\n Email: support@therundown.io",
+      "type": "text/plain"
+    }
+  }
+}

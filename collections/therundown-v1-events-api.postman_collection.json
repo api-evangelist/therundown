@@ -1,0 +1,1169 @@
+{
+  "item": [
+    {
+      "id": "eda53494-9b3c-473b-85b3-1f256c0c12bc",
+      "name": "V1 Events",
+      "description": {
+        "content": "Events with line-based odds (V1 legacy)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5ccb6b38-0bee-4e52-96b8-ef54773cc206",
+          "name": "Get a single event with lines",
+          "request": {
+            "name": "Get a single event with lines",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "events",
+                ":eventId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Set to `all_periods` to include period-specific lines"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated affiliate IDs"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eventId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "52da61ea-4fb9-434a-b7bb-7b94ff7a1f36",
+              "name": "Event with lines",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "events",
+                    ":eventId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n  \"sport_id\": 4,\n  \"event_date\": \"2026-02-12T00:00:00Z\",\n  \"score\": {\n    \"event_status\": \"STATUS_FINAL\",\n    \"score_away\": 107,\n    \"score_home\": 110,\n    \"venue_name\": \"Spectrum Center\",\n    \"venue_location\": \"Charlotte, NC\",\n    \"event_status_detail\": \"Final\"\n  },\n  \"teams\": [\n    {\n      \"team_id\": 178,\n      \"team_normalized_id\": 11,\n      \"name\": \"Atlanta Hawks\",\n      \"is_away\": true,\n      \"is_home\": false\n    },\n    {\n      \"team_id\": 164,\n      \"team_normalized_id\": 12,\n      \"name\": \"Charlotte Hornets\",\n      \"is_away\": false,\n      \"is_home\": true\n    }\n  ],\n  \"teams_normalized\": [\n    {\n      \"team_id\": 11,\n      \"name\": \"Atlanta\",\n      \"mascot\": \"Hawks\",\n      \"abbreviation\": \"ATL\",\n      \"record\": \"26-30\",\n      \"is_away\": true,\n      \"is_home\": false\n    },\n    {\n      \"team_id\": 12,\n      \"name\": \"Charlotte\",\n      \"mascot\": \"Hornets\",\n      \"abbreviation\": \"CHA\",\n      \"record\": \"26-29\",\n      \"is_away\": false,\n      \"is_home\": true\n    }\n  ],\n  \"lines\": {\n    \"4\": {\n      \"line_id\": 17980122,\n      \"moneyline\": {\n        \"moneyline_away\": -105,\n        \"moneyline_home\": -115,\n        \"moneyline_draw\": 0.0001\n      },\n      \"spread\": {\n        \"point_spread_away\": 1.5,\n        \"point_spread_away_money\": -110,\n        \"point_spread_home\": -1.5,\n        \"point_spread_home_money\": -110\n      },\n      \"total\": {\n        \"total_over\": 235.5,\n        \"total_over_money\": -110,\n        \"total_under\": 235.5,\n        \"total_under_money\": -110\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7ee68eb-5d21-4913-9fb8-6a930cc7e043",
+          "name": "Get event by line ID",
+          "request": {
+            "name": "Get event by line ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "events",
+                ":eventId",
+                "lines",
+                ":lineId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eventId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "lineId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7c0ffc34-e415-4512-a7b7-40b3bc9bad32",
+              "name": "Event for the line",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "events",
+                    ":eventId",
+                    "lines",
+                    ":lineId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lineId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n  \"sport_id\": 4,\n  \"event_date\": \"2026-02-12T00:00:00Z\",\n  \"teams_normalized\": [\n    {\n      \"team_id\": 11,\n      \"name\": \"Atlanta\",\n      \"mascot\": \"Hawks\",\n      \"abbreviation\": \"ATL\",\n      \"is_away\": true,\n      \"is_home\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "96e6abb6-8544-487b-855e-6d6363c65708",
+          "name": "Get events with lines for a sport and date",
+          "request": {
+            "name": "Get events with lines for a sport and date",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sports",
+                ":sportID",
+                "events",
+                ":date"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC."
+                },
+                {
+                  "disabled": false,
+                  "key": "conference_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "division_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_status",
+                  "value": "<string>",
+                  "description": "Comma-separated event statuses to exclude"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<date>",
+                  "key": "date",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5cc0be1f-dcc3-4fd0-8ed9-a1cd0fe93c0e",
+              "name": "Events with lines",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sports",
+                    ":sportID",
+                    "events",
+                    ":date"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "300"
+                    },
+                    {
+                      "key": "conference_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "division_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<date>",
+                      "key": "date",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n      \"sport_id\": 4,\n      \"event_date\": \"2026-02-12T00:00:00Z\",\n      \"teams_normalized\": [\n        {\n          \"team_id\": 11,\n          \"name\": \"Atlanta\",\n          \"mascot\": \"Hawks\",\n          \"abbreviation\": \"ATL\",\n          \"record\": \"26-30\",\n          \"is_away\": true,\n          \"is_home\": false\n        },\n        {\n          \"team_id\": 12,\n          \"name\": \"Charlotte\",\n          \"mascot\": \"Hornets\",\n          \"abbreviation\": \"CHA\",\n          \"record\": \"26-29\",\n          \"is_away\": false,\n          \"is_home\": true\n        }\n      ],\n      \"lines\": {\n        \"4\": {\n          \"line_id\": 17980122,\n          \"moneyline\": {\n            \"moneyline_away\": -105,\n            \"moneyline_home\": -115\n          },\n          \"spread\": {\n            \"point_spread_away\": 1.5,\n            \"point_spread_away_money\": -110,\n            \"point_spread_home\": -1.5,\n            \"point_spread_home_money\": -110\n          },\n          \"total\": {\n            \"total_over\": 235.5,\n            \"total_over_money\": -110,\n            \"total_under\": 235.5,\n            \"total_under_money\": -110\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7a1b40fe-bec9-4c86-9d55-7b142b36d040",
+          "name": "Get opening lines for a sport and date",
+          "request": {
+            "name": "Get opening lines for a sport and date",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sports",
+                ":sportID",
+                "openers",
+                ":date"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC."
+                },
+                {
+                  "disabled": false,
+                  "key": "conference_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "division_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<date>",
+                  "key": "date",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b67b3f4c-2078-44f4-9fff-2cc5ead9a1f3",
+              "name": "Events with opening lines",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sports",
+                    ":sportID",
+                    "openers",
+                    ":date"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "300"
+                    },
+                    {
+                      "key": "conference_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "division_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<date>",
+                      "key": "date",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n      \"sport_id\": 4,\n      \"event_date\": \"2026-02-12T00:00:00Z\",\n      \"teams_normalized\": [\n        {\n          \"team_id\": 11,\n          \"name\": \"Atlanta\",\n          \"mascot\": \"Hawks\",\n          \"abbreviation\": \"ATL\",\n          \"is_away\": true,\n          \"is_home\": false\n        }\n      ],\n      \"lines\": {\n        \"4\": {\n          \"moneyline\": {\n            \"moneyline_away\": -120,\n            \"moneyline_home\": 100\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77feae22-ae0b-4935-8281-a854d0c55d15",
+          "name": "Get closing lines for a sport and date",
+          "request": {
+            "name": "Get closing lines for a sport and date",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sports",
+                ":sportID",
+                "closing",
+                ":date"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC."
+                },
+                {
+                  "disabled": false,
+                  "key": "conference_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "division_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<date>",
+                  "key": "date",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2a135a73-6fe6-43b5-bb70-3231eac8b819",
+              "name": "Events with closing lines",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sports",
+                    ":sportID",
+                    "closing",
+                    ":date"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "300"
+                    },
+                    {
+                      "key": "conference_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "division_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exclude_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<date>",
+                      "key": "date",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n      \"sport_id\": 4,\n      \"event_date\": \"2026-02-12T00:00:00Z\",\n      \"teams_normalized\": [\n        {\n          \"team_id\": 11,\n          \"name\": \"Atlanta\",\n          \"mascot\": \"Hawks\",\n          \"abbreviation\": \"ATL\",\n          \"is_away\": true,\n          \"is_home\": false\n        }\n      ],\n      \"lines\": {\n        \"4\": {\n          \"moneyline\": {\n            \"moneyline_away\": -105,\n            \"moneyline_home\": -115\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b14c4436-e652-4cca-b8da-beff1afa09e5",
+          "name": "Get events for widget display",
+          "request": {
+            "name": "Get events for widget display",
+            "description": {
+              "content": "Internal widget endpoint. Returns events with pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sports",
+                ":sportID",
+                "widget",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "last_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ea8b4b19-981a-4a20-ada1-7ac2dac8805c",
+              "name": "Events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sports",
+                    ":sportID",
+                    "widget",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n      \"sport_id\": 4,\n      \"event_date\": \"2026-02-12T00:00:00Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ea020a14-e384-4fa0-a9ab-af8961cbf852",
+          "name": "Get opening lines for widget",
+          "request": {
+            "name": "Get opening lines for widget",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sports",
+                ":sportID",
+                "widget",
+                "opening"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4bc24816-7f22-4a79-8739-ec9722e0a0a7",
+              "name": "Events with opening lines",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sports",
+                    ":sportID",
+                    "widget",
+                    "opening"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n      \"sport_id\": 4,\n      \"event_date\": \"2026-02-12T00:00:00Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "292bd4b0-9239-42a4-bfa6-cbab5fdb558d",
+          "name": "Get closing lines for widget",
+          "request": {
+            "name": "Get closing lines for widget",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sports",
+                ":sportID",
+                "widget",
+                "closing"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sportID",
+                  "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "519b7829-cf72-4c83-af17-aa057c2e6d18",
+              "name": "Events with closing lines",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sports",
+                    ":sportID",
+                    "widget",
+                    "closing"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sportID",
+                      "description": "(Required) Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"event_id\": \"09bfa53f8484a63e584398545c035932\",\n      \"sport_id\": 4,\n      \"event_date\": \"2026-02-12T00:00:00Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://therundown.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4e5b0528-401a-446f-86bc-3dfcd4b84c3c",
+    "name": "TheRundown Sports V1 Delta V1 Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.\n\n## Authentication\nAll endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:\n- **Query parameter**: `?key=YOUR_API_KEY`\n- **Header**: `X-Therundown-Key: YOUR_API_KEY`\n## Off-the-Board Sentinel Value\nThe value **0.0001** indicates a line is \"off the board\" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as \"Off Board\" or \"N/A\" in your UI.\n\n## Rate Limiting\nRequests are rate-limited per API key tier. Check response headers for current limits.\n\n## Data Updates\n- Live odds update in real-time during games\n- Use delta endpoints for efficient polling of changes\n- WebSocket connections available for streaming updates\n\n## V1 vs V2\nV2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.\n\n\nContact Support:\n Name: TheRundown API Support\n Email: support@therundown.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TheRundown Sports V1 Delta V1 Sports API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "V1 Sports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all sports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/sports"
+          },
+          "docs": "List all sports"
+        },
+        {
+          "info": {
+            "name": "Get teams for a sport",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/sports/:sportID/teams",
+            "params": [
+              {
+                "name": "sportID",
+                "value": "",
+                "type": "path",
+                "description": "Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+              }
+            ]
+          },
+          "docs": "Get teams for a sport"
+        },
+        {
+          "info": {
+            "name": "Get divisions for a sport",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/sports/:sportID/divisions",
+            "params": [
+              {
+                "name": "sportID",
+                "value": "",
+                "type": "path",
+                "description": "Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+              }
+            ]
+          },
+          "docs": "Get divisions for a sport"
+        },
+        {
+          "info": {
+            "name": "Get conferences for a sport",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/sports/:sportID/conferences",
+            "params": [
+              {
+                "name": "sportID",
+                "value": "",
+                "type": "path",
+                "description": "Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+              }
+            ]
+          },
+          "docs": "Get conferences for a sport"
+        },
+        {
+          "info": {
+            "name": "Get available dates for a sport",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/sports/:sportID/dates",
+            "params": [
+              {
+                "name": "sportID",
+                "value": "",
+                "type": "path",
+                "description": "Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Date format — `iso8601` returns date strings, `epoch` returns Unix timestamps"
+              }
+            ]
+          },
+          "docs": "Get available dates for a sport"
+        },
+        {
+          "info": {
+            "name": "Get event schedule for a sport",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v1/sports/:sportID/schedule",
+            "params": [
+              {
+                "name": "sportID",
+                "value": "",
+                "type": "path",
+                "description": "Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "season_year",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "season_type_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "last_event_uuid",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination — pass the last event UUID from previous page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "conference_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "division_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_teams",
+                "value": "",
+                "type": "query",
+                "description": "Include team details when present"
+              }
+            ]
+          },
+          "docs": "Get event schedule for a sport"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

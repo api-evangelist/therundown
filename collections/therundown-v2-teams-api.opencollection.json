@@ -1,0 +1,141 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TheRundown Sports V1 Delta V2 Teams API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "V2 Teams",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a team by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/teams/:teamID/",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path",
+                "description": "Normalized team ID"
+              }
+            ]
+          },
+          "docs": "Get a team by ID"
+        },
+        {
+          "info": {
+            "name": "Get players for a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/teams/:teamID/players",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path",
+                "description": "Normalized team ID"
+              }
+            ]
+          },
+          "docs": "Get players for a team"
+        },
+        {
+          "info": {
+            "name": "Get season stats for a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/teams/:teamID/stats",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "stats_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated stat IDs (max 12)"
+              },
+              {
+                "name": "year",
+                "value": "",
+                "type": "query",
+                "description": "Season year (defaults to current year)"
+              },
+              {
+                "name": "season_type",
+                "value": "",
+                "type": "query",
+                "description": "Season type ID (default 2 = regular season)"
+              }
+            ]
+          },
+          "docs": "Get season stats for a team"
+        },
+        {
+          "info": {
+            "name": "Get player season stats for a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/teams/:teamID/players/stats",
+            "params": [
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "stats_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated stat IDs (max 12)"
+              },
+              {
+                "name": "player_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated player IDs"
+              },
+              {
+                "name": "year",
+                "value": "",
+                "type": "query",
+                "description": "Season year (defaults to current year)"
+              },
+              {
+                "name": "season_type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get player season stats for a team"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

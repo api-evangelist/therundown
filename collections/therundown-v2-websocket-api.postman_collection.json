@@ -1,0 +1,159 @@
+{
+  "item": [
+    {
+      "id": "71486909-53e5-45e7-8990-c8d4d474bf1b",
+      "name": "V2 WebSocket",
+      "description": {
+        "content": "Real-time streaming via WebSocket (V2)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "062526ca-7d6a-414a-8fb4-0f78f09ed819",
+          "name": "Markets WebSocket — stream real-time market price updates",
+          "request": {
+            "name": "Markets WebSocket — stream real-time market price updates",
+            "description": {
+              "content": "Establishes a WebSocket connection for streaming V2 market price changes in real-time.\n\n**Connection**: `wss://therundown.io/api/v2/ws/markets?key=YOUR_API_KEY`\n\n**Filter parameters** (query string):\n- `affiliate_ids` — comma-separated affiliate IDs\n- `sport_ids` — comma-separated sport IDs\n- `event_ids` — comma-separated event IDs\n- `market_ids` — comma-separated market IDs\n\nAll filters are optional. If none are specified, all messages are received.\n\n**Heartbeat**: Server sends `{\"meta\":{\"type\":\"heartbeat\"},\"data\":{\"now\":\"<RFC3339>\"}}` every 15 seconds.\n\n**Message format**:\n```json\n{\n  \"meta\": {...},\n  \"data\": {\n    \"affiliate_id\": 19,\n    \"sport_id\": 4,\n    \"event_id\": \"abc123\",\n    \"market_id\": 1,\n    ...\n  }\n}\n```\n\n**Queue**: 256-message buffer per client. If the client falls behind, messages are dropped.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "ws",
+                "markets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "sport_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sport IDs to filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated event IDs to filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "market_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated market IDs to filter"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7a3e818e-0c6a-4015-a72c-1f125bb9cde8",
+              "name": "WebSocket upgrade successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "ws",
+                    "markets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sport_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "event_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "market_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Switching Protocols",
+              "code": 101,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://therundown.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2a54fe78-e618-4064-8979-3fcf2ea487e0",
+    "name": "TheRundown Sports V1 Delta V2 WebSocket API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.\n\n## Authentication\nAll endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:\n- **Query parameter**: `?key=YOUR_API_KEY`\n- **Header**: `X-Therundown-Key: YOUR_API_KEY`\n## Off-the-Board Sentinel Value\nThe value **0.0001** indicates a line is \"off the board\" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as \"Off Board\" or \"N/A\" in your UI.\n\n## Rate Limiting\nRequests are rate-limited per API key tier. Check response headers for current limits.\n\n## Data Updates\n- Live odds update in real-time during games\n- Use delta endpoints for efficient polling of changes\n- WebSocket connections available for streaming updates\n\n## V1 vs V2\nV2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.\n\n\nContact Support:\n Name: TheRundown API Support\n Email: support@therundown.io",
+      "type": "text/plain"
+    }
+  }
+}

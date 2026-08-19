@@ -1,0 +1,154 @@
+{
+  "item": [
+    {
+      "id": "d79311bf-9c20-4494-89ea-76d1b6bfbc32",
+      "name": "V1 WebSocket",
+      "description": {
+        "content": "Real-time streaming via WebSocket (V1 legacy)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "76cbc982-1d54-4610-a1e1-140603cda60c",
+          "name": "V1 WebSocket — stream real-time event and market updates",
+          "request": {
+            "name": "V1 WebSocket — stream real-time event and market updates",
+            "description": {
+              "content": "Establishes a WebSocket connection for streaming V1 event updates and V2 market price deltas.\n\n**Connection**: `wss://therundown.io/api/v1/ws?key=YOUR_API_KEY`\n\n**Filter parameters** (query string):\n- `affiliate_ids` — comma-separated affiliate IDs\n- `sport_ids` — comma-separated sport IDs (V1 messages only)\n- `event_ids` — comma-separated event IDs\n- `date` — date filter in YYYY-MM-DD format (V1 messages only)\n\n**Heartbeat**: Every 15 seconds.\n\n**Message queue**: 256-message buffer. Messages dropped if client falls behind.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "ws"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "affiliate_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3)."
+                },
+                {
+                  "disabled": false,
+                  "key": "sport_ids",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_ids",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<date>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2c19cb92-13ce-459d-b136-105e240c3ffc",
+              "name": "WebSocket upgrade successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "ws"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "affiliate_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sport_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "event_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Switching Protocols",
+              "code": 101,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://therundown.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9cc4ee11-4840-48fe-9485-fe76ee487895",
+    "name": "TheRundown Sports V1 Delta V1 WebSocket API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.\n\n## Authentication\nAll endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:\n- **Query parameter**: `?key=YOUR_API_KEY`\n- **Header**: `X-Therundown-Key: YOUR_API_KEY`\n## Off-the-Board Sentinel Value\nThe value **0.0001** indicates a line is \"off the board\" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as \"Off Board\" or \"N/A\" in your UI.\n\n## Rate Limiting\nRequests are rate-limited per API key tier. Check response headers for current limits.\n\n## Data Updates\n- Live odds update in real-time during games\n- Use delta endpoints for efficient polling of changes\n- WebSocket connections available for streaming updates\n\n## V1 vs V2\nV2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.\n\n\nContact Support:\n Name: TheRundown API Support\n Email: support@therundown.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "item": [
+    {
+      "id": "c121d8dc-7439-44bc-973b-c291cc675ef8",
+      "name": "V2 Players",
+      "description": {
+        "content": "Player data (V2)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "48ed72bd-bf62-40a9-9658-3f9b705e0fb5",
+          "name": "Get a player by ID",
+          "request": {
+            "name": "Get a player by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "players",
+                ":playerID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "playerID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7ae5570e-f09d-42ba-bb24-365cbefa6c7d",
+              "name": "Player data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "players",
+                    ":playerID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "playerID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"players\": [\n    {\n      \"id\": 16627,\n      \"sport_id\": 4,\n      \"team_id\": 11,\n      \"first_name\": \"Trae\",\n      \"last_name\": \"Young\",\n      \"display_name\": \"Trae Young\",\n      \"weight\": 164,\n      \"height\": 73,\n      \"display_weight\": \"164 lbs\",\n      \"display_height\": \"6' 1\\\"\",\n      \"age\": 27,\n      \"date_of_birth\": \"1998-09-19T07:00Z\",\n      \"slug\": \"trae-young\",\n      \"jersey\": \"11\",\n      \"position\": \"Guard\",\n      \"position_abbreviation\": \"G\",\n      \"birth_place_city\": \"Lubbock\",\n      \"birth_place_country\": \"USA\",\n      \"experience_years\": 7,\n      \"active\": true,\n      \"status\": \"Active\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://therundown.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3f3ebac2-af86-40be-8d9a-a03052c0dd47",
+    "name": "TheRundown Sports V1 Delta V2 Players API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.\n\n## Authentication\nAll endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:\n- **Query parameter**: `?key=YOUR_API_KEY`\n- **Header**: `X-Therundown-Key: YOUR_API_KEY`\n## Off-the-Board Sentinel Value\nThe value **0.0001** indicates a line is \"off the board\" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as \"Off Board\" or \"N/A\" in your UI.\n\n## Rate Limiting\nRequests are rate-limited per API key tier. Check response headers for current limits.\n\n## Data Updates\n- Live odds update in real-time during games\n- Use delta endpoints for efficient polling of changes\n- WebSocket connections available for streaming updates\n\n## V1 vs V2\nV2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.\n\n\nContact Support:\n Name: TheRundown API Support\n Email: support@therundown.io",
+      "type": "text/plain"
+    }
+  }
+}

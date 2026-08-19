@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TheRundown Sports V1 Delta V2 Reference API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "V2 Reference",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all sportsbooks/affiliates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/affiliates",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Set to `regions` to include geographic region data"
+              }
+            ]
+          },
+          "docs": "Returns all enabled sportsbooks with IDs, names, and URLs. No authentication required."
+        },
+        {
+          "info": {
+            "name": "List all sportsbooks (alias for /affiliates)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/sportsbooks",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all sportsbooks (alias for /affiliates)"
+        },
+        {
+          "info": {
+            "name": "List season types per sport",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://therundown.io/api/v2/season_types"
+          },
+          "docs": "List season types per sport"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

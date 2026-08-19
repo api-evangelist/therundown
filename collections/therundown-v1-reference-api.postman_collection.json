@@ -1,0 +1,297 @@
+{
+  "item": [
+    {
+      "id": "12f79b0f-0db5-4bf2-80f7-41652bc04bab",
+      "name": "V1 Reference",
+      "description": {
+        "content": "Reference data (V1 legacy)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2befccbd-9fc6-4c37-8e8d-ec92db10ea92",
+          "name": "List all sportsbooks/affiliates",
+          "request": {
+            "name": "List all sportsbooks/affiliates",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "affiliates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7b4ef267-6c59-4923-8c5d-65ac07274785",
+              "name": "List of affiliates",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "affiliates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"affiliates\": [\n    {\n      \"affiliate_id\": 3,\n      \"affiliate_name\": \"Pinnacle\",\n      \"affiliate_url\": \"https://www.pinnacle.com\"\n    },\n    {\n      \"affiliate_id\": 19,\n      \"affiliate_name\": \"DraftKings\",\n      \"affiliate_url\": \"https://sportsbook.draftkings.com\"\n    },\n    {\n      \"affiliate_id\": 23,\n      \"affiliate_name\": \"FanDuel\",\n      \"affiliate_url\": \"https://sportsbook.fanduel.com\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ba9419cf-db4f-4093-abd3-9e153ffa413b",
+          "name": "List all sportsbooks (alias)",
+          "request": {
+            "name": "List all sportsbooks (alias)",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "sportsbooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4f7a0f0e-e5c3-477a-a762-9bc5cab9ec28",
+              "name": "List of sportsbooks",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "sportsbooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"affiliates\": [\n    {\n      \"affiliate_id\": 3,\n      \"affiliate_name\": \"Pinnacle\",\n      \"affiliate_url\": \"https://www.pinnacle.com\"\n    },\n    {\n      \"affiliate_id\": 19,\n      \"affiliate_name\": \"DraftKings\",\n      \"affiliate_url\": \"https://sportsbook.draftkings.com\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc7d9306-dc3b-41f9-9eec-d8a121960cdf",
+          "name": "List season types per sport",
+          "request": {
+            "name": "List season types per sport",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "season_types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f0580477-d5a4-44ec-8bd5-0f8d55c1190c",
+              "name": "Season types",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "season_types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"season_types\": [\n    {\n      \"sport_id\": 2,\n      \"sport_name\": \"NFL\",\n      \"season_type_id\": 1,\n      \"season_type_name\": \"Preseason\"\n    },\n    {\n      \"sport_id\": 2,\n      \"sport_name\": \"NFL\",\n      \"season_type_id\": 2,\n      \"season_type_name\": \"Regular Season\"\n    },\n    {\n      \"sport_id\": 4,\n      \"sport_name\": \"NBA\",\n      \"season_type_id\": 2,\n      \"season_type_name\": \"Regular Season\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://therundown.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "52d3d36f-1f8a-4f45-83e4-7dddd583f878",
+    "name": "TheRundown Sports V1 Delta V1 Reference API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.\n\n## Authentication\nAll endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:\n- **Query parameter**: `?key=YOUR_API_KEY`\n- **Header**: `X-Therundown-Key: YOUR_API_KEY`\n## Off-the-Board Sentinel Value\nThe value **0.0001** indicates a line is \"off the board\" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as \"Off Board\" or \"N/A\" in your UI.\n\n## Rate Limiting\nRequests are rate-limited per API key tier. Check response headers for current limits.\n\n## Data Updates\n- Live odds update in real-time during games\n- Use delta endpoints for efficient polling of changes\n- WebSocket connections available for streaming updates\n\n## V1 vs V2\nV2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.\n\n\nContact Support:\n Name: TheRundown API Support\n Email: support@therundown.io",
+      "type": "text/plain"
+    }
+  }
+}
