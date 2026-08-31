@@ -370,8 +370,6 @@ common:
     url: vocabulary/therundown-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/therundown-context.jsonld
-  - type: Blog
-    url: blogs/blogs.json
 
 maintainers:
   - FN: Kin Lane
