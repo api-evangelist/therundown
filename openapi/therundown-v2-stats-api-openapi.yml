@@ -1,42 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: TheRundown Sports V1 Delta V2 Stats API
+  title: TheRundown Sports V2 Stats API
   version: 2.0.0
-  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
-
-
-    ## Authentication
-
-    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
-
-    - **Query parameter**: `?key=YOUR_API_KEY`
-
-    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
-
-    ## Off-the-Board Sentinel Value
-
-    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
-
-
-    ## Rate Limiting
-
-    Requests are rate-limited per API key tier. Check response headers for current limits.
-
-
-    ## Data Updates
-
-    - Live odds update in real-time during games
-
-    - Use delta endpoints for efficient polling of changes
-
-    - WebSocket connections available for streaming updates
-
-
-    ## V1 vs V2
-
-    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
-
-    '
+  description: Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
   contact:
     name: TheRundown API Support
     url: https://therundown.io
@@ -210,6 +176,75 @@ paths:
                 sport_id: 4
 components:
   schemas:
+    PlayerGameStatResponse:
+      type: object
+      properties:
+        player:
+          $ref: '#/components/schemas/PlayerNormalized'
+        meta:
+          $ref: '#/components/schemas/StatsMeta'
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerGameStats'
+    TeamNormalized:
+      type: object
+      properties:
+        team_id:
+          type: integer
+        name:
+          type: string
+        mascot:
+          type: string
+        abbreviation:
+          type: string
+        record:
+          type: string
+        is_home:
+          type: boolean
+        is_away:
+          type: boolean
+        ranking:
+          type:
+          - integer
+          - 'null'
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
+    TeamGameStats:
+      type: object
+      properties:
+        team_id:
+          type:
+          - integer
+          - 'null'
+        team:
+          $ref: '#/components/schemas/TeamNormalized'
+        stat_id:
+          type:
+          - integer
+          - 'null'
+        stat:
+          $ref: '#/components/schemas/StatDefinition'
+        event_id:
+          type: string
+        value:
+          type: string
+    Conference:
+      type: object
+      properties:
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+    StatsMeta:
+      type: object
+      properties:
+        complete:
+          type: boolean
     PlayerNormalized:
       type: object
       properties:
@@ -220,9 +255,10 @@ components:
         team_id:
           type: integer
         updated_at:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         first_name:
           type: string
         last_name:
@@ -267,29 +303,13 @@ components:
         throws:
           type: string
           description: MLB only — throwing arm
-    TeamGameStats:
-      type: object
-      properties:
-        team_id:
-          type: integer
-          nullable: true
-        team:
-          $ref: '#/components/schemas/TeamNormalized'
-        stat_id:
-          type: integer
-          nullable: true
-        stat:
-          $ref: '#/components/schemas/StatDefinition'
-        event_id:
-          type: string
-        value:
-          type: string
     StatDefinition:
       type: object
       properties:
         id:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         name:
           type: string
         category:
@@ -302,20 +322,30 @@ components:
           type: string
         sport_id:
           type: integer
-    Conference:
+    PlayerGameStats:
       type: object
       properties:
-        conference_id:
-          type: integer
-        sport_id:
-          type: integer
-        name:
+        event_id:
           type: string
-    StatsMeta:
-      type: object
-      properties:
-        complete:
-          type: boolean
+        player_id:
+          type:
+          - integer
+          - 'null'
+        player:
+          $ref: '#/components/schemas/PlayerNormalized'
+        stat_id:
+          type:
+          - integer
+          - 'null'
+        stat:
+          $ref: '#/components/schemas/StatDefinition'
+        value:
+          type: string
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
     TeamGameStatResponse:
       type: object
       properties:
@@ -327,51 +357,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TeamGameStats'
-    TeamNormalized:
-      type: object
-      properties:
-        team_id:
-          type: integer
-        name:
-          type: string
-        mascot:
-          type: string
-        abbreviation:
-          type: string
-        record:
-          type: string
-        is_home:
-          type: boolean
-        is_away:
-          type: boolean
-        ranking:
-          type: integer
-          nullable: true
-        conference:
-          $ref: '#/components/schemas/Conference'
-        division:
-          $ref: '#/components/schemas/Division'
-    PlayerGameStats:
-      type: object
-      properties:
-        event_id:
-          type: string
-        player_id:
-          type: integer
-          nullable: true
-        player:
-          $ref: '#/components/schemas/PlayerNormalized'
-        stat_id:
-          type: integer
-          nullable: true
-        stat:
-          $ref: '#/components/schemas/StatDefinition'
-        value:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
     Division:
       type: object
       properties:
@@ -383,17 +368,6 @@ components:
           type: integer
         name:
           type: string
-    PlayerGameStatResponse:
-      type: object
-      properties:
-        player:
-          $ref: '#/components/schemas/PlayerNormalized'
-        meta:
-          $ref: '#/components/schemas/StatsMeta'
-        stats:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlayerGameStats'
   parameters:
     EventIDPath:
       name: eventID

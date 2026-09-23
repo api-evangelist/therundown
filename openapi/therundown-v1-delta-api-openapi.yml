@@ -1,42 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: TheRundown Sports V1 Delta API
   version: 2.0.0
-  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
-
-
-    ## Authentication
-
-    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
-
-    - **Query parameter**: `?key=YOUR_API_KEY`
-
-    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
-
-    ## Off-the-Board Sentinel Value
-
-    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
-
-
-    ## Rate Limiting
-
-    Requests are rate-limited per API key tier. Check response headers for current limits.
-
-
-    ## Data Updates
-
-    - Live odds update in real-time during games
-
-    - Use delta endpoints for efficient polling of changes
-
-    - WebSocket connections available for streaming updates
-
-
-    ## V1 vs V2
-
-    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
-
-    '
+  description: Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
   contact:
     name: TheRundown API Support
     url: https://therundown.io
@@ -148,71 +114,13 @@ components:
         moneyline_draw_delta:
           type: number
         date_updated:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         format:
           type: string
           example: American
-    Region:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-    V1Spread:
-      type: object
-      properties:
-        point_spread_away:
-          type: number
-          example: 3.5
-        point_spread_away_delta:
-          type: number
-        point_spread_home:
-          type: number
-          example: -3.5
-        point_spread_home_delta:
-          type: number
-        point_spread_away_money:
-          type: number
-          example: -110
-        point_spread_away_money_delta:
-          type: number
-        point_spread_home_money:
-          type: number
-          example: -110
-        point_spread_home_money_delta:
-          type: number
-        date_updated:
-          type: string
-          format: date-time
-          nullable: true
-        format:
-          type: string
-        extended_spreads:
-          type: array
-          items:
-            $ref: '#/components/schemas/V1Spread'
-    Pitcher:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        throws_left_handed:
-          type: boolean
-          nullable: true
-        throws_right_handed:
-          type: boolean
-          nullable: true
-        bats_left_handed:
-          type: boolean
-          nullable: true
-        bats_right_handed:
-          type: boolean
-          nullable: true
     V1LinePeriods:
       type: object
       properties:
@@ -244,6 +152,92 @@ components:
           $ref: '#/components/schemas/V1Line'
         period_live_fourth_period:
           $ref: '#/components/schemas/V1Line'
+    V1Spread:
+      type: object
+      properties:
+        point_spread_away:
+          type: number
+          example: 3.5
+        point_spread_away_delta:
+          type: number
+        point_spread_home:
+          type: number
+          example: -3.5
+        point_spread_home_delta:
+          type: number
+        point_spread_away_money:
+          type: number
+          example: -110
+        point_spread_away_money_delta:
+          type: number
+        point_spread_home_money:
+          type: number
+          example: -110
+        point_spread_home_money_delta:
+          type: number
+        date_updated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        format:
+          type: string
+        extended_spreads:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Spread'
+    TeamNormalized:
+      type: object
+      properties:
+        team_id:
+          type: integer
+        name:
+          type: string
+        mascot:
+          type: string
+        abbreviation:
+          type: string
+        record:
+          type: string
+        is_home:
+          type: boolean
+        is_away:
+          type: boolean
+        ranking:
+          type:
+          - integer
+          - 'null'
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
+    Affiliate:
+      type: object
+      properties:
+        affiliate_id:
+          type: integer
+          example: 19
+        affiliate_name:
+          type: string
+          example: Draftkings
+        affiliate_url:
+          type: string
+          example: https://draftkings.com
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+    Division:
+      type: object
+      properties:
+        division_id:
+          type: integer
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
     DeltasResponse:
       type: object
       properties:
@@ -257,6 +251,38 @@ components:
               data:
                 type: string
                 description: Raw JSON string of the delta payload
+    V1Line:
+      type: object
+      properties:
+        line_id:
+          type: integer
+        moneyline:
+          $ref: '#/components/schemas/V1Moneyline'
+        spread:
+          $ref: '#/components/schemas/V1Spread'
+        total:
+          $ref: '#/components/schemas/V1Total'
+        affiliate:
+          $ref: '#/components/schemas/Affiliate'
+        teams:
+          type: array
+          items:
+            type: object
+            properties:
+              team_id:
+                type: integer
+              team_normalized_id:
+                type: integer
+              name:
+                type: string
+              is_home:
+                type: boolean
+              is_away:
+                type: boolean
+        period_id:
+          type: integer
+        period_description:
+          type: string
     Conference:
       type: object
       properties:
@@ -276,13 +302,15 @@ components:
           type: integer
           example: 2026
         conference_competition:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         conference_name:
           type: string
         league_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         event_name:
           type: string
         attendance:
@@ -348,94 +376,52 @@ components:
           $ref: '#/components/schemas/Pitcher'
         pitcher_home:
           $ref: '#/components/schemas/Pitcher'
-    V1Line:
-      type: object
-      properties:
-        line_id:
-          type: integer
-        moneyline:
-          $ref: '#/components/schemas/V1Moneyline'
-        spread:
-          $ref: '#/components/schemas/V1Spread'
-        total:
-          $ref: '#/components/schemas/V1Total'
-        affiliate:
-          $ref: '#/components/schemas/Affiliate'
-        teams:
-          type: array
-          items:
-            type: object
-            properties:
-              team_id:
-                type: integer
-              team_normalized_id:
-                type: integer
-              name:
-                type: string
-              is_home:
-                type: boolean
-              is_away:
-                type: boolean
-        period_id:
-          type: integer
-        period_description:
-          type: string
-    TeamNormalized:
-      type: object
-      properties:
-        team_id:
-          type: integer
-        name:
-          type: string
-        mascot:
-          type: string
-        abbreviation:
-          type: string
-        record:
-          type: string
-        is_home:
-          type: boolean
-        is_away:
-          type: boolean
-        ranking:
-          type: integer
-          nullable: true
-        conference:
-          $ref: '#/components/schemas/Conference'
-        division:
-          $ref: '#/components/schemas/Division'
     Meta:
       type: object
       properties:
         delta_last_id:
           type: string
-    Division:
+    V1Total:
       type: object
       properties:
-        division_id:
-          type: integer
-        conference_id:
-          type: integer
-        sport_id:
+        total_over:
+          type: number
+          example: 47.5
+        total_over_delta:
+          type: number
+        total_under:
+          type: number
+          example: 47.5
+        total_under_delta:
+          type: number
+        total_over_money:
+          type: number
+          example: -110
+        total_over_money_delta:
+          type: number
+        total_under_money:
+          type: number
+          example: -110
+        total_under_money_delta:
+          type: number
+        date_updated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        format:
+          type: string
+        extended_totals:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Total'
+    Region:
+      type: object
+      properties:
+        id:
           type: integer
         name:
           type: string
-    Affiliate:
-      type: object
-      properties:
-        affiliate_id:
-          type: integer
-          example: 19
-        affiliate_name:
-          type: string
-          example: Draftkings
-        affiliate_url:
-          type: string
-          example: https://draftkings.com
-        regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Region'
     Score:
       type: object
       properties:
@@ -487,39 +473,29 @@ components:
         updated_at:
           type: string
           format: date-time
-    V1Total:
+    Pitcher:
       type: object
       properties:
-        total_over:
-          type: number
-          example: 47.5
-        total_over_delta:
-          type: number
-        total_under:
-          type: number
-          example: 47.5
-        total_under_delta:
-          type: number
-        total_over_money:
-          type: number
-          example: -110
-        total_over_money_delta:
-          type: number
-        total_under_money:
-          type: number
-          example: -110
-        total_under_money_delta:
-          type: number
-        date_updated:
+        id:
+          type: integer
+        name:
           type: string
-          format: date-time
-          nullable: true
-        format:
-          type: string
-        extended_totals:
-          type: array
-          items:
-            $ref: '#/components/schemas/V1Total'
+        throws_left_handed:
+          type:
+          - boolean
+          - 'null'
+        throws_right_handed:
+          type:
+          - boolean
+          - 'null'
+        bats_left_handed:
+          type:
+          - boolean
+          - 'null'
+        bats_right_handed:
+          type:
+          - boolean
+          - 'null'
     V1EventsResponse:
       type: object
       properties:

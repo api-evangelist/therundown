@@ -1,20 +1,7 @@
 {
   "provider": "therundown",
   "sources": [
-    "therundown-v1-delta-api-openapi.yml",
-    "therundown-v1-events-api-openapi.yml",
-    "therundown-v1-lines-api-openapi.yml",
-    "therundown-v1-reference-api-openapi.yml",
-    "therundown-v1-sports-api-openapi.yml",
-    "therundown-v1-websocket-api-openapi.yml",
-    "therundown-v2-events-api-openapi.yml",
-    "therundown-v2-markets-api-openapi.yml",
-    "therundown-v2-players-api-openapi.yml",
-    "therundown-v2-reference-api-openapi.yml",
-    "therundown-v2-sports-api-openapi.yml",
-    "therundown-v2-stats-api-openapi.yml",
-    "therundown-v2-teams-api-openapi.yml",
-    "therundown-v2-websocket-api-openapi.yml"
+    "_original/therundown-sports-odds-api-openapi.yml"
   ],
   "outputs": [
     "therundown-v1-delta-api-openapi.yml",
@@ -35,6 +22,25 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "therundown-sports-odds-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "therundown-v1-delta-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v1-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v1-lines-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v1-reference-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v1-sports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v1-websocket-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v2-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v2-markets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v2-players-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v2-reference-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v2-sports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v2-stats-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v2-teams-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "therundown-v2-websocket-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

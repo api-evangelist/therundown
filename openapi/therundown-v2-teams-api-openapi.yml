@@ -1,42 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: TheRundown Sports V1 Delta V2 Teams API
+  title: TheRundown Sports V2 Teams API
   version: 2.0.0
-  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
-
-
-    ## Authentication
-
-    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
-
-    - **Query parameter**: `?key=YOUR_API_KEY`
-
-    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
-
-    ## Off-the-Board Sentinel Value
-
-    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
-
-
-    ## Rate Limiting
-
-    Requests are rate-limited per API key tier. Check response headers for current limits.
-
-
-    ## Data Updates
-
-    - Live odds update in real-time during games
-
-    - Use delta endpoints for efficient polling of changes
-
-    - WebSocket connections available for streaming updates
-
-
-    ## V1 vs V2
-
-    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
-
-    '
+  description: Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
   contact:
     name: TheRundown API Support
     url: https://therundown.io
@@ -286,6 +252,51 @@ paths:
                   display_value: '3.2'
 components:
   schemas:
+    Conference:
+      type: object
+      properties:
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+    TeamStats:
+      type: object
+      properties:
+        team_id:
+          type:
+          - integer
+          - 'null'
+        stat_id:
+          type:
+          - integer
+          - 'null'
+        stat:
+          $ref: '#/components/schemas/StatDefinition'
+        season_year:
+          type: integer
+        season_type:
+          type: integer
+        season_type_name:
+          type: string
+        value:
+          type: number
+        display_value:
+          type: string
+        per_game_value:
+          type: number
+        per_game_display_value:
+          type: string
+        rank:
+          type: integer
+        rank_display_value:
+          type: string
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
     PlayersResponse:
       type: object
       properties:
@@ -293,6 +304,44 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PlayerNormalized'
+    PlayerStats:
+      type: object
+      properties:
+        player_id:
+          type:
+          - integer
+          - 'null'
+        player:
+          $ref: '#/components/schemas/PlayerNormalized'
+        stat_id:
+          type:
+          - integer
+          - 'null'
+        stat:
+          $ref: '#/components/schemas/StatDefinition'
+        season_year:
+          type: integer
+        season_type:
+          type: integer
+        season_type_name:
+          type: string
+        value:
+          type: number
+        display_value:
+          type: string
+        per_game_value:
+          type: number
+        per_game_display_value:
+          type: string
+        rank:
+          type: integer
+        rank_display_value:
+          type: string
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
     PlayerNormalized:
       type: object
       properties:
@@ -303,9 +352,10 @@ components:
         team_id:
           type: integer
         updated_at:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         first_name:
           type: string
         last_name:
@@ -350,6 +400,34 @@ components:
         throws:
           type: string
           description: MLB only — throwing arm
+    StatDefinition:
+      type: object
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        name:
+          type: string
+        category:
+          type: string
+        display_name:
+          type: string
+        abbreviation:
+          type: string
+        description:
+          type: string
+        sport_id:
+          type: integer
+    PlayerStatResponse:
+      type: object
+      properties:
+        player:
+          $ref: '#/components/schemas/PlayerNormalized'
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerStats'
     Team:
       type: object
       properties:
@@ -366,8 +444,9 @@ components:
           type: string
           example: NE
         ranking:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         record:
           type: string
           example: 10-7
@@ -375,33 +454,6 @@ components:
           $ref: '#/components/schemas/Conference'
         division:
           $ref: '#/components/schemas/Division'
-    StatDefinition:
-      type: object
-      properties:
-        id:
-          type: integer
-          nullable: true
-        name:
-          type: string
-        category:
-          type: string
-        display_name:
-          type: string
-        abbreviation:
-          type: string
-        description:
-          type: string
-        sport_id:
-          type: integer
-    Conference:
-      type: object
-      properties:
-        conference_id:
-          type: integer
-        sport_id:
-          type: integer
-        name:
-          type: string
     TeamsResponse:
       type: object
       properties:
@@ -409,50 +461,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Team'
-    PlayerStats:
-      type: object
-      properties:
-        player_id:
-          type: integer
-          nullable: true
-        player:
-          $ref: '#/components/schemas/PlayerNormalized'
-        stat_id:
-          type: integer
-          nullable: true
-        stat:
-          $ref: '#/components/schemas/StatDefinition'
-        season_year:
-          type: integer
-        season_type:
-          type: integer
-        season_type_name:
-          type: string
-        value:
-          type: number
-        display_value:
-          type: string
-        per_game_value:
-          type: number
-        per_game_display_value:
-          type: string
-        rank:
-          type: integer
-        rank_display_value:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
-    PlayerStatResponse:
-      type: object
-      properties:
-        player:
-          $ref: '#/components/schemas/PlayerNormalized'
-        stats:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlayerStats'
     Division:
       type: object
       properties:
@@ -464,39 +472,6 @@ components:
           type: integer
         name:
           type: string
-    TeamStats:
-      type: object
-      properties:
-        team_id:
-          type: integer
-          nullable: true
-        stat_id:
-          type: integer
-          nullable: true
-        stat:
-          $ref: '#/components/schemas/StatDefinition'
-        season_year:
-          type: integer
-        season_type:
-          type: integer
-        season_type_name:
-          type: string
-        value:
-          type: number
-        display_value:
-          type: string
-        per_game_value:
-          type: number
-        per_game_display_value:
-          type: string
-        rank:
-          type: integer
-        rank_display_value:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

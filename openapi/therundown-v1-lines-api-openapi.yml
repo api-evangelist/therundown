@@ -1,42 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: TheRundown Sports V1 Delta V1 Lines API
+  title: TheRundown Sports V1 Lines API
   version: 2.0.0
-  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
-
-
-    ## Authentication
-
-    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
-
-    - **Query parameter**: `?key=YOUR_API_KEY`
-
-    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
-
-    ## Off-the-Board Sentinel Value
-
-    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
-
-
-    ## Rate Limiting
-
-    Requests are rate-limited per API key tier. Check response headers for current limits.
-
-
-    ## Data Updates
-
-    - Live odds update in real-time during games
-
-    - Use delta endpoints for efficient polling of changes
-
-    - WebSocket connections available for streaming updates
-
-
-    ## V1 vs V2
-
-    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
-
-    '
+  description: Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
   contact:
     name: TheRundown API Support
     url: https://therundown.io
@@ -335,12 +301,101 @@ components:
         moneyline_draw_delta:
           type: number
         date_updated:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         format:
           type: string
           example: American
+    BestSpread:
+      type: object
+      properties:
+        point_spread_home:
+          type:
+          - number
+          - 'null'
+        point_spread_away:
+          type:
+          - number
+          - 'null'
+        point_spread_home_money:
+          type:
+          - number
+          - 'null'
+        point_spread_away_money:
+          type:
+          - number
+          - 'null'
+        best_affiliate_home:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_away:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+    BestAffiliateInfo:
+      type: object
+      properties:
+        affiliate_id:
+          type: integer
+        affiliate_name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    BestMoneyline:
+      type: object
+      properties:
+        moneyline_home:
+          type:
+          - number
+          - 'null'
+        moneyline_away:
+          type:
+          - number
+          - 'null'
+        moneyline_draw:
+          type:
+          - number
+          - 'null'
+        best_affiliate_home:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_away:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_draw:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+    V1Total:
+      type: object
+      properties:
+        total_over:
+          type: number
+          example: 47.5
+        total_over_delta:
+          type: number
+        total_under:
+          type: number
+          example: 47.5
+        total_under_delta:
+          type: number
+        total_over_money:
+          type: number
+          example: -110
+        total_over_money_delta:
+          type: number
+        total_under_money:
+          type: number
+          example: -110
+        total_under_money_delta:
+          type: number
+        date_updated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        format:
+          type: string
+        extended_totals:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Total'
     BestLineResponse:
       type: object
       properties:
@@ -388,110 +443,35 @@ components:
         point_spread_home_money_delta:
           type: number
         date_updated:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         format:
           type: string
         extended_spreads:
           type: array
           items:
             $ref: '#/components/schemas/V1Spread'
-    BestAffiliateInfo:
-      type: object
-      properties:
-        affiliate_id:
-          type: integer
-        affiliate_name:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-    BestSpread:
-      type: object
-      properties:
-        point_spread_home:
-          type: number
-          nullable: true
-        point_spread_away:
-          type: number
-          nullable: true
-        point_spread_home_money:
-          type: number
-          nullable: true
-        point_spread_away_money:
-          type: number
-          nullable: true
-        best_affiliate_home:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_away:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-    BestMoneyline:
-      type: object
-      properties:
-        moneyline_home:
-          type: number
-          nullable: true
-        moneyline_away:
-          type: number
-          nullable: true
-        moneyline_draw:
-          type: number
-          nullable: true
-        best_affiliate_home:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_away:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_draw:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-    V1Total:
-      type: object
-      properties:
-        total_over:
-          type: number
-          example: 47.5
-        total_over_delta:
-          type: number
-        total_under:
-          type: number
-          example: 47.5
-        total_under_delta:
-          type: number
-        total_over_money:
-          type: number
-          example: -110
-        total_over_money_delta:
-          type: number
-        total_under_money:
-          type: number
-          example: -110
-        total_under_money_delta:
-          type: number
-        date_updated:
-          type: string
-          format: date-time
-          nullable: true
-        format:
-          type: string
-        extended_totals:
-          type: array
-          items:
-            $ref: '#/components/schemas/V1Total'
     BestTotal:
       type: object
       properties:
         total_over:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         total_under:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         total_over_money:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         total_under_money:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         best_affiliate_over:
           $ref: '#/components/schemas/BestAffiliateInfo'
         best_affiliate_under:

@@ -1,42 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: TheRundown Sports V1 Delta V2 Reference API
+  title: TheRundown Sports V2 Reference API
   version: 2.0.0
-  description: 'Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
-
-
-    ## Authentication
-
-    All endpoints (except `/sports` and `/affiliates`) require authentication. Pass your API key using one of:
-
-    - **Query parameter**: `?key=YOUR_API_KEY`
-
-    - **Header**: `X-Therundown-Key: YOUR_API_KEY`
-
-    ## Off-the-Board Sentinel Value
-
-    The value **0.0001** indicates a line is "off the board" — the sportsbook has temporarily removed pricing (e.g., pending injury news). This is NOT an error. Display as "Off Board" or "N/A" in your UI.
-
-
-    ## Rate Limiting
-
-    Requests are rate-limited per API key tier. Check response headers for current limits.
-
-
-    ## Data Updates
-
-    - Live odds update in real-time during games
-
-    - Use delta endpoints for efficient polling of changes
-
-    - WebSocket connections available for streaming updates
-
-
-    ## V1 vs V2
-
-    V2 endpoints use market-based data structures (market_id, participants, line prices). V1 endpoints use legacy line-based structures (moneyline, spread, total objects). V2 is recommended for new integrations.
-
-    '
+  description: Real-time and historical sports betting data, odds, lines, and statistics across major North American and international sports leagues.
   contact:
     name: TheRundown API Support
     url: https://therundown.io
@@ -194,38 +160,6 @@ paths:
                   season_type_name: Postseason
 components:
   schemas:
-    Region:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-    SeasonTypeSport:
-      type: object
-      properties:
-        sport_id:
-          type: integer
-        sport_name:
-          type: string
-        season_type_id:
-          type: integer
-        season_type_name:
-          type: string
-    AffiliatesResponse:
-      type: object
-      properties:
-        affiliates:
-          type: array
-          items:
-            $ref: '#/components/schemas/Affiliate'
-    SeasonTypesResponse:
-      type: object
-      properties:
-        season_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/SeasonTypeSport'
     Affiliate:
       type: object
       properties:
@@ -242,6 +176,38 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Region'
+    SeasonTypeSport:
+      type: object
+      properties:
+        sport_id:
+          type: integer
+        sport_name:
+          type: string
+        season_type_id:
+          type: integer
+        season_type_name:
+          type: string
+    SeasonTypesResponse:
+      type: object
+      properties:
+        season_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeasonTypeSport'
+    AffiliatesResponse:
+      type: object
+      properties:
+        affiliates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Affiliate'
+    Region:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
