@@ -252,15 +252,6 @@ paths:
                   display_value: '3.2'
 components:
   schemas:
-    Conference:
-      type: object
-      properties:
-        conference_id:
-          type: integer
-        sport_id:
-          type: integer
-        name:
-          type: string
     TeamStats:
       type: object
       properties:
@@ -297,51 +288,13 @@ components:
           - string
           - 'null'
           format: date-time
-    PlayersResponse:
+    TeamsResponse:
       type: object
       properties:
-        players:
+        teams:
           type: array
           items:
-            $ref: '#/components/schemas/PlayerNormalized'
-    PlayerStats:
-      type: object
-      properties:
-        player_id:
-          type:
-          - integer
-          - 'null'
-        player:
-          $ref: '#/components/schemas/PlayerNormalized'
-        stat_id:
-          type:
-          - integer
-          - 'null'
-        stat:
-          $ref: '#/components/schemas/StatDefinition'
-        season_year:
-          type: integer
-        season_type:
-          type: integer
-        season_type_name:
-          type: string
-        value:
-          type: number
-        display_value:
-          type: string
-        per_game_value:
-          type: number
-        per_game_display_value:
-          type: string
-        rank:
-          type: integer
-        rank_display_value:
-          type: string
-        updated_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
+            $ref: '#/components/schemas/Team'
     PlayerNormalized:
       type: object
       properties:
@@ -400,34 +353,17 @@ components:
         throws:
           type: string
           description: MLB only — throwing arm
-    StatDefinition:
+    Division:
       type: object
       properties:
-        id:
-          type:
-          - integer
-          - 'null'
-        name:
-          type: string
-        category:
-          type: string
-        display_name:
-          type: string
-        abbreviation:
-          type: string
-        description:
-          type: string
+        division_id:
+          type: integer
+        conference_id:
+          type: integer
         sport_id:
           type: integer
-    PlayerStatResponse:
-      type: object
-      properties:
-        player:
-          $ref: '#/components/schemas/PlayerNormalized'
-        stats:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlayerStats'
+        name:
+          type: string
     Team:
       type: object
       properties:
@@ -454,24 +390,88 @@ components:
           $ref: '#/components/schemas/Conference'
         division:
           $ref: '#/components/schemas/Division'
-    TeamsResponse:
+    PlayersResponse:
       type: object
       properties:
-        teams:
+        players:
           type: array
           items:
-            $ref: '#/components/schemas/Team'
-    Division:
+            $ref: '#/components/schemas/PlayerNormalized'
+    PlayerStats:
       type: object
       properties:
-        division_id:
+        player_id:
+          type:
+          - integer
+          - 'null'
+        player:
+          $ref: '#/components/schemas/PlayerNormalized'
+        stat_id:
+          type:
+          - integer
+          - 'null'
+        stat:
+          $ref: '#/components/schemas/StatDefinition'
+        season_year:
           type: integer
+        season_type:
+          type: integer
+        season_type_name:
+          type: string
+        value:
+          type: number
+        display_value:
+          type: string
+        per_game_value:
+          type: number
+        per_game_display_value:
+          type: string
+        rank:
+          type: integer
+        rank_display_value:
+          type: string
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    StatDefinition:
+      type: object
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        name:
+          type: string
+        category:
+          type: string
+        display_name:
+          type: string
+        abbreviation:
+          type: string
+        description:
+          type: string
+        sport_id:
+          type: integer
+    Conference:
+      type: object
+      properties:
         conference_id:
           type: integer
         sport_id:
           type: integer
         name:
           type: string
+    PlayerStatResponse:
+      type: object
+      properties:
+        player:
+          $ref: '#/components/schemas/PlayerNormalized'
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerStats'
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

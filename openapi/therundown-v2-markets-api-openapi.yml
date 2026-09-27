@@ -564,53 +564,6 @@ paths:
                   type: TYPE_RESULT
                   name: Under
 components:
-  parameters:
-    EventIDPath:
-      name: eventID
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Canonical V2 event ID from the `event_id` field returned by event endpoints
-    SportIDPath:
-      name: sportID
-      in: path
-      required: true
-      schema:
-        type: integer
-      description: 'Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis
-
-        '
-    OffsetQuery:
-      name: offset
-      in: query
-      schema:
-        type: integer
-        default: 0
-        example: 300
-      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
-    ParticipantTypeQuery:
-      name: participant_type
-      in: query
-      schema:
-        type: string
-        enum:
-        - TYPE_TEAM
-        - TYPE_PLAYER
-        - TYPE_RESULT
-      description: Filter participants by type
-    AffiliateIDsQuery:
-      name: affiliate_ids
-      in: query
-      schema:
-        type: string
-      description: Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3).
-    ParticipantIDsQuery:
-      name: participant_ids
-      in: query
-      schema:
-        type: string
-      description: Comma-separated participant IDs to filter (max 99)
   schemas:
     ChartResponse:
       type: object
@@ -630,43 +583,29 @@ components:
           description: Keyed by affiliate ID
           additionalProperties:
             $ref: '#/components/schemas/ChartSeries'
-    Market:
+    ChartSeries:
       type: object
-      description: 'Market definition. The `line_value_is_participant` flag indicates whether the line value represents a participant name (true) or a numeric value like a spread/total (false).
-
-        '
       properties:
-        id:
-          type: integer
-          example: 1
-        name:
+        affiliate_name:
           type: string
-          example: Money Line
-        description:
-          type: string
-        short_description:
-          type: string
-        line_value_is_participant:
-          type: boolean
-          description: If true, the line "value" field is a participant name rather than a numeric line
-        proposition:
-          type: boolean
-          description: Whether this is a proposition/prop market
-        period_id:
-          type:
-          - integer
-          - 'null'
-          description: 'Associated period. 0=Full Game, 1=1st Half, 2=2nd Half, 3-6=Quarters/periods, 7=Live Full Game, 13-18=Live periods. For tennis, 3/4 represent prematch Set 1/Set 2 and 15/16 represent live Set 1/Set 2.
-
-            '
-        live_variant_id:
-          type:
-          - integer
-          - 'null'
-          description: ID of the live/in-play variant of this market
-        updated_at:
-          type: string
-          format: date-time
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              t:
+                type: string
+                format: date-time
+                description: Timestamp
+              p:
+                type: string
+                description: Price
+              c:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                description: Closed at timestamp
     MarketHistoryResponse:
       type: object
       properties:
@@ -684,6 +623,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MarketLinePriceHistory'
+    MarketParticipantsResponse:
+      type: object
+      properties:
+        participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketParticipant'
     MarketLinePriceHistory:
       type: object
       properties:
@@ -742,13 +688,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MarketDeltaEntry'
-    MarketParticipantsResponse:
-      type: object
-      properties:
-        participants:
-          type: array
-          items:
-            $ref: '#/components/schemas/MarketParticipant'
     OpeningPricesResponse:
       type: object
       properties:
@@ -848,29 +787,43 @@ components:
         updated_at:
           type: string
           format: date-time
-    ChartSeries:
+    Market:
       type: object
+      description: 'Market definition. The `line_value_is_participant` flag indicates whether the line value represents a participant name (true) or a numeric value like a spread/total (false).
+
+        '
       properties:
-        affiliate_name:
+        id:
+          type: integer
+          example: 1
+        name:
           type: string
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              t:
-                type: string
-                format: date-time
-                description: Timestamp
-              p:
-                type: string
-                description: Price
-              c:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                description: Closed at timestamp
+          example: Money Line
+        description:
+          type: string
+        short_description:
+          type: string
+        line_value_is_participant:
+          type: boolean
+          description: If true, the line "value" field is a participant name rather than a numeric line
+        proposition:
+          type: boolean
+          description: Whether this is a proposition/prop market
+        period_id:
+          type:
+          - integer
+          - 'null'
+          description: 'Associated period. 0=Full Game, 1=1st Half, 2=2nd Half, 3-6=Quarters/periods, 7=Live Full Game, 13-18=Live periods. For tennis, 3/4 represent prematch Set 1/Set 2 and 15/16 represent live Set 1/Set 2.
+
+            '
+        live_variant_id:
+          type:
+          - integer
+          - 'null'
+          description: ID of the live/in-play variant of this market
+        updated_at:
+          type: string
+          format: date-time
     MarketParticipant:
       type: object
       properties:
@@ -893,6 +846,53 @@ components:
         updated_at:
           type: string
           format: date-time
+  parameters:
+    EventIDPath:
+      name: eventID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Canonical V2 event ID from the `event_id` field returned by event endpoints
+    SportIDPath:
+      name: sportID
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: 'Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis
+
+        '
+    AffiliateIDsQuery:
+      name: affiliate_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3).
+    ParticipantIDsQuery:
+      name: participant_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated participant IDs to filter (max 99)
+    ParticipantTypeQuery:
+      name: participant_type
+      in: query
+      schema:
+        type: string
+        enum:
+        - TYPE_TEAM
+        - TYPE_PLAYER
+        - TYPE_RESULT
+      description: Filter participants by type
+    OffsetQuery:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+        example: 300
+      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

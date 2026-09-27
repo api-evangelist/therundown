@@ -108,6 +108,31 @@ paths:
                   season_type_name: Regular Season
 components:
   schemas:
+    Region:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    AffiliatesResponse:
+      type: object
+      properties:
+        affiliates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Affiliate'
+    SeasonTypeSport:
+      type: object
+      properties:
+        sport_id:
+          type: integer
+        sport_name:
+          type: string
+        season_type_id:
+          type: integer
+        season_type_name:
+          type: string
     Affiliate:
       type: object
       properties:
@@ -124,17 +149,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Region'
-    SeasonTypeSport:
-      type: object
-      properties:
-        sport_id:
-          type: integer
-        sport_name:
-          type: string
-        season_type_id:
-          type: integer
-        season_type_name:
-          type: string
     SeasonTypesResponse:
       type: object
       properties:
@@ -142,20 +156,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SeasonTypeSport'
-    AffiliatesResponse:
-      type: object
-      properties:
-        affiliates:
-          type: array
-          items:
-            $ref: '#/components/schemas/Affiliate'
-    Region:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

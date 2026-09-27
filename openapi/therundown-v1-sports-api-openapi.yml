@@ -290,6 +290,87 @@ paths:
                     is_home: true
 components:
   schemas:
+    ConferencesResponse:
+      type: object
+      properties:
+        conferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Conference'
+    Sport:
+      type: object
+      properties:
+        sport_id:
+          type: integer
+          example: 4
+        sport_name:
+          type: string
+          example: NBA
+    TeamsResponse:
+      type: object
+      properties:
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+    Division:
+      type: object
+      properties:
+        division_id:
+          type: integer
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+    ScheduleResponse:
+      type: object
+      properties:
+        schedules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduledEvent'
+    DivisionsResponse:
+      type: object
+      properties:
+        divisions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Division'
+    SportsResponse:
+      type: object
+      properties:
+        sports:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sport'
+    Team:
+      type: object
+      properties:
+        team_id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: New England
+        mascot:
+          type: string
+          example: Patriots
+        abbreviation:
+          type: string
+          example: NE
+        ranking:
+          type:
+          - integer
+          - 'null'
+        record:
+          type: string
+          example: 10-7
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
     ScheduledEvent:
       type: object
       properties:
@@ -356,90 +437,9 @@ components:
           type:
           - integer
           - 'null'
-    SportsResponse:
-      type: object
-      properties:
-        sports:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sport'
-    ConferencesResponse:
-      type: object
-      properties:
-        conferences:
-          type: array
-          items:
-            $ref: '#/components/schemas/Conference'
     Conference:
       type: object
       properties:
-        conference_id:
-          type: integer
-        sport_id:
-          type: integer
-        name:
-          type: string
-    Sport:
-      type: object
-      properties:
-        sport_id:
-          type: integer
-          example: 4
-        sport_name:
-          type: string
-          example: NBA
-    Team:
-      type: object
-      properties:
-        team_id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: New England
-        mascot:
-          type: string
-          example: Patriots
-        abbreviation:
-          type: string
-          example: NE
-        ranking:
-          type:
-          - integer
-          - 'null'
-        record:
-          type: string
-          example: 10-7
-        conference:
-          $ref: '#/components/schemas/Conference'
-        division:
-          $ref: '#/components/schemas/Division'
-    ScheduleResponse:
-      type: object
-      properties:
-        schedules:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduledEvent'
-    DivisionsResponse:
-      type: object
-      properties:
-        divisions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Division'
-    TeamsResponse:
-      type: object
-      properties:
-        teams:
-          type: array
-          items:
-            $ref: '#/components/schemas/Team'
-    Division:
-      type: object
-      properties:
-        division_id:
-          type: integer
         conference_id:
           type: integer
         sport_id:
@@ -456,14 +456,6 @@ components:
       description: 'Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis
 
         '
-    OffsetQuery:
-      name: offset
-      in: query
-      schema:
-        type: integer
-        default: 0
-        example: 300
-      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
     DateFormatQuery:
       name: format
       in: query
@@ -474,6 +466,14 @@ components:
         - iso8601
         - epoch
       description: Date format — `iso8601` returns date strings, `epoch` returns Unix timestamps
+    OffsetQuery:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+        example: 300
+      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
