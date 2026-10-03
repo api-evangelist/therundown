@@ -281,84 +281,6 @@ paths:
                   date_updated: '2026-02-11T22:00:00Z'
 components:
   schemas:
-    V1Total:
-      type: object
-      properties:
-        total_over:
-          type: number
-          example: 47.5
-        total_over_delta:
-          type: number
-        total_under:
-          type: number
-          example: 47.5
-        total_under_delta:
-          type: number
-        total_over_money:
-          type: number
-          example: -110
-        total_over_money_delta:
-          type: number
-        total_under_money:
-          type: number
-          example: -110
-        total_under_money_delta:
-          type: number
-        date_updated:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        format:
-          type: string
-        extended_totals:
-          type: array
-          items:
-            $ref: '#/components/schemas/V1Total'
-    BestMoneyline:
-      type: object
-      properties:
-        moneyline_home:
-          type:
-          - number
-          - 'null'
-        moneyline_away:
-          type:
-          - number
-          - 'null'
-        moneyline_draw:
-          type:
-          - number
-          - 'null'
-        best_affiliate_home:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_away:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_draw:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-    BestSpread:
-      type: object
-      properties:
-        point_spread_home:
-          type:
-          - number
-          - 'null'
-        point_spread_away:
-          type:
-          - number
-          - 'null'
-        point_spread_home_money:
-          type:
-          - number
-          - 'null'
-        point_spread_away_money:
-          type:
-          - number
-          - 'null'
-        best_affiliate_home:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_away:
-          $ref: '#/components/schemas/BestAffiliateInfo'
     V1Moneyline:
       type: object
       properties:
@@ -386,28 +308,26 @@ components:
         format:
           type: string
           example: American
-    BestTotal:
+    BestMoneyline:
       type: object
       properties:
-        total_over:
+        moneyline_home:
           type:
           - number
           - 'null'
-        total_under:
+        moneyline_away:
           type:
           - number
           - 'null'
-        total_over_money:
+        moneyline_draw:
           type:
           - number
           - 'null'
-        total_under_money:
-          type:
-          - number
-          - 'null'
-        best_affiliate_over:
+        best_affiliate_home:
           $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_under:
+        best_affiliate_away:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_draw:
           $ref: '#/components/schemas/BestAffiliateInfo'
     V1Spread:
       type: object
@@ -443,6 +363,73 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/V1Spread'
+    BestAffiliateInfo:
+      type: object
+      properties:
+        affiliate_id:
+          type: integer
+        affiliate_name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    BestSpread:
+      type: object
+      properties:
+        point_spread_home:
+          type:
+          - number
+          - 'null'
+        point_spread_away:
+          type:
+          - number
+          - 'null'
+        point_spread_home_money:
+          type:
+          - number
+          - 'null'
+        point_spread_away_money:
+          type:
+          - number
+          - 'null'
+        best_affiliate_home:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_away:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+    V1Total:
+      type: object
+      properties:
+        total_over:
+          type: number
+          example: 47.5
+        total_over_delta:
+          type: number
+        total_under:
+          type: number
+          example: 47.5
+        total_under_delta:
+          type: number
+        total_over_money:
+          type: number
+          example: -110
+        total_over_money_delta:
+          type: number
+        total_under_money:
+          type: number
+          example: -110
+        total_under_money_delta:
+          type: number
+        date_updated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        format:
+          type: string
+        extended_totals:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Total'
     BestLineResponse:
       type: object
       properties:
@@ -466,16 +453,29 @@ components:
                 $ref: '#/components/schemas/BestSpread'
               total:
                 $ref: '#/components/schemas/BestTotal'
-    BestAffiliateInfo:
+    BestTotal:
       type: object
       properties:
-        affiliate_id:
-          type: integer
-        affiliate_name:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
+        total_over:
+          type:
+          - number
+          - 'null'
+        total_under:
+          type:
+          - number
+          - 'null'
+        total_over_money:
+          type:
+          - number
+          - 'null'
+        total_under_money:
+          type:
+          - number
+          - 'null'
+        best_affiliate_over:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_under:
+          $ref: '#/components/schemas/BestAffiliateInfo'
   parameters:
     AffiliateIDsQuery:
       name: affiliate_ids

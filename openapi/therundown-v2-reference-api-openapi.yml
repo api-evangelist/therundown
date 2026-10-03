@@ -160,13 +160,29 @@ paths:
                   season_type_name: Postseason
 components:
   schemas:
-    Region:
+    SeasonTypesResponse:
       type: object
       properties:
-        id:
+        season_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeasonTypeSport'
+    Affiliate:
+      type: object
+      properties:
+        affiliate_id:
           type: integer
-        name:
+          example: 19
+        affiliate_name:
           type: string
+          example: Draftkings
+        affiliate_url:
+          type: string
+          example: https://draftkings.com
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
     AffiliatesResponse:
       type: object
       properties:
@@ -185,29 +201,13 @@ components:
           type: integer
         season_type_name:
           type: string
-    Affiliate:
+    Region:
       type: object
       properties:
-        affiliate_id:
+        id:
           type: integer
-          example: 19
-        affiliate_name:
+        name:
           type: string
-          example: Draftkings
-        affiliate_url:
-          type: string
-          example: https://draftkings.com
-        regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Region'
-    SeasonTypesResponse:
-      type: object
-      properties:
-        season_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/SeasonTypeSport'
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

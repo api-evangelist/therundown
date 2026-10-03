@@ -583,53 +583,6 @@ components:
           description: Keyed by affiliate ID
           additionalProperties:
             $ref: '#/components/schemas/ChartSeries'
-    ChartSeries:
-      type: object
-      properties:
-        affiliate_name:
-          type: string
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              t:
-                type: string
-                format: date-time
-                description: Timestamp
-              p:
-                type: string
-                description: Price
-              c:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                description: Closed at timestamp
-    MarketHistoryResponse:
-      type: object
-      properties:
-        meta:
-          type: object
-          properties:
-            event_id:
-              type: string
-            market_id:
-              type: integer
-              format: int64
-            count:
-              type: integer
-        history:
-          type: array
-          items:
-            $ref: '#/components/schemas/MarketLinePriceHistory'
-    MarketParticipantsResponse:
-      type: object
-      properties:
-        participants:
-          type: array
-          items:
-            $ref: '#/components/schemas/MarketParticipant'
     MarketLinePriceHistory:
       type: object
       properties:
@@ -670,6 +623,75 @@ components:
         updated_at:
           type: string
           format: date-time
+    MarketParticipant:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        market_event_id:
+          type: integer
+          format: int64
+        participant_id:
+          type: integer
+        participant_type:
+          type: string
+          enum:
+          - TYPE_TEAM
+          - TYPE_PLAYER
+          - TYPE_RESULT
+        participant_name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    MarketHistoryResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            event_id:
+              type: string
+            market_id:
+              type: integer
+              format: int64
+            count:
+              type: integer
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketLinePriceHistory'
+    ChartSeries:
+      type: object
+      properties:
+        affiliate_name:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              t:
+                type: string
+                format: date-time
+                description: Timestamp
+              p:
+                type: string
+                description: Price
+              c:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                description: Closed at timestamp
+    MarketParticipantsResponse:
+      type: object
+      properties:
+        participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketParticipant'
     MarketDeltaResponse:
       type: object
       properties:
@@ -688,54 +710,43 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MarketDeltaEntry'
-    OpeningPricesResponse:
+    Market:
       type: object
+      description: 'Market definition. The `line_value_is_participant` flag indicates whether the line value represents a participant name (true) or a numeric value like a spread/total (false).
+
+        '
       properties:
-        meta:
-          type: object
-          properties:
-            event_id:
-              type: string
-            count:
-              type: integer
-        markets:
-          type: object
-          description: Keyed by market ID
-          additionalProperties:
-            type: object
-            properties:
-              market_id:
-                type: integer
-                format: int64
-              market_name:
-                type: string
-              lines:
-                type: object
-                description: Keyed by participant_id:line composite key
-                additionalProperties:
-                  type: object
-                  properties:
-                    participant_id:
-                      type: integer
-                    participant_type:
-                      type: string
-                      enum:
-                      - TYPE_TEAM
-                      - TYPE_PLAYER
-                      - TYPE_RESULT
-                    participant_name:
-                      type: string
-                    prices:
-                      type: object
-                      description: Keyed by affiliate ID
-                      additionalProperties:
-                        type: object
-                        properties:
-                          price:
-                            type: string
-                          timestamp:
-                            type: string
-                            format: date-time
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Money Line
+        description:
+          type: string
+        short_description:
+          type: string
+        line_value_is_participant:
+          type: boolean
+          description: If true, the line "value" field is a participant name rather than a numeric line
+        proposition:
+          type: boolean
+          description: Whether this is a proposition/prop market
+        period_id:
+          type:
+          - integer
+          - 'null'
+          description: 'Associated period. 0=Full Game, 1=1st Half, 2=2nd Half, 3-6=Quarters/periods, 7=Live Full Game, 13-18=Live periods. For tennis, 3/4 represent prematch Set 1/Set 2 and 15/16 represent live Set 1/Set 2.
+
+            '
+        live_variant_id:
+          type:
+          - integer
+          - 'null'
+          description: ID of the live/in-play variant of this market
+        updated_at:
+          type: string
+          format: date-time
     MarketDeltaEntry:
       type: object
       description: A single market line price change entry from the delta feed
@@ -787,73 +798,79 @@ components:
         updated_at:
           type: string
           format: date-time
-    Market:
-      type: object
-      description: 'Market definition. The `line_value_is_participant` flag indicates whether the line value represents a participant name (true) or a numeric value like a spread/total (false).
-
-        '
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Money Line
-        description:
-          type: string
-        short_description:
-          type: string
-        line_value_is_participant:
-          type: boolean
-          description: If true, the line "value" field is a participant name rather than a numeric line
-        proposition:
-          type: boolean
-          description: Whether this is a proposition/prop market
-        period_id:
-          type:
-          - integer
-          - 'null'
-          description: 'Associated period. 0=Full Game, 1=1st Half, 2=2nd Half, 3-6=Quarters/periods, 7=Live Full Game, 13-18=Live periods. For tennis, 3/4 represent prematch Set 1/Set 2 and 15/16 represent live Set 1/Set 2.
-
-            '
-        live_variant_id:
-          type:
-          - integer
-          - 'null'
-          description: ID of the live/in-play variant of this market
-        updated_at:
-          type: string
-          format: date-time
-    MarketParticipant:
+    OpeningPricesResponse:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-        market_event_id:
-          type: integer
-          format: int64
-        participant_id:
-          type: integer
-        participant_type:
-          type: string
-          enum:
-          - TYPE_TEAM
-          - TYPE_PLAYER
-          - TYPE_RESULT
-        participant_name:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
+        meta:
+          type: object
+          properties:
+            event_id:
+              type: string
+            count:
+              type: integer
+        markets:
+          type: object
+          description: Keyed by market ID
+          additionalProperties:
+            type: object
+            properties:
+              market_id:
+                type: integer
+                format: int64
+              market_name:
+                type: string
+              lines:
+                type: object
+                description: Keyed by participant_id:line composite key
+                additionalProperties:
+                  type: object
+                  properties:
+                    participant_id:
+                      type: integer
+                    participant_type:
+                      type: string
+                      enum:
+                      - TYPE_TEAM
+                      - TYPE_PLAYER
+                      - TYPE_RESULT
+                    participant_name:
+                      type: string
+                    prices:
+                      type: object
+                      description: Keyed by affiliate ID
+                      additionalProperties:
+                        type: object
+                        properties:
+                          price:
+                            type: string
+                          timestamp:
+                            type: string
+                            format: date-time
   parameters:
-    EventIDPath:
-      name: eventID
-      in: path
-      required: true
+    ParticipantIDsQuery:
+      name: participant_ids
+      in: query
       schema:
         type: string
-      description: Canonical V2 event ID from the `event_id` field returned by event endpoints
+      description: Comma-separated participant IDs to filter (max 99)
+    OffsetQuery:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+        example: 300
+      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
+    ParticipantTypeQuery:
+      name: participant_type
+      in: query
+      schema:
+        type: string
+        enum:
+        - TYPE_TEAM
+        - TYPE_PLAYER
+        - TYPE_RESULT
+      description: Filter participants by type
     SportIDPath:
       name: sportID
       in: path
@@ -869,30 +886,13 @@ components:
       schema:
         type: string
       description: Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3).
-    ParticipantIDsQuery:
-      name: participant_ids
-      in: query
+    EventIDPath:
+      name: eventID
+      in: path
+      required: true
       schema:
         type: string
-      description: Comma-separated participant IDs to filter (max 99)
-    ParticipantTypeQuery:
-      name: participant_type
-      in: query
-      schema:
-        type: string
-        enum:
-        - TYPE_TEAM
-        - TYPE_PLAYER
-        - TYPE_RESULT
-      description: Filter participants by type
-    OffsetQuery:
-      name: offset
-      in: query
-      schema:
-        type: integer
-        default: 0
-        example: 300
-      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
+      description: Canonical V2 event ID from the `event_id` field returned by event endpoints
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

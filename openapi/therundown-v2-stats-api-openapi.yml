@@ -175,58 +175,43 @@ paths:
                 description: The average rebounds per game.
                 sport_id: 4
 components:
-  parameters:
-    EventIDPath:
-      name: eventID
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Canonical V2 event ID from the `event_id` field returned by event endpoints
   schemas:
-    TeamGameStats:
+    PlayerGameStatResponse:
+      type: object
+      properties:
+        player:
+          $ref: '#/components/schemas/PlayerNormalized'
+        meta:
+          $ref: '#/components/schemas/StatsMeta'
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerGameStats'
+    TeamNormalized:
       type: object
       properties:
         team_id:
+          type: integer
+        name:
+          type: string
+        mascot:
+          type: string
+        abbreviation:
+          type: string
+        record:
+          type: string
+        is_home:
+          type: boolean
+        is_away:
+          type: boolean
+        ranking:
           type:
           - integer
           - 'null'
-        team:
-          $ref: '#/components/schemas/TeamNormalized'
-        stat_id:
-          type:
-          - integer
-          - 'null'
-        stat:
-          $ref: '#/components/schemas/StatDefinition'
-        event_id:
-          type: string
-        value:
-          type: string
-    PlayerGameStats:
-      type: object
-      properties:
-        event_id:
-          type: string
-        player_id:
-          type:
-          - integer
-          - 'null'
-        player:
-          $ref: '#/components/schemas/PlayerNormalized'
-        stat_id:
-          type:
-          - integer
-          - 'null'
-        stat:
-          $ref: '#/components/schemas/StatDefinition'
-        value:
-          type: string
-        updated_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
     PlayerNormalized:
       type: object
       properties:
@@ -285,28 +270,63 @@ components:
         throws:
           type: string
           description: MLB only — throwing arm
-    Division:
+    Conference:
       type: object
       properties:
-        division_id:
-          type: integer
         conference_id:
           type: integer
         sport_id:
           type: integer
         name:
           type: string
-    PlayerGameStatResponse:
+    TeamGameStats:
       type: object
       properties:
+        team_id:
+          type:
+          - integer
+          - 'null'
+        team:
+          $ref: '#/components/schemas/TeamNormalized'
+        stat_id:
+          type:
+          - integer
+          - 'null'
+        stat:
+          $ref: '#/components/schemas/StatDefinition'
+        event_id:
+          type: string
+        value:
+          type: string
+    PlayerGameStats:
+      type: object
+      properties:
+        event_id:
+          type: string
+        player_id:
+          type:
+          - integer
+          - 'null'
         player:
           $ref: '#/components/schemas/PlayerNormalized'
-        meta:
-          $ref: '#/components/schemas/StatsMeta'
-        stats:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlayerGameStats'
+        stat_id:
+          type:
+          - integer
+          - 'null'
+        stat:
+          $ref: '#/components/schemas/StatDefinition'
+        value:
+          type: string
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    StatsMeta:
+      type: object
+      properties:
+        complete:
+          type: boolean
     TeamGameStatResponse:
       type: object
       properties:
@@ -318,36 +338,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TeamGameStats'
-    StatsMeta:
-      type: object
-      properties:
-        complete:
-          type: boolean
-    TeamNormalized:
-      type: object
-      properties:
-        team_id:
-          type: integer
-        name:
-          type: string
-        mascot:
-          type: string
-        abbreviation:
-          type: string
-        record:
-          type: string
-        is_home:
-          type: boolean
-        is_away:
-          type: boolean
-        ranking:
-          type:
-          - integer
-          - 'null'
-        conference:
-          $ref: '#/components/schemas/Conference'
-        division:
-          $ref: '#/components/schemas/Division'
     StatDefinition:
       type: object
       properties:
@@ -367,15 +357,25 @@ components:
           type: string
         sport_id:
           type: integer
-    Conference:
+    Division:
       type: object
       properties:
+        division_id:
+          type: integer
         conference_id:
           type: integer
         sport_id:
           type: integer
         name:
           type: string
+  parameters:
+    EventIDPath:
+      name: eventID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Canonical V2 event ID from the `event_id` field returned by event endpoints
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
