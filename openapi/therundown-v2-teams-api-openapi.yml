@@ -252,6 +252,42 @@ paths:
                   display_value: '3.2'
 components:
   schemas:
+    TeamStats:
+      type: object
+      properties:
+        team_id:
+          type:
+          - integer
+          - 'null'
+        stat_id:
+          type:
+          - integer
+          - 'null'
+        stat:
+          $ref: '#/components/schemas/StatDefinition'
+        season_year:
+          type: integer
+        season_type:
+          type: integer
+        season_type_name:
+          type: string
+        value:
+          type: number
+        display_value:
+          type: string
+        per_game_value:
+          type: number
+        per_game_display_value:
+          type: string
+        rank:
+          type: integer
+        rank_display_value:
+          type: string
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
     PlayerNormalized:
       type: object
       properties:
@@ -310,6 +346,43 @@ components:
         throws:
           type: string
           description: MLB only — throwing arm
+    Team:
+      type: object
+      properties:
+        team_id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: New England
+        mascot:
+          type: string
+          example: Patriots
+        abbreviation:
+          type: string
+          example: NE
+        ranking:
+          type:
+          - integer
+          - 'null'
+        record:
+          type: string
+          example: 10-7
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
+    Division:
+      type: object
+      properties:
+        division_id:
+          type: integer
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
     PlayerStatResponse:
       type: object
       properties:
@@ -319,6 +392,32 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PlayerStats'
+    PlayersResponse:
+      type: object
+      properties:
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerNormalized'
+    StatDefinition:
+      type: object
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        name:
+          type: string
+        category:
+          type: string
+        display_name:
+          type: string
+        abbreviation:
+          type: string
+        description:
+          type: string
+        sport_id:
+          type: integer
     TeamsResponse:
       type: object
       properties:
@@ -326,6 +425,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Team'
+    Conference:
+      type: object
+      properties:
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
     PlayerStats:
       type: object
       properties:
@@ -364,114 +472,6 @@ components:
           - string
           - 'null'
           format: date-time
-    Conference:
-      type: object
-      properties:
-        conference_id:
-          type: integer
-        sport_id:
-          type: integer
-        name:
-          type: string
-    PlayersResponse:
-      type: object
-      properties:
-        players:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlayerNormalized'
-    TeamStats:
-      type: object
-      properties:
-        team_id:
-          type:
-          - integer
-          - 'null'
-        stat_id:
-          type:
-          - integer
-          - 'null'
-        stat:
-          $ref: '#/components/schemas/StatDefinition'
-        season_year:
-          type: integer
-        season_type:
-          type: integer
-        season_type_name:
-          type: string
-        value:
-          type: number
-        display_value:
-          type: string
-        per_game_value:
-          type: number
-        per_game_display_value:
-          type: string
-        rank:
-          type: integer
-        rank_display_value:
-          type: string
-        updated_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    Team:
-      type: object
-      properties:
-        team_id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: New England
-        mascot:
-          type: string
-          example: Patriots
-        abbreviation:
-          type: string
-          example: NE
-        ranking:
-          type:
-          - integer
-          - 'null'
-        record:
-          type: string
-          example: 10-7
-        conference:
-          $ref: '#/components/schemas/Conference'
-        division:
-          $ref: '#/components/schemas/Division'
-    StatDefinition:
-      type: object
-      properties:
-        id:
-          type:
-          - integer
-          - 'null'
-        name:
-          type: string
-        category:
-          type: string
-        display_name:
-          type: string
-        abbreviation:
-          type: string
-        description:
-          type: string
-        sport_id:
-          type: integer
-    Division:
-      type: object
-      properties:
-        division_id:
-          type: integer
-        conference_id:
-          type: integer
-        sport_id:
-          type: integer
-        name:
-          type: string
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

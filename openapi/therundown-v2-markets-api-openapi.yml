@@ -565,86 +565,6 @@ paths:
                   name: Under
 components:
   schemas:
-    ChartResponse:
-      type: object
-      properties:
-        meta:
-          type: object
-          properties:
-            event_id:
-              type: string
-            market_id:
-              type: integer
-              format: int64
-            market_name:
-              type: string
-        series:
-          type: object
-          description: Keyed by affiliate ID
-          additionalProperties:
-            $ref: '#/components/schemas/ChartSeries'
-    MarketLinePriceHistory:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        market_line_price_id:
-          type: integer
-          format: int64
-        event_id:
-          type: string
-        sport_id:
-          type: integer
-        affiliate_id:
-          type: integer
-        market_participant_id:
-          type: integer
-          format: int64
-        market_id:
-          type: integer
-          format: int64
-        line:
-          type: string
-        price:
-          type: string
-        previous_price:
-          type:
-          - string
-          - 'null'
-        closed_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        change_type:
-          type: string
-          description: Type of change (e.g., "price_change", "new", "closed")
-        updated_at:
-          type: string
-          format: date-time
-    MarketParticipant:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        market_event_id:
-          type: integer
-          format: int64
-        participant_id:
-          type: integer
-        participant_type:
-          type: string
-          enum:
-          - TYPE_TEAM
-          - TYPE_PLAYER
-          - TYPE_RESULT
-        participant_name:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
     MarketHistoryResponse:
       type: object
       properties:
@@ -662,36 +582,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MarketLinePriceHistory'
-    ChartSeries:
-      type: object
-      properties:
-        affiliate_name:
-          type: string
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              t:
-                type: string
-                format: date-time
-                description: Timestamp
-              p:
-                type: string
-                description: Price
-              c:
-                type:
-                - string
-                - 'null'
-                format: date-time
-                description: Closed at timestamp
-    MarketParticipantsResponse:
-      type: object
-      properties:
-        participants:
-          type: array
-          items:
-            $ref: '#/components/schemas/MarketParticipant'
     MarketDeltaResponse:
       type: object
       properties:
@@ -798,6 +688,53 @@ components:
         updated_at:
           type: string
           format: date-time
+    MarketParticipantsResponse:
+      type: object
+      properties:
+        participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketParticipant'
+    MarketLinePriceHistory:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        market_line_price_id:
+          type: integer
+          format: int64
+        event_id:
+          type: string
+        sport_id:
+          type: integer
+        affiliate_id:
+          type: integer
+        market_participant_id:
+          type: integer
+          format: int64
+        market_id:
+          type: integer
+          format: int64
+        line:
+          type: string
+        price:
+          type: string
+        previous_price:
+          type:
+          - string
+          - 'null'
+        closed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        change_type:
+          type: string
+          description: Type of change (e.g., "price_change", "new", "closed")
+        updated_at:
+          type: string
+          format: date-time
     OpeningPricesResponse:
       type: object
       properties:
@@ -846,13 +783,83 @@ components:
                           timestamp:
                             type: string
                             format: date-time
+    MarketParticipant:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        market_event_id:
+          type: integer
+          format: int64
+        participant_id:
+          type: integer
+        participant_type:
+          type: string
+          enum:
+          - TYPE_TEAM
+          - TYPE_PLAYER
+          - TYPE_RESULT
+        participant_name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    ChartSeries:
+      type: object
+      properties:
+        affiliate_name:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              t:
+                type: string
+                format: date-time
+                description: Timestamp
+              p:
+                type: string
+                description: Price
+              c:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                description: Closed at timestamp
+    ChartResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            event_id:
+              type: string
+            market_id:
+              type: integer
+              format: int64
+            market_name:
+              type: string
+        series:
+          type: object
+          description: Keyed by affiliate ID
+          additionalProperties:
+            $ref: '#/components/schemas/ChartSeries'
   parameters:
-    ParticipantIDsQuery:
-      name: participant_ids
+    EventIDPath:
+      name: eventID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Canonical V2 event ID from the `event_id` field returned by event endpoints
+    AffiliateIDsQuery:
+      name: affiliate_ids
       in: query
       schema:
         type: string
-      description: Comma-separated participant IDs to filter (max 99)
+      description: Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3).
     OffsetQuery:
       name: offset
       in: query
@@ -871,6 +878,12 @@ components:
         - TYPE_PLAYER
         - TYPE_RESULT
       description: Filter participants by type
+    ParticipantIDsQuery:
+      name: participant_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated participant IDs to filter (max 99)
     SportIDPath:
       name: sportID
       in: path
@@ -880,19 +893,6 @@ components:
       description: 'Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis
 
         '
-    AffiliateIDsQuery:
-      name: affiliate_ids
-      in: query
-      schema:
-        type: string
-      description: Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3).
-    EventIDPath:
-      name: eventID
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Canonical V2 event ID from the `event_id` field returned by event endpoints
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

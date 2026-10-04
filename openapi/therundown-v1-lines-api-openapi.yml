@@ -281,54 +281,29 @@ paths:
                   date_updated: '2026-02-11T22:00:00Z'
 components:
   schemas:
-    V1Moneyline:
+    BestLineResponse:
       type: object
       properties:
-        moneyline_away:
-          type: number
-          description: Away team moneyline. 0.0001 = off the board.
-          example: 150
-        moneyline_away_delta:
-          type: number
-        moneyline_home:
-          type: number
-          example: -180
-        moneyline_home_delta:
-          type: number
-        moneyline_draw:
-          type: number
-          description: Draw moneyline (soccer, UFC)
-        moneyline_draw_delta:
-          type: number
-        date_updated:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        format:
+        event_id:
           type: string
-          example: American
-    BestMoneyline:
-      type: object
-      properties:
-        moneyline_home:
-          type:
-          - number
-          - 'null'
-        moneyline_away:
-          type:
-          - number
-          - 'null'
-        moneyline_draw:
-          type:
-          - number
-          - 'null'
-        best_affiliate_home:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_away:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_draw:
-          $ref: '#/components/schemas/BestAffiliateInfo'
+        moneyline:
+          $ref: '#/components/schemas/BestMoneyline'
+        spread:
+          $ref: '#/components/schemas/BestSpread'
+        total:
+          $ref: '#/components/schemas/BestTotal'
+        periods:
+          type: object
+          description: Period-specific best lines keyed by period name
+          additionalProperties:
+            type: object
+            properties:
+              moneyline:
+                $ref: '#/components/schemas/BestMoneyline'
+              spread:
+                $ref: '#/components/schemas/BestSpread'
+              total:
+                $ref: '#/components/schemas/BestTotal'
     V1Spread:
       type: object
       properties:
@@ -363,6 +338,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/V1Spread'
+    BestMoneyline:
+      type: object
+      properties:
+        moneyline_home:
+          type:
+          - number
+          - 'null'
+        moneyline_away:
+          type:
+          - number
+          - 'null'
+        moneyline_draw:
+          type:
+          - number
+          - 'null'
+        best_affiliate_home:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_away:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_draw:
+          $ref: '#/components/schemas/BestAffiliateInfo'
     BestAffiliateInfo:
       type: object
       properties:
@@ -373,29 +369,6 @@ components:
         updated_at:
           type: string
           format: date-time
-    BestSpread:
-      type: object
-      properties:
-        point_spread_home:
-          type:
-          - number
-          - 'null'
-        point_spread_away:
-          type:
-          - number
-          - 'null'
-        point_spread_home_money:
-          type:
-          - number
-          - 'null'
-        point_spread_away_money:
-          type:
-          - number
-          - 'null'
-        best_affiliate_home:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_away:
-          $ref: '#/components/schemas/BestAffiliateInfo'
     V1Total:
       type: object
       properties:
@@ -430,29 +403,33 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/V1Total'
-    BestLineResponse:
+    V1Moneyline:
       type: object
       properties:
-        event_id:
+        moneyline_away:
+          type: number
+          description: Away team moneyline. 0.0001 = off the board.
+          example: 150
+        moneyline_away_delta:
+          type: number
+        moneyline_home:
+          type: number
+          example: -180
+        moneyline_home_delta:
+          type: number
+        moneyline_draw:
+          type: number
+          description: Draw moneyline (soccer, UFC)
+        moneyline_draw_delta:
+          type: number
+        date_updated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        format:
           type: string
-        moneyline:
-          $ref: '#/components/schemas/BestMoneyline'
-        spread:
-          $ref: '#/components/schemas/BestSpread'
-        total:
-          $ref: '#/components/schemas/BestTotal'
-        periods:
-          type: object
-          description: Period-specific best lines keyed by period name
-          additionalProperties:
-            type: object
-            properties:
-              moneyline:
-                $ref: '#/components/schemas/BestMoneyline'
-              spread:
-                $ref: '#/components/schemas/BestSpread'
-              total:
-                $ref: '#/components/schemas/BestTotal'
+          example: American
     BestTotal:
       type: object
       properties:
@@ -475,6 +452,29 @@ components:
         best_affiliate_over:
           $ref: '#/components/schemas/BestAffiliateInfo'
         best_affiliate_under:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+    BestSpread:
+      type: object
+      properties:
+        point_spread_home:
+          type:
+          - number
+          - 'null'
+        point_spread_away:
+          type:
+          - number
+          - 'null'
+        point_spread_home_money:
+          type:
+          - number
+          - 'null'
+        point_spread_away_money:
+          type:
+          - number
+          - 'null'
+        best_affiliate_home:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_away:
           $ref: '#/components/schemas/BestAffiliateInfo'
   parameters:
     AffiliateIDsQuery:

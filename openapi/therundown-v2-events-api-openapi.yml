@@ -532,81 +532,81 @@ paths:
                 - data: '{"event_id":"09bfa53f8484a63e584398545c035932","sport_id":4,"event_date":"2026-02-12T00:00:00Z","lines":{...}}'
                 - data: '{"event_id":"b9c4e2a1f3d5670089ab12cd34ef5678","sport_id":4,"event_date":"2026-02-12T00:00:00Z","lines":{...}}'
 components:
+  parameters:
+    EventIDPath:
+      name: eventID
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Canonical V2 event ID from the `event_id` field returned by event endpoints
+    AffiliateIDsQuery:
+      name: affiliate_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3).
+    ParticipantIDsQuery:
+      name: participant_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated participant IDs to filter (max 99)
+    MarketIDsQuery:
+      name: market_ids
+      in: query
+      schema:
+        type: string
+        default: 1,2,3
+      description: 'Comma-separated market IDs. Defaults to `1,2,3` (Moneyline, Spread, Total).
+
+        **Limit: 12 market IDs per request.** IDs beyond the 12th are silently ignored.
+
+        Common IDs: 1=Moneyline, 2=Spread, 3=Total, 29=Player Points, 35=Player Rebounds, 38=Three Pointers, 39=Player Assists, 93=Player PRA, 94=Team Totals.
+
+        Live variants: 41=Live ML, 42=Live Spread, 43=Live Total.
+
+        If you need more than 12 markets, make multiple requests.
+
+        '
+    ParticipantTypeQuery:
+      name: participant_type
+      in: query
+      schema:
+        type: string
+        enum:
+        - TYPE_TEAM
+        - TYPE_PLAYER
+        - TYPE_RESULT
+      description: Filter participants by type
+    SportIDPath:
+      name: sportID
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: 'Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis
+
+        '
+    MainLineQuery:
+      name: main_line
+      in: query
+      schema:
+        type: string
+        enum:
+        - 'true'
+        - 'false'
+        default: 'false'
+      description: Only return main lines (primary odds, not alternates)
+    OffsetQuery:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+        example: 300
+      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
   schemas:
-    BestMoneyline:
-      type: object
-      properties:
-        moneyline_home:
-          type:
-          - number
-          - 'null'
-        moneyline_away:
-          type:
-          - number
-          - 'null'
-        moneyline_draw:
-          type:
-          - number
-          - 'null'
-        best_affiliate_home:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_away:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_draw:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-    MarketResponse:
-      type: object
-      description: Market with participants and prices for a specific event
-      properties:
-        id:
-          type: integer
-          format: int64
-        market_id:
-          type: integer
-          example: 1
-        period_id:
-          type: integer
-        name:
-          type: string
-          example: Money Line
-        market_description:
-          type: string
-        participants:
-          type: array
-          items:
-            $ref: '#/components/schemas/MarketParticipantResponse'
-    Conference:
-      type: object
-      properties:
-        conference_id:
-          type: integer
-        sport_id:
-          type: integer
-        name:
-          type: string
-    BestLineResponse:
-      type: object
-      properties:
-        event_id:
-          type: string
-        moneyline:
-          $ref: '#/components/schemas/BestMoneyline'
-        spread:
-          $ref: '#/components/schemas/BestSpread'
-        total:
-          $ref: '#/components/schemas/BestTotal'
-        periods:
-          type: object
-          description: Period-specific best lines keyed by period name
-          additionalProperties:
-            type: object
-            properties:
-              moneyline:
-                $ref: '#/components/schemas/BestMoneyline'
-              spread:
-                $ref: '#/components/schemas/BestSpread'
-              total:
-                $ref: '#/components/schemas/BestTotal'
     BestTotal:
       type: object
       properties:
@@ -635,6 +635,77 @@ components:
       properties:
         delta_last_id:
           type: string
+    BestSpread:
+      type: object
+      properties:
+        point_spread_home:
+          type:
+          - number
+          - 'null'
+        point_spread_away:
+          type:
+          - number
+          - 'null'
+        point_spread_home_money:
+          type:
+          - number
+          - 'null'
+        point_spread_away_money:
+          type:
+          - number
+          - 'null'
+        best_affiliate_home:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_away:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+    Pitcher:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        throws_left_handed:
+          type:
+          - boolean
+          - 'null'
+        throws_right_handed:
+          type:
+          - boolean
+          - 'null'
+        bats_left_handed:
+          type:
+          - boolean
+          - 'null'
+        bats_right_handed:
+          type:
+          - boolean
+          - 'null'
+    TeamNormalized:
+      type: object
+      properties:
+        team_id:
+          type: integer
+        name:
+          type: string
+        mascot:
+          type: string
+        abbreviation:
+          type: string
+        record:
+          type: string
+        is_home:
+          type: boolean
+        is_away:
+          type: boolean
+        ranking:
+          type:
+          - integer
+          - 'null'
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
     EventV2:
       type: object
       properties:
@@ -672,56 +743,61 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MarketResponse'
-    MarketLinesResponse:
+    Division:
       type: object
       properties:
-        id:
-          type: string
-        value:
-          type: string
-          description: Line value (numeric for spreads/totals, participant name if `line_value_is_participant` is true)
-        selection:
-          type: string
-        handicap:
-          type: string
-        prices:
-          type: object
-          description: Prices keyed by affiliate ID
-          additionalProperties:
-            $ref: '#/components/schemas/MarketLinePriceResponse'
-    BestAffiliateInfo:
-      type: object
-      properties:
-        affiliate_id:
+        division_id:
           type: integer
-        affiliate_name:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-    Pitcher:
-      type: object
-      properties:
-        id:
+        conference_id:
+          type: integer
+        sport_id:
           type: integer
         name:
           type: string
-        throws_left_handed:
+    BestLineResponse:
+      type: object
+      properties:
+        event_id:
+          type: string
+        moneyline:
+          $ref: '#/components/schemas/BestMoneyline'
+        spread:
+          $ref: '#/components/schemas/BestSpread'
+        total:
+          $ref: '#/components/schemas/BestTotal'
+        periods:
+          type: object
+          description: Period-specific best lines keyed by period name
+          additionalProperties:
+            type: object
+            properties:
+              moneyline:
+                $ref: '#/components/schemas/BestMoneyline'
+              spread:
+                $ref: '#/components/schemas/BestSpread'
+              total:
+                $ref: '#/components/schemas/BestTotal'
+    BestMoneyline:
+      type: object
+      properties:
+        moneyline_home:
           type:
-          - boolean
+          - number
           - 'null'
-        throws_right_handed:
+        moneyline_away:
           type:
-          - boolean
+          - number
           - 'null'
-        bats_left_handed:
+        moneyline_draw:
           type:
-          - boolean
+          - number
           - 'null'
-        bats_right_handed:
-          type:
-          - boolean
-          - 'null'
+        best_affiliate_home:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_away:
+          $ref: '#/components/schemas/BestAffiliateInfo'
+        best_affiliate_draw:
+          $ref: '#/components/schemas/BestAffiliateInfo'
     DeltasResponse:
       type: object
       properties:
@@ -735,31 +811,6 @@ components:
               data:
                 type: string
                 description: Raw JSON string of the delta payload
-    MarketLinePriceResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        price:
-          type: number
-          description: American odds price. Value of 0.0001 means "off the board".
-          example: -110
-        price_delta:
-          type:
-          - number
-          - 'null'
-          description: Change from previous price
-        is_main_line:
-          type: boolean
-          description: Whether this is the primary/main line
-        updated_at:
-          type: string
-          format: date-time
-        closed_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
     Schedule:
       type: object
       properties:
@@ -791,59 +842,6 @@ components:
           type: string
         week_detail:
           type: string
-    MarketParticipantResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Participant ID
-        type:
-          type: string
-          enum:
-          - TYPE_TEAM
-          - TYPE_PLAYER
-          - TYPE_RESULT
-        name:
-          type: string
-          example: New England Patriots
-        lines:
-          type: array
-          items:
-            $ref: '#/components/schemas/MarketLinesResponse'
-    EventsV2Response:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventV2'
-    TeamNormalized:
-      type: object
-      properties:
-        team_id:
-          type: integer
-        name:
-          type: string
-        mascot:
-          type: string
-        abbreviation:
-          type: string
-        record:
-          type: string
-        is_home:
-          type: boolean
-        is_away:
-          type: boolean
-        ranking:
-          type:
-          - integer
-          - 'null'
-        conference:
-          $ref: '#/components/schemas/Conference'
-        division:
-          $ref: '#/components/schemas/Division'
     Score:
       type: object
       properties:
@@ -895,114 +893,116 @@ components:
         updated_at:
           type: string
           format: date-time
-    BestSpread:
+    EventsV2Response:
       type: object
       properties:
-        point_spread_home:
-          type:
-          - number
-          - 'null'
-        point_spread_away:
-          type:
-          - number
-          - 'null'
-        point_spread_home_money:
-          type:
-          - number
-          - 'null'
-        point_spread_away_money:
-          type:
-          - number
-          - 'null'
-        best_affiliate_home:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-        best_affiliate_away:
-          $ref: '#/components/schemas/BestAffiliateInfo'
-    Division:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventV2'
+    Conference:
       type: object
       properties:
-        division_id:
-          type: integer
         conference_id:
           type: integer
         sport_id:
           type: integer
         name:
           type: string
-  parameters:
-    MarketIDsQuery:
-      name: market_ids
-      in: query
-      schema:
-        type: string
-        default: 1,2,3
-      description: 'Comma-separated market IDs. Defaults to `1,2,3` (Moneyline, Spread, Total).
-
-        **Limit: 12 market IDs per request.** IDs beyond the 12th are silently ignored.
-
-        Common IDs: 1=Moneyline, 2=Spread, 3=Total, 29=Player Points, 35=Player Rebounds, 38=Three Pointers, 39=Player Assists, 93=Player PRA, 94=Team Totals.
-
-        Live variants: 41=Live ML, 42=Live Spread, 43=Live Total.
-
-        If you need more than 12 markets, make multiple requests.
-
-        '
-    AffiliateIDsQuery:
-      name: affiliate_ids
-      in: query
-      schema:
-        type: string
-      description: Comma-separated sportsbook/affiliate IDs to filter. Common values include DraftKings (19), FanDuel (23), BetMGM (22), Bovada (2), Pinnacle (3).
-    MainLineQuery:
-      name: main_line
-      in: query
-      schema:
-        type: string
-        enum:
-        - 'true'
-        - 'false'
-        default: 'false'
-      description: Only return main lines (primary odds, not alternates)
-    OffsetQuery:
-      name: offset
-      in: query
-      schema:
-        type: integer
-        default: 0
-        example: 300
-      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
-    ParticipantIDsQuery:
-      name: participant_ids
-      in: query
-      schema:
-        type: string
-      description: Comma-separated participant IDs to filter (max 99)
-    ParticipantTypeQuery:
-      name: participant_type
-      in: query
-      schema:
-        type: string
-        enum:
-        - TYPE_TEAM
-        - TYPE_PLAYER
-        - TYPE_RESULT
-      description: Filter participants by type
-    SportIDPath:
-      name: sportID
-      in: path
-      required: true
-      schema:
-        type: integer
-      description: 'Sport ID. Common values: 1=NCAAF, 2=NFL, 3=MLB, 4=NBA, 5=NCAAB, 6=NHL, 7=UFC, 8=WNBA, 9=CFL, 10=MLS, 11=EPL, 16=UEFA Champions League, 33=UEFA Europa League, 38=ATP Tennis, 39=WTA Tennis
-
-        '
-    EventIDPath:
-      name: eventID
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Canonical V2 event ID from the `event_id` field returned by event endpoints
+    MarketLinesResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+          description: Line value (numeric for spreads/totals, participant name if `line_value_is_participant` is true)
+        selection:
+          type: string
+        handicap:
+          type: string
+        prices:
+          type: object
+          description: Prices keyed by affiliate ID
+          additionalProperties:
+            $ref: '#/components/schemas/MarketLinePriceResponse'
+    MarketLinePriceResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        price:
+          type: number
+          description: American odds price. Value of 0.0001 means "off the board".
+          example: -110
+        price_delta:
+          type:
+          - number
+          - 'null'
+          description: Change from previous price
+        is_main_line:
+          type: boolean
+          description: Whether this is the primary/main line
+        updated_at:
+          type: string
+          format: date-time
+        closed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    BestAffiliateInfo:
+      type: object
+      properties:
+        affiliate_id:
+          type: integer
+        affiliate_name:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    MarketParticipantResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Participant ID
+        type:
+          type: string
+          enum:
+          - TYPE_TEAM
+          - TYPE_PLAYER
+          - TYPE_RESULT
+        name:
+          type: string
+          example: New England Patriots
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketLinesResponse'
+    MarketResponse:
+      type: object
+      description: Market with participants and prices for a specific event
+      properties:
+        id:
+          type: integer
+          format: int64
+        market_id:
+          type: integer
+          example: 1
+        period_id:
+          type: integer
+        name:
+          type: string
+          example: Money Line
+        market_description:
+          type: string
+        participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketParticipantResponse'
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

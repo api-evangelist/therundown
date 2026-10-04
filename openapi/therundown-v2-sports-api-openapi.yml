@@ -371,39 +371,37 @@ paths:
                   name: Western Conference
 components:
   schemas:
-    SportsResponse:
+    Team:
       type: object
       properties:
-        sports:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sport'
-    TeamsResponse:
-      type: object
-      properties:
-        teams:
-          type: array
-          items:
-            $ref: '#/components/schemas/Team'
-    DivisionsResponse:
-      type: object
-      properties:
-        divisions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Division'
-    Sport:
-      type: object
-      properties:
-        sport_id:
+        team_id:
           type: integer
-          example: 4
-        sport_name:
+          example: 1
+        name:
           type: string
-          example: NBA
-    Conference:
+          example: New England
+        mascot:
+          type: string
+          example: Patriots
+        abbreviation:
+          type: string
+          example: NE
+        ranking:
+          type:
+          - integer
+          - 'null'
+        record:
+          type: string
+          example: 10-7
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
+    Division:
       type: object
       properties:
+        division_id:
+          type: integer
         conference_id:
           type: integer
         sport_id:
@@ -447,43 +445,15 @@ components:
         updated_at:
           type: string
           format: date-time
-    Team:
+    Sport:
       type: object
       properties:
-        team_id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: New England
-        mascot:
-          type: string
-          example: Patriots
-        abbreviation:
-          type: string
-          example: NE
-        ranking:
-          type:
-          - integer
-          - 'null'
-        record:
-          type: string
-          example: 10-7
-        conference:
-          $ref: '#/components/schemas/Conference'
-        division:
-          $ref: '#/components/schemas/Division'
-    Division:
-      type: object
-      properties:
-        division_id:
-          type: integer
-        conference_id:
-          type: integer
         sport_id:
           type: integer
-        name:
+          example: 4
+        sport_name:
           type: string
+          example: NBA
     ConferencesResponse:
       type: object
       properties:
@@ -491,7 +461,43 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Conference'
+    DivisionsResponse:
+      type: object
+      properties:
+        divisions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Division'
+    TeamsResponse:
+      type: object
+      properties:
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+    SportsResponse:
+      type: object
+      properties:
+        sports:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sport'
+    Conference:
+      type: object
+      properties:
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
   parameters:
+    SportIDsQuery:
+      name: sport_ids
+      in: query
+      schema:
+        type: string
+      description: Comma-separated sport IDs
     OffsetQuery:
       name: offset
       in: query
@@ -510,12 +516,6 @@ components:
         - iso8601
         - epoch
       description: Date format — `iso8601` returns date strings, `epoch` returns Unix timestamps
-    SportIDsQuery:
-      name: sport_ids
-      in: query
-      schema:
-        type: string
-      description: Comma-separated sport IDs
     SportIDPath:
       name: sportID
       in: path

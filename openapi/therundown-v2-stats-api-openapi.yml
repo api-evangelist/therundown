@@ -176,42 +176,6 @@ paths:
                 sport_id: 4
 components:
   schemas:
-    PlayerGameStatResponse:
-      type: object
-      properties:
-        player:
-          $ref: '#/components/schemas/PlayerNormalized'
-        meta:
-          $ref: '#/components/schemas/StatsMeta'
-        stats:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlayerGameStats'
-    TeamNormalized:
-      type: object
-      properties:
-        team_id:
-          type: integer
-        name:
-          type: string
-        mascot:
-          type: string
-        abbreviation:
-          type: string
-        record:
-          type: string
-        is_home:
-          type: boolean
-        is_away:
-          type: boolean
-        ranking:
-          type:
-          - integer
-          - 'null'
-        conference:
-          $ref: '#/components/schemas/Conference'
-        division:
-          $ref: '#/components/schemas/Division'
     PlayerNormalized:
       type: object
       properties:
@@ -270,9 +234,11 @@ components:
         throws:
           type: string
           description: MLB only — throwing arm
-    Conference:
+    Division:
       type: object
       properties:
+        division_id:
+          type: integer
         conference_id:
           type: integer
         sport_id:
@@ -298,35 +264,6 @@ components:
           type: string
         value:
           type: string
-    PlayerGameStats:
-      type: object
-      properties:
-        event_id:
-          type: string
-        player_id:
-          type:
-          - integer
-          - 'null'
-        player:
-          $ref: '#/components/schemas/PlayerNormalized'
-        stat_id:
-          type:
-          - integer
-          - 'null'
-        stat:
-          $ref: '#/components/schemas/StatDefinition'
-        value:
-          type: string
-        updated_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    StatsMeta:
-      type: object
-      properties:
-        complete:
-          type: boolean
     TeamGameStatResponse:
       type: object
       properties:
@@ -357,17 +294,80 @@ components:
           type: string
         sport_id:
           type: integer
-    Division:
+    PlayerGameStats:
       type: object
       properties:
-        division_id:
-          type: integer
+        event_id:
+          type: string
+        player_id:
+          type:
+          - integer
+          - 'null'
+        player:
+          $ref: '#/components/schemas/PlayerNormalized'
+        stat_id:
+          type:
+          - integer
+          - 'null'
+        stat:
+          $ref: '#/components/schemas/StatDefinition'
+        value:
+          type: string
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    PlayerGameStatResponse:
+      type: object
+      properties:
+        player:
+          $ref: '#/components/schemas/PlayerNormalized'
+        meta:
+          $ref: '#/components/schemas/StatsMeta'
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerGameStats'
+    StatsMeta:
+      type: object
+      properties:
+        complete:
+          type: boolean
+    Conference:
+      type: object
+      properties:
         conference_id:
           type: integer
         sport_id:
           type: integer
         name:
           type: string
+    TeamNormalized:
+      type: object
+      properties:
+        team_id:
+          type: integer
+        name:
+          type: string
+        mascot:
+          type: string
+        abbreviation:
+          type: string
+        record:
+          type: string
+        is_home:
+          type: boolean
+        is_away:
+          type: boolean
+        ranking:
+          type:
+          - integer
+          - 'null'
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
   parameters:
     EventIDPath:
       name: eventID
