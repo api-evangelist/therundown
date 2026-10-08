@@ -167,3 +167,60 @@ plans:
       - Dedicated account manager
       - Enterprise SLA and uptime guarantee
       - REST API access
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  - subscription
+  units: []
+  plans:
+  - name: Free
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Starter
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pro
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Ultra
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Super
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Mega
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Max
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
