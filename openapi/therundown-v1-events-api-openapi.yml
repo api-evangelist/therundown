@@ -431,142 +431,6 @@ paths:
                   event_date: '2026-02-12T00:00:00Z'
 components:
   schemas:
-    Region:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-    V1Spread:
-      type: object
-      properties:
-        point_spread_away:
-          type: number
-          example: 3.5
-        point_spread_away_delta:
-          type: number
-        point_spread_home:
-          type: number
-          example: -3.5
-        point_spread_home_delta:
-          type: number
-        point_spread_away_money:
-          type: number
-          example: -110
-        point_spread_away_money_delta:
-          type: number
-        point_spread_home_money:
-          type: number
-          example: -110
-        point_spread_home_money_delta:
-          type: number
-        date_updated:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        format:
-          type: string
-        extended_spreads:
-          type: array
-          items:
-            $ref: '#/components/schemas/V1Spread'
-    V1EventsResponse:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/V1Event'
-    V1Moneyline:
-      type: object
-      properties:
-        moneyline_away:
-          type: number
-          description: Away team moneyline. 0.0001 = off the board.
-          example: 150
-        moneyline_away_delta:
-          type: number
-        moneyline_home:
-          type: number
-          example: -180
-        moneyline_home_delta:
-          type: number
-        moneyline_draw:
-          type: number
-          description: Draw moneyline (soccer, UFC)
-        moneyline_draw_delta:
-          type: number
-        date_updated:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        format:
-          type: string
-          example: American
-    V1LinePeriods:
-      type: object
-      properties:
-        period_full_game:
-          $ref: '#/components/schemas/V1Line'
-        period_first_half:
-          $ref: '#/components/schemas/V1Line'
-        period_second_half:
-          $ref: '#/components/schemas/V1Line'
-        period_first_period:
-          $ref: '#/components/schemas/V1Line'
-        period_second_period:
-          $ref: '#/components/schemas/V1Line'
-        period_third_period:
-          $ref: '#/components/schemas/V1Line'
-        period_fourth_period:
-          $ref: '#/components/schemas/V1Line'
-        period_live_full_game:
-          $ref: '#/components/schemas/V1Line'
-        period_live_first_half:
-          $ref: '#/components/schemas/V1Line'
-        period_live_second_half:
-          $ref: '#/components/schemas/V1Line'
-        period_live_first_period:
-          $ref: '#/components/schemas/V1Line'
-        period_live_second_period:
-          $ref: '#/components/schemas/V1Line'
-        period_live_third_period:
-          $ref: '#/components/schemas/V1Line'
-        period_live_fourth_period:
-          $ref: '#/components/schemas/V1Line'
-    Meta:
-      type: object
-      properties:
-        delta_last_id:
-          type: string
-    Pitcher:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        throws_left_handed:
-          type:
-          - boolean
-          - 'null'
-        throws_right_handed:
-          type:
-          - boolean
-          - 'null'
-        bats_left_handed:
-          type:
-          - boolean
-          - 'null'
-        bats_right_handed:
-          type:
-          - boolean
-          - 'null'
     TeamNormalized:
       type: object
       properties:
@@ -592,48 +456,6 @@ components:
           $ref: '#/components/schemas/Conference'
         division:
           $ref: '#/components/schemas/Division'
-    Division:
-      type: object
-      properties:
-        division_id:
-          type: integer
-        conference_id:
-          type: integer
-        sport_id:
-          type: integer
-        name:
-          type: string
-    Schedule:
-      type: object
-      properties:
-        season_type:
-          type: string
-          example: Regular Season
-        season_year:
-          type: integer
-          example: 2026
-        conference_competition:
-          type:
-          - boolean
-          - 'null'
-        conference_name:
-          type: string
-        league_name:
-          type:
-          - string
-          - 'null'
-        event_name:
-          type: string
-        attendance:
-          type: string
-        event_headline:
-          type: string
-        week:
-          type: integer
-        week_name:
-          type: string
-        week_detail:
-          type: string
     V1Line:
       type: object
       properties:
@@ -666,116 +488,40 @@ components:
           type: integer
         period_description:
           type: string
-    Score:
+    Pitcher:
       type: object
       properties:
-        event_id:
-          type: string
-        event_status:
-          type: string
-          description: 'Event status. Common values: STATUS_SCHEDULED, STATUS_IN_PROGRESS, STATUS_FINAL, STATUS_POSTPONED, STATUS_CANCELED, STATUS_SUSPENDED, STATUS_DELAYED, STATUS_RAIN_DELAY, STATUS_HALFTIME, STATUS_END_PERIOD, STATUS_END_OF_REGULATION, STATUS_OVERTIME, STATUS_FIRST_HALF, STATUS_SECOND_HALF
-
-            '
-        team_id_away:
+        id:
           type: integer
-          description: Away team ID. Omitted when zero.
-        team_id_home:
-          type: integer
-          description: Home team ID. Omitted when zero.
-        score_away:
-          type: integer
-        score_home:
-          type: integer
-        winner_away:
-          type: integer
-        winner_home:
-          type: integer
-        score_away_by_period:
-          type: array
-          items:
-            type: integer
-        score_home_by_period:
-          type: array
-          items:
-            type: integer
-        venue_name:
+        name:
           type: string
-          description: Arena or stadium name. May be an empty string when unavailable from the live feed.
-        venue_location:
-          type: string
-          description: City and state. May be an empty string when unavailable from the live feed.
-        game_clock:
-          type: integer
-        display_clock:
-          type: string
-        game_period:
-          type: integer
-        broadcast:
-          type: string
-        event_status_detail:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-    Conference:
+        throws_left_handed:
+          type:
+          - boolean
+          - 'null'
+        throws_right_handed:
+          type:
+          - boolean
+          - 'null'
+        bats_left_handed:
+          type:
+          - boolean
+          - 'null'
+        bats_right_handed:
+          type:
+          - boolean
+          - 'null'
+    Division:
       type: object
       properties:
+        division_id:
+          type: integer
         conference_id:
           type: integer
         sport_id:
           type: integer
         name:
           type: string
-    Affiliate:
-      type: object
-      properties:
-        affiliate_id:
-          type: integer
-          example: 19
-        affiliate_name:
-          type: string
-          example: Draftkings
-        affiliate_url:
-          type: string
-          example: https://draftkings.com
-        regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Region'
-    V1Total:
-      type: object
-      properties:
-        total_over:
-          type: number
-          example: 47.5
-        total_over_delta:
-          type: number
-        total_under:
-          type: number
-          example: 47.5
-        total_under_delta:
-          type: number
-        total_over_money:
-          type: number
-          example: -110
-        total_over_money_delta:
-          type: number
-        total_under_money:
-          type: number
-          example: -110
-        total_under_money_delta:
-          type: number
-        date_updated:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        format:
-          type: string
-        extended_totals:
-          type: array
-          items:
-            $ref: '#/components/schemas/V1Total'
     V1Event:
       type: object
       properties:
@@ -829,6 +575,260 @@ components:
           $ref: '#/components/schemas/Pitcher'
         pitcher_home:
           $ref: '#/components/schemas/Pitcher'
+    V1EventsResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Event'
+    Conference:
+      type: object
+      properties:
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+    V1Moneyline:
+      type: object
+      properties:
+        moneyline_away:
+          type: number
+          description: Away team moneyline. 0.0001 = off the board.
+          example: 150
+        moneyline_away_delta:
+          type: number
+        moneyline_home:
+          type: number
+          example: -180
+        moneyline_home_delta:
+          type: number
+        moneyline_draw:
+          type: number
+          description: Draw moneyline (soccer, UFC)
+        moneyline_draw_delta:
+          type: number
+        date_updated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        format:
+          type: string
+          example: American
+    Schedule:
+      type: object
+      properties:
+        season_type:
+          type: string
+          example: Regular Season
+        season_year:
+          type: integer
+          example: 2026
+        conference_competition:
+          type:
+          - boolean
+          - 'null'
+        conference_name:
+          type: string
+        league_name:
+          type:
+          - string
+          - 'null'
+        event_name:
+          type: string
+        attendance:
+          type: string
+        event_headline:
+          type: string
+        week:
+          type: integer
+        week_name:
+          type: string
+        week_detail:
+          type: string
+    Score:
+      type: object
+      properties:
+        event_id:
+          type: string
+        event_status:
+          type: string
+          description: 'Event status. Common values: STATUS_SCHEDULED, STATUS_IN_PROGRESS, STATUS_FINAL, STATUS_POSTPONED, STATUS_CANCELED, STATUS_SUSPENDED, STATUS_DELAYED, STATUS_RAIN_DELAY, STATUS_HALFTIME, STATUS_END_PERIOD, STATUS_END_OF_REGULATION, STATUS_OVERTIME, STATUS_FIRST_HALF, STATUS_SECOND_HALF
+
+            '
+        team_id_away:
+          type: integer
+          description: Away team ID. Omitted when zero.
+        team_id_home:
+          type: integer
+          description: Home team ID. Omitted when zero.
+        score_away:
+          type: integer
+        score_home:
+          type: integer
+        winner_away:
+          type: integer
+        winner_home:
+          type: integer
+        score_away_by_period:
+          type: array
+          items:
+            type: integer
+        score_home_by_period:
+          type: array
+          items:
+            type: integer
+        venue_name:
+          type: string
+          description: Arena or stadium name. May be an empty string when unavailable from the live feed.
+        venue_location:
+          type: string
+          description: City and state. May be an empty string when unavailable from the live feed.
+        game_clock:
+          type: integer
+        display_clock:
+          type: string
+        game_period:
+          type: integer
+        broadcast:
+          type: string
+        event_status_detail:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    Meta:
+      type: object
+      properties:
+        delta_last_id:
+          type: string
+    Region:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    V1Total:
+      type: object
+      properties:
+        total_over:
+          type: number
+          example: 47.5
+        total_over_delta:
+          type: number
+        total_under:
+          type: number
+          example: 47.5
+        total_under_delta:
+          type: number
+        total_over_money:
+          type: number
+          example: -110
+        total_over_money_delta:
+          type: number
+        total_under_money:
+          type: number
+          example: -110
+        total_under_money_delta:
+          type: number
+        date_updated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        format:
+          type: string
+        extended_totals:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Total'
+    Affiliate:
+      type: object
+      properties:
+        affiliate_id:
+          type: integer
+          example: 19
+        affiliate_name:
+          type: string
+          example: Draftkings
+        affiliate_url:
+          type: string
+          example: https://draftkings.com
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+    V1LinePeriods:
+      type: object
+      properties:
+        period_full_game:
+          $ref: '#/components/schemas/V1Line'
+        period_first_half:
+          $ref: '#/components/schemas/V1Line'
+        period_second_half:
+          $ref: '#/components/schemas/V1Line'
+        period_first_period:
+          $ref: '#/components/schemas/V1Line'
+        period_second_period:
+          $ref: '#/components/schemas/V1Line'
+        period_third_period:
+          $ref: '#/components/schemas/V1Line'
+        period_fourth_period:
+          $ref: '#/components/schemas/V1Line'
+        period_live_full_game:
+          $ref: '#/components/schemas/V1Line'
+        period_live_first_half:
+          $ref: '#/components/schemas/V1Line'
+        period_live_second_half:
+          $ref: '#/components/schemas/V1Line'
+        period_live_first_period:
+          $ref: '#/components/schemas/V1Line'
+        period_live_second_period:
+          $ref: '#/components/schemas/V1Line'
+        period_live_third_period:
+          $ref: '#/components/schemas/V1Line'
+        period_live_fourth_period:
+          $ref: '#/components/schemas/V1Line'
+    V1Spread:
+      type: object
+      properties:
+        point_spread_away:
+          type: number
+          example: 3.5
+        point_spread_away_delta:
+          type: number
+        point_spread_home:
+          type: number
+          example: -3.5
+        point_spread_home_delta:
+          type: number
+        point_spread_away_money:
+          type: number
+          example: -110
+        point_spread_away_money_delta:
+          type: number
+        point_spread_home_money:
+          type: number
+          example: -110
+        point_spread_home_money_delta:
+          type: number
+        date_updated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        format:
+          type: string
+        extended_spreads:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Spread'
   parameters:
     AffiliateIDsQuery:
       name: affiliate_ids

@@ -290,43 +290,15 @@ paths:
                     is_home: true
 components:
   schemas:
-    Team:
+    Sport:
       type: object
       properties:
-        team_id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: New England
-        mascot:
-          type: string
-          example: Patriots
-        abbreviation:
-          type: string
-          example: NE
-        ranking:
-          type:
-          - integer
-          - 'null'
-        record:
-          type: string
-          example: 10-7
-        conference:
-          $ref: '#/components/schemas/Conference'
-        division:
-          $ref: '#/components/schemas/Division'
-    Division:
-      type: object
-      properties:
-        division_id:
-          type: integer
-        conference_id:
-          type: integer
         sport_id:
           type: integer
-        name:
+          example: 4
+        sport_name:
           type: string
+          example: NBA
     ScheduleResponse:
       type: object
       properties:
@@ -334,6 +306,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ScheduledEvent'
+    TeamsResponse:
+      type: object
+      properties:
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+    Conference:
+      type: object
+      properties:
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+    SportsResponse:
+      type: object
+      properties:
+        sports:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sport'
     ScheduledEvent:
       type: object
       properties:
@@ -400,15 +395,6 @@ components:
           type:
           - integer
           - 'null'
-    Sport:
-      type: object
-      properties:
-        sport_id:
-          type: integer
-          example: 4
-        sport_name:
-          type: string
-          example: NBA
     ConferencesResponse:
       type: object
       properties:
@@ -416,6 +402,43 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Conference'
+    Division:
+      type: object
+      properties:
+        division_id:
+          type: integer
+        conference_id:
+          type: integer
+        sport_id:
+          type: integer
+        name:
+          type: string
+    Team:
+      type: object
+      properties:
+        team_id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: New England
+        mascot:
+          type: string
+          example: Patriots
+        abbreviation:
+          type: string
+          example: NE
+        ranking:
+          type:
+          - integer
+          - 'null'
+        record:
+          type: string
+          example: 10-7
+        conference:
+          $ref: '#/components/schemas/Conference'
+        division:
+          $ref: '#/components/schemas/Division'
     DivisionsResponse:
       type: object
       properties:
@@ -423,38 +446,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Division'
-    TeamsResponse:
-      type: object
-      properties:
-        teams:
-          type: array
-          items:
-            $ref: '#/components/schemas/Team'
-    SportsResponse:
-      type: object
-      properties:
-        sports:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sport'
-    Conference:
-      type: object
-      properties:
-        conference_id:
-          type: integer
-        sport_id:
-          type: integer
-        name:
-          type: string
   parameters:
-    OffsetQuery:
-      name: offset
-      in: query
-      schema:
-        type: integer
-        default: 0
-        example: 300
-      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
     DateFormatQuery:
       name: format
       in: query
@@ -465,6 +457,14 @@ components:
         - iso8601
         - epoch
       description: Date format — `iso8601` returns date strings, `epoch` returns Unix timestamps
+    OffsetQuery:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+        example: 300
+      description: UTC offset in **minutes** for the date boundary. Use `300` for US Central, `240` for Eastern, `360` for Mountain, `420` for Pacific. Without this, the API day boundary is midnight UTC.
     SportIDPath:
       name: sportID
       in: path

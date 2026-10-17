@@ -62,13 +62,6 @@ paths:
                   status: Active
 components:
   schemas:
-    PlayersResponse:
-      type: object
-      properties:
-        players:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlayerNormalized'
     PlayerNormalized:
       type: object
       properties:
@@ -127,6 +120,13 @@ components:
         throws:
           type: string
           description: MLB only — throwing arm
+    PlayersResponse:
+      type: object
+      properties:
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerNormalized'
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
