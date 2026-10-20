@@ -19,3 +19,38 @@ tools_note: No tool list captured. This manifest records a PROBED, reachable end
   not perform. Run signals/audit_mcp_authorship.py --probe to enumerate tools and settle platform-vs-provider
   authorship. Do NOT derive a tool list from the OpenAPI and store it here -- that is a candidate manifest,
   and it belongs under an X-MCPServerCandidate pointer.
+tool_quality:
+  tool_count: 85
+  tokens_total: 76641
+  tokens_per_tool_median: 809
+  heavy_tools:
+  - name: v2GetFuturesForSport
+    tokens: 2104
+  - name: capture_live_stream
+    tokens: 2002
+  - name: v2GetEventsBySportAndDate
+    tokens: 1910
+  - name: v2GetClosingBySportAndDate
+    tokens: 1782
+  - name: v2GetOpenersBySportAndDate
+    tokens: 1669
+  heavy_tool_count: 16
+  params_total: 145
+  params_undescribed: 133
+  params_described_pct: 8.3
+  tools_with_undescribed_params: 75
+  tools_annotated: 85
+  annotated_pct: 100.0
+  state_changing_unhinted: []
+  tools_missing_schema: 0
+  short_descriptions: 0
+  duplicate_descriptions: 6
+  duplicate_names: 0
+  nonportable_names: []
+  output_schema_count: 85
+  token_estimate: chars/3.6 of each compact tool definition
+  source: mcp/therundown-mcp-tools.json
+  measured: '2026-10-20'
+  scored: false
+  note: Facts from the saved tools/list capture (mcp_tool_quality.py); recorded, not scored. Checks learned
+    from Glimind's agent-readiness audit.
