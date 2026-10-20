@@ -54,3 +54,562 @@ tool_quality:
   scored: false
   note: Facts from the saved tools/list capture (mcp_tool_quality.py); recorded, not scored. Checks learned
     from Glimind's agent-readiness audit.
+tools:
+- name: list_sports
+  description: List current canonical sport IDs and names. Do not use a catalog row as evidence of current
+    events, prices, or plan access.
+- name: list_affiliates
+  description: List currently published affiliate IDs and names, excluding retired affiliates. Do not
+    use a catalog row as proof of plan access or an open offer for a sport or market.
+- name: list_markets
+  description: Discover market definitions, or available markets for one sport and date. Do not use definitions
+    as price quotes or combine live with date-based discovery. Catalog sport/live filters use catalog
+    metadata.
+- name: list_events
+  description: Find event IDs and summaries for one sport and date. Do not use this tool for futures or
+    as a price quote; use the returned exact event ID with get_main_lines. Defaults to open main lines
+    for prematch markets 1/2/3 and affiliates 19/23. Each local page refetches a metered snapshot.
+- name: get_main_lines
+  description: Fetch open per-affiliate main lines for one event_id. Do not call until list_events returned
+    that exact ID, and do not treat retrieved_at as price freshness. Preserves participant identity, line
+    value and price updated_at. Request live markets 41/42/43 explicitly; each local page is metered.
+- name: list_futures
+  description: Read one sport's scoped futures competition page. Do not use this for dated event discovery
+    or treat a partial page as a complete listing. Futures require an eligible Ultra plan or higher and
+    use opaque cursor pagination.
+- name: v2GetDelta
+  description: "Get event changes since a delta ID Returns raw JSON delta payloads for events that changed\
+    \ since `last_id`. Each delta entry is a raw JSON string containing the full event update — the `data`\
+    \ field is a serialized JSON string, not a parsed object.\n\nThe response is wrapped in a `meta` object\
+    \ containing the `delta_last_id` cursor for subsequent polling.\n Read-only Product data or price\
+    \ calculation. Use returned canonical IDs. Access, delay and metered usage follow your connected account;\
+    \ never infer coverage from an empty result. One bounded request, no background polling or automatic\
+    \ retry. Affiliate 27 is excluded. No wagers, account changes or guarantee of returns."
+- name: v2GetAllStats
+  description: List all stat definitions Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v2GetStatsSample
+  description: "Get a fixed complete-game stats sample Returns a static, marked sample game box for schema\
+    \ and parsing tests.\nIt requires an API key but consumes zero data points. It is not a\nproduction-data\
+    \ entitlement and must not be polled.\n Read-only Product data or price calculation. Use returned\
+    \ canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage\
+    \ from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27\
+    \ is excluded. No wagers, account changes or guarantee of returns."
+- name: v2GetStatsByEvent
+  description: Get team game stats for an event Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetPlayerStatsByEvent
+  description: Get player game stats for an event Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetAllMarkets
+  description: List all market definitions Returns all canonical market definitions with IDs, names, period
+    info, and whether the line value represents a participant. Read-only Product data or price calculation.
+    Use returned canonical IDs. Access, delay and metered usage follow your connected account; never infer
+    coverage from an empty result. One bounded request, no background polling or automatic retry. Affiliate
+    27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetMarketsDelta
+  description: "Get market price changes since a given ID Returns market line price changes (new, updated,\
+    \ closed) since the specified `last_id`. Use for efficient polling.\n\n**Bootstrap flow:** On known\
+    \ zero-delay access, call `GET /api/v2/sports/{sportID}/events/{date}` with the snapshot scope you\
+    \ need. Use its positive whole-integer `meta.delta_last_id` only when that response explicitly reports\
+    \ `X-Data-Delay-Seconds: 0`, then pass it as `last_id`. If the header is positive, absent, or invalid,\
+    \ keep using scoped snapshots; do not substitute `0`.\n\n**Staleness guard:** Cursors older than 30\
+    \ minutes are rejected with HTTP 400. After a cursor error, take at most one fresh scoped snapshot\
+    \ and resume only when it meets the same zero-delay and valid-cursor conditions. Do not loop bootstrap\
+    \ requests.\n\n**Core live markets:** Event snapshots expand `market_ids=1,2,3` to include in-play\
+    \ IDs. This delta endpoint filters IDs literally, so poll `1,2,3,41,42,43` to receive full-game core\
+    \ updates before and during play. Returned rows retain their actual market IDs.\n Read-only Product\
+    \ data or price calculation. Use returned canonical IDs. Access, delay and metered usage follow your\
+    \ connected account; never infer coverage from an empty result. One bounded request, no background\
+    \ polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes or guarantee of\
+    \ returns."
+- name: v2GetMarketLinePriceHistory
+  description: Get price history for specific market line prices Read-only Product data or price calculation.
+    Use returned canonical IDs. Access, delay and metered usage follow your connected account; never infer
+    coverage from an empty result. One bounded request, no background polling or automatic retry. Affiliate
+    27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetMarketsParticipants
+  description: Get market participants Lists teams, players, or result sides for the requested event and
+    markets. Use `participant_id` from this response, rather than `id`, to filter a participant-specific
+    chart. Market `3` totals use `TYPE_RESULT` Over and Under participants, while markets `1` and `2`
+    use `TYPE_TEAM` participants. For example, discover totals with `GET /api/v2/markets/participants?event_id=733a06aa4f4f2a3af7872c3667a60f22&market_ids=3&participant_type=TYPE_RESULT`,
+    then request each discovered side from `GET /api/v2/events/{eventID}/markets/{marketID}/history`.
+    Read-only Product data or price calculation. Use returned canonical IDs. Access, delay and metered
+    usage follow your connected account; never infer coverage from an empty result. One bounded request,
+    no background polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes or
+    guarantee of returns.
+- name: v2GetTeamByID
+  description: Get a team by ID Read-only Product data or price calculation. Use returned canonical IDs.
+    Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v2GetPlayersByTeam
+  description: Get players for a team Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v2GetTeamStats
+  description: Get season stats for a team Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v2GetPlayerStatsByTeam
+  description: Get player season stats for a team Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetPlayerByID
+  description: Get a player by ID Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v2GetSports
+  description: List all sports Returns all available sports with their IDs. No authentication required.
+    Read-only Product data or price calculation. Use returned canonical IDs. Access, delay and metered
+    usage follow your connected account; never infer coverage from an empty result. One bounded request,
+    no background polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes or
+    guarantee of returns.
+- name: v2GetDatesBySportIDs
+  description: Get available dates for multiple sports Returns dates with events for the specified sport
+    IDs. Read-only Product data or price calculation. Use returned canonical IDs. Access, delay and metered
+    usage follow your connected account; never infer coverage from an empty result. One bounded request,
+    no background polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes or
+    guarantee of returns.
+- name: v2GetMarketsByDate
+  description: Get available markets by date Returns available market definitions for each sport on the
+    given date. Read-only Product data or price calculation. Use returned canonical IDs. Access, delay
+    and metered usage follow your connected account; never infer coverage from an empty result. One bounded
+    request, no background polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes
+    or guarantee of returns.
+- name: v2GetEventsByDate
+  description: Get events across sports for a date Returns schedule listing dates grouped by sport (`sport_id`
+    → date strings) for the given date. Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v2GetTeamsBySport
+  description: Get teams for a sport Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v2GetEventsBySportAndDate
+  description: "Get events with markets for a sport and date Returns events with full market/odds data\
+    \ for the specified sport and date. This is the primary endpoint for building odds screens.\n\n`main_line=true`\
+    \ also excludes closed prices while selecting main lines.\n\nFor known zero-delay access, this response's\
+    \ positive whole-integer `meta.delta_last_id` can bootstrap `/api/v2/markets/delta` only when this\
+    \ response explicitly reports `X-Data-Delay-Seconds: 0`. If that header is positive, absent, or invalid,\
+    \ use scoped snapshots instead; do not start market-delta polling with `0`.\n Read-only Product data\
+    \ or price calculation. Use returned canonical IDs. Access, delay and metered usage follow your connected\
+    \ account; never infer coverage from an empty result. One bounded request, no background polling or\
+    \ automatic retry. Affiliate 27 is excluded. No wagers, account changes or guarantee of returns."
+- name: v2GetDatesBySportID
+  description: Get available dates for a sport Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetDivisionsBySport
+  description: Get divisions for a sport Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v2GetConferencesBySport
+  description: Get conferences for a sport Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v2GetFuturesForSport
+  description: "Get futures for a sport Returns futures/outright **competition events** (e.g. tournament\
+    \ winner) for a sport, with future-class markets in the standard V2 market → participants → lines\
+    \ → prices shape and per-market settlement state. Competition events are excluded from the dated game\
+    \ endpoints and served only here. **Early access — requires an Ultra plan or higher.**\n\nA competition\
+    \ is an **interval**, not an instant: `event_date` is when it starts and `settle_by` is when it must\
+    \ have graded. Futures events carry no `teams` array and no score — the human-readable identity is\
+    \ `schedule.event_name`.\n\n**Date filtering uses interval overlap.** An event is returned when its\
+    \ `[event_date, settle_by]` span intersects the requested window — `settle_by >= from` and `event_date\
+    \ <= to`. So the default `from=now` means \"in flight right now\" and matches a season future that\
+    \ started months ago.\n\n**Paging is keyset-based** (no skip parameter). When more results exist the\
+    \ response carries `meta.next_cursor`; pass it back verbatim as `cursor`. Ordering is soonest-to-resolve\
+    \ first: `settle_by`, then `event_date`, then `event_id`. `meta.count` is the number of events on\
+    \ the page, `meta.has_more` says whether another page exists, and `meta.total` is the number of events\
+    \ matching your filters across all pages, so a single call tells you the size of the listing.\n\n\
+    **Default visibility:** settled markets are removed per market, an event is hidden once every requested\
+    \ future-class market on it has settled, and terminal (final/canceled/abandoned) events are excluded.\
+    \ `include_settled=true` lifts all of those **and** the default `from=now`, so settled history is\
+    \ reachable.\n\n**Delta bootstrap:** On known zero-delay access, `meta.delta_last_id` can seed `GET\
+    \ /api/v2/markets/delta` only when this snapshot explicitly reports `X-Data-Delay-Seconds: 0`; it\
+    \ is a positive whole-integer cursor. With a positive, absent, or invalid delay header, keep using\
+    \ scoped snapshots and do not substitute `0`. Futures market IDs are **not** in the delta feed's default\
+    \ set — pass them explicitly (e.g. `market_ids=1141`) when polling. See the [Futures guide](/guides/futures)\
+    \ for the full integration recipe.\n Read-only Product data or price calculation. Use returned canonical\
+    \ IDs. Access, delay and metered usage follow your connected account; never infer coverage from an\
+    \ empty result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded.\
+    \ No wagers, account changes or guarantee of returns."
+- name: v2GetFuturesEventByID
+  description: "Get one futures competition, with progress and leaders Returns **one** futures/outright\
+    \ competition event — the same envelope and event object shape as `GET /api/v2/sports/{sportID}/futures`\
+    \ (`meta.delta_last_id`, `events` with a single event carrying `event_id`, `sport_id`, `event_date`,\
+    \ `settle_by`, `event_status`, `settlement`, `schedule`, `markets`) — plus up to three optional detail-only\
+    \ keys not served on the listing. **Early access — requires an Ultra plan or higher.**\n\n**`progress`**\
+    \ — the competition's live non-odds state (a golf leaderboard, a team-sport standings table), refreshed\
+    \ on its own cycle independent of the odds board. `entries[].participant_id` is the same participant\
+    \ ID space `markets[].participants[].id` uses, so a progress row joins directly to a price. Omitted\
+    \ entirely (never `null`) when no progress document exists yet for the competition — \"priced, no\
+    \ odds-board progress\" is the normal state for a fresh team-championship board, not a degraded response.\
+    \ See [Competition Stats (Progress)](/guides/futures#competition-stats-progress) for the full field-by-field\
+    \ breakdown of both kinds live today.\n\n**`leaders`** / **`player_leaders`** — optional curated season-stats\
+    \ leaderboards, team-grain and player-grain respectively, for a hand-verified set of sports. Both\
+    \ reuse the same `{stat, stat_id, season_year, entries[]}` shape and are omitted entirely (never an\
+    \ empty array) when the sport is not curated or no stat rows exist yet — see [Competition Stats (Progress)](/guides/futures#competition-stats-progress)\
+    \ for the curated sport list and the two distinct entry ID spaces.\n\n**Settled competitions are always\
+    \ served here.** Unlike the listing (which hides settled markets and terminal events unless `include_settled=true`),\
+    \ this is a deep link to a specific competition you already hold the ID for, and it keeps working\
+    \ after settlement, with the graded results visible in `settlement`. There is no `include_settled`\
+    \ parameter on this endpoint.\n Read-only Product data or price calculation. Use returned canonical\
+    \ IDs. Access, delay and metered usage follow your connected account; never infer coverage from an\
+    \ empty result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded.\
+    \ No wagers, account changes or guarantee of returns."
+- name: v2GetOpenersBySportAndDate
+  description: Get opening lines for a sport and date Returns events with the earliest recorded price
+    for each available line at each sportsbook. Opening snapshots are available whenever a price has been
+    recorded, including before, during, or after an event. Read-only Product data or price calculation.
+    Use returned canonical IDs. Access, delay and metered usage follow your connected account; never infer
+    coverage from an empty result. One bounded request, no background polling or automatic retry. Affiliate
+    27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetClosingBySportAndDate
+  description: "Get closing lines for a sport and date Returns events with the latest recorded price for\
+    \ each available line and sportsbook at or before each event's scheduled start time. Before an event\
+    \ starts, the snapshot is provisional. Period markets use the event start time as their closing cutoff.\n\
+    \nHistorical-data access and the event-date lookback depend on your plan. Omit `hide_closed` or use\
+    \ `false` to include currently closed prices in completed-event snapshots. Events can be returned\
+    \ without prices when no recorded lines match the filters. Use market history for price changes over\
+    \ time; see the [Historical Odds guide](/guides/historical-odds).\n Read-only Product data or price\
+    \ calculation. Use returned canonical IDs. Access, delay and metered usage follow your connected account;\
+    \ never infer coverage from an empty result. One bounded request, no background polling or automatic\
+    \ retry. Affiliate 27 is excluded. No wagers, account changes or guarantee of returns."
+- name: v2GetMarketsBySportAndDate
+  description: Get available markets for a sport and date Read-only Product data or price calculation.
+    Use returned canonical IDs. Access, delay and metered usage follow your connected account; never infer
+    coverage from an empty result. One bounded request, no background polling or automatic retry. Affiliate
+    27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetBestOddsBySportAndDate
+  description: "Get Bulk Best Lines by Sport and Date Returns the best currently open sportsbook price\
+    \ for each matching\nevent/market/participant selection on a sport date. This is the\ncollection form\
+    \ of the event best-line endpoint and avoids making one\nrequest per event. By default it considers\
+    \ only main lines; set\ninclude_alternates=true to rank alternate and extended lines.\n Read-only\
+    \ Product data or price calculation. Use returned canonical IDs. Access, delay and metered usage follow\
+    \ your connected account; never infer coverage from an empty result. One bounded request, no background\
+    \ polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes or guarantee of\
+    \ returns."
+- name: v2GetSteamersBySportAndDate
+  description: "Get Steamers by Sport and Date Returns open prices for a sport and event date whose implied\n\
+    probability moved the most during the requested lookback window.\n Read-only Product data or price\
+    \ calculation. Use returned canonical IDs. Access, delay and metered usage follow your connected account;\
+    \ never infer coverage from an empty result. One bounded request, no background polling or automatic\
+    \ retry. Affiliate 27 is excluded. No wagers, account changes or guarantee of returns."
+- name: v2GetOutliersBySportAndDate
+  description: "Get Bookmaker Outliers by Sport and Date Returns prices from one sportsbook that are most\
+    \ out of line with the\npeer-book consensus for matching event, market, period, participant,\nand\
+    \ line. The date scope keeps the query bounded and cacheable.\n Read-only Product data or price calculation.\
+    \ Use returned canonical IDs. Access, delay and metered usage follow your connected account; never\
+    \ infer coverage from an empty result. One bounded request, no background polling or automatic retry.\
+    \ Affiliate 27 is excluded. No wagers, account changes or guarantee of returns."
+- name: v2GetAffiliates
+  description: "List all sportsbooks/affiliates Returns currently published sportsbooks with IDs, names,\
+    \ URLs, and an integration `status` (`healthy`, `unhealthy`, or `beta`). Availability can vary by\
+    \ sport and market. No authentication required.\n Read-only Product data or price calculation. Use\
+    \ returned canonical IDs. Access, delay and metered usage follow your connected account; never infer\
+    \ coverage from an empty result. One bounded request, no background polling or automatic retry. Affiliate\
+    \ 27 is excluded. No wagers, account changes or guarantee of returns."
+- name: v2GetSportsbooks
+  description: List all sportsbooks (alias for /affiliates) Read-only Product data or price calculation.
+    Use returned canonical IDs. Access, delay and metered usage follow your connected account; never infer
+    coverage from an empty result. One bounded request, no background polling or automatic retry. Affiliate
+    27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetSeasonTypes
+  description: List season types per sport Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v2GetPublicTournament
+  description: Read public allowlisted tournament schedule and scores (no odds) Read-only Product data
+    or price calculation. Use returned canonical IDs. Access, delay and metered usage follow your connected
+    account; never infer coverage from an empty result. One bounded request, no background polling or
+    automatic retry. Affiliate 27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetEventByID
+  description: Get a single event with markets `main_line=true` also excludes closed prices while selecting
+    main lines. Read-only Product data or price calculation. Use returned canonical IDs. Access, delay
+    and metered usage follow your connected account; never infer coverage from an empty result. One bounded
+    request, no background polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes
+    or guarantee of returns.
+- name: v2GetEventOpeners
+  description: Get opening prices for an event Returns the earliest recorded price for each available
+    line at each sportsbook. Opening snapshots are available whenever a price has been recorded, including
+    before, during, or after an event. The response always uses an `events` array, even for one event
+    ID. Read-only Product data or price calculation. Use returned canonical IDs. Access, delay and metered
+    usage follow your connected account; never infer coverage from an empty result. One bounded request,
+    no background polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes or
+    guarantee of returns.
+- name: v2GetEventClosing
+  description: "Get closing prices for an event Returns the latest recorded price for each available line\
+    \ and sportsbook at or before the event's scheduled start time. Before the event starts, the snapshot\
+    \ is provisional. Period markets use the event start time as their closing cutoff. The response always\
+    \ uses an `events` array, even for one event ID.\n\nHistorical-data access and the event-date lookback\
+    \ depend on your plan. Omit `hide_closed` or use `false` to include currently closed prices in completed-event\
+    \ snapshots. The event can be returned without prices when no recorded lines match the filters.\n\n\
+    For price changes over time, use `GET /api/v2/events/{eventID}/markets/history` or `GET /api/v2/events/{eventID}/markets/{marketID}/history`.\
+    \ See the [Historical Odds guide](/guides/historical-odds) for examples.\n Read-only Product data\
+    \ or price calculation. Use returned canonical IDs. Access, delay and metered usage follow your connected\
+    \ account; never infer coverage from an empty result. One bounded request, no background polling or\
+    \ automatic retry. Affiliate 27 is excluded. No wagers, account changes or guarantee of returns."
+- name: v2GetAvailableMarketsByEvent
+  description: Get available markets for an event Returns the list of market definitions available for
+    this event (not prices — use the event endpoint with market_ids for prices). Read-only Product data
+    or price calculation. Use returned canonical IDs. Access, delay and metered usage follow your connected
+    account; never infer coverage from an empty result. One bounded request, no background polling or
+    automatic retry. Affiliate 27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetMarketHistoryByEvent
+  description: Get market price history for an event Returns recorded price changes for the requested
+    markets and sportsbooks, subject to your plan's historical-data access. Data can be available before,
+    during, or after an event as prices are recorded. Each response is bounded by the requested limit.
+    Read-only Product data or price calculation. Use returned canonical IDs. Access, delay and metered
+    usage follow your connected account; never infer coverage from an empty result. One bounded request,
+    no background polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes or
+    guarantee of returns.
+- name: v2GetOpeningPricesByEvent
+  description: Get opening prices for an event's markets Read-only Product data or price calculation.
+    Use returned canonical IDs. Access, delay and metered usage follow your connected account; never infer
+    coverage from an empty result. One bounded request, no background polling or automatic retry. Affiliate
+    27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetMarketLineHistoryByEvent
+  description: Get line price chart data for a specific market Returns time-series price data suitable
+    for charting line movement. To chart one participant, first discover its public `participant_id` with
+    `GET /api/v2/markets/participants` for the same event and market, then pass that value here. For totals
+    (market `3`), discover the `TYPE_RESULT` Over and Under participants and request each side separately.
+    Series are grouped by affiliate and can otherwise contain points for more than one participant. `main_line=true`
+    keeps only the points that were the main line when written. Read-only Product data or price calculation.
+    Use returned canonical IDs. Access, delay and metered usage follow your connected account; never infer
+    coverage from an empty result. One bounded request, no background polling or automatic retry. Affiliate
+    27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v2GetBestLineByEvent
+  description: Get best available line for an event Returns the best moneyline, spread, and total across
+    all sportsbooks. Read-only Product data or price calculation. Use returned canonical IDs. Access,
+    delay and metered usage follow your connected account; never infer coverage from an empty result.
+    One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No wagers,
+    account changes or guarantee of returns.
+- name: v2GetBestOddsByEvent
+  description: "Get Best Available Line for an Event Returns the best currently open sportsbook price\
+    \ for one event market,\nplus the ranked matching prices. This endpoint is event-scoped, so no\ndate\
+    \ parameter is required.\n Read-only Product data or price calculation. Use returned canonical IDs.\
+    \ Access, delay and metered usage follow your connected account; never infer coverage from an empty\
+    \ result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded.\
+    \ No wagers, account changes or guarantee of returns."
+- name: v2GetPlaysByEvent
+  description: "Get play-by-play for an event Returns the play-by-play timeline for a live or completed\
+    \ event — one entry per play with description, period, game clock, running score, and (as attribution\
+    \ rolls out) the players involved. Live game state and play-by-play require an **Ultra plan or higher**;\
+    \ keys on lower tiers receive a `403`. The companion `live_game_state` snapshot (current inning/quarter,\
+    \ count, base runners, possession, and more) is embedded on live event payloads for entitled keys.\
+    \ Also available for streaming via the `plays` channel on the V2 WebSocket.\n Read-only Product data\
+    \ or price calculation. Use returned canonical IDs. Access, delay and metered usage follow your connected\
+    \ account; never infer coverage from an empty result. One bounded request, no background polling or\
+    \ automatic retry. Affiliate 27 is excluded. No wagers, account changes or guarantee of returns."
+- name: v2GetHedgeOpportunities
+  description: List Hedge Opportunities (v2) Returns current arbitrage/hedge opportunities across sportsbooks.
+    Read-only Product data or price calculation. Use returned canonical IDs. Access, delay and metered
+    usage follow your connected account; never infer coverage from an empty result. One bounded request,
+    no background polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes or
+    guarantee of returns.
+- name: v2GetTopHedgeOpportunities
+  description: List Top Hedge Opportunities (v2) Returns the top arbitrage/hedge opportunities by edge.
+    Read-only Product data or price calculation. Use returned canonical IDs. Access, delay and metered
+    usage follow your connected account; never infer coverage from an empty result. One bounded request,
+    no background polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes or
+    guarantee of returns.
+- name: v2GetHedgeOpportunityByID
+  description: "Get a Hedge Opportunity by ID (v2) Returns one hedge opportunity from the selected opportunity\
+    \ type.\nIDs are unique within an opportunity type, not across every hedge type,\nso an ID copied\
+    \ from a non-mainlines feed must be requested with that\nfeed's concrete `type`. If omitted, `type`\
+    \ defaults to `mainlines` for\nbackwards compatibility. Only the enumerated generally available\n\
+    opportunity types are part of this public contract.\n Read-only Product data or price calculation.\
+    \ Use returned canonical IDs. Access, delay and metered usage follow your connected account; never\
+    \ infer coverage from an empty result. One bounded request, no background polling or automatic retry.\
+    \ Affiliate 27 is excluded. No wagers, account changes or guarantee of returns."
+- name: v2GetHedgeOpportunitiesByEvent
+  description: List Hedge Opportunities for an Event (v2) Returns arbitrage/hedge opportunities for a
+    specific event. Read-only Product data or price calculation. Use returned canonical IDs. Access, delay
+    and metered usage follow your connected account; never infer coverage from an empty result. One bounded
+    request, no background polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes
+    or guarantee of returns.
+- name: v2GetBestOdds
+  description: "Get best available line using event_id query Returns the best currently open sportsbook\
+    \ price for one event market,\nplus the ranked matching prices. This endpoint is event-scoped, so\
+    \ no\ndate parameter is required.\n Read-only Product data or price calculation. Use returned canonical\
+    \ IDs. Access, delay and metered usage follow your connected account; never infer coverage from an\
+    \ empty result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded.\
+    \ No wagers, account changes or guarantee of returns."
+- name: v2GetSteamers
+  description: "Get Steamers by Sport and Date using sport_id/date query Returns open prices for a sport\
+    \ and event date whose implied\nprobability moved the most during the requested lookback window.\n\
+    \ Read-only Product data or price calculation. Use returned canonical IDs. Access, delay and metered\
+    \ usage follow your connected account; never infer coverage from an empty result. One bounded request,\
+    \ no background polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes or\
+    \ guarantee of returns."
+- name: v2GetOutliers
+  description: "Get Bookmaker Outliers by Sport and Date using sport_id/date query Returns prices from\
+    \ one sportsbook that are most out of line with the\npeer-book consensus for matching event, market,\
+    \ period, participant,\nand line. The date scope keeps the query bounded and cacheable.\n Read-only\
+    \ Product data or price calculation. Use returned canonical IDs. Access, delay and metered usage follow\
+    \ your connected account; never infer coverage from an empty result. One bounded request, no background\
+    \ polling or automatic retry. Affiliate 27 is excluded. No wagers, account changes or guarantee of\
+    \ returns."
+- name: v2GetParlayBook
+  description: "Find Best Same-Book Parlay Price Returns sportsbooks that currently have every requested\
+    \ leg open, ranked\nby the combined same-book price. The response does not guarantee that a\nsportsbook\
+    \ will accept the exact betslip combination.\n Read-only Product data or price calculation. Use returned\
+    \ canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage\
+    \ from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27\
+    \ is excluded. No wagers, account changes or guarantee of returns. POST computes same-book prices\
+    \ from existing public prices; it does not submit a bet."
+- name: v2GetBestParlayBook
+  description: "Find Best Same-Book Parlay Price Returns sportsbooks that currently have every requested\
+    \ leg open, ranked\nby the combined same-book price. The response does not guarantee that a\nsportsbook\
+    \ will accept the exact betslip combination.\n Read-only Product data or price calculation. Use returned\
+    \ canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage\
+    \ from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27\
+    \ is excluded. No wagers, account changes or guarantee of returns. POST computes same-book prices\
+    \ from existing public prices; it does not submit a bet."
+- name: v1GetEventByID
+  description: Get a single event with lines Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetByLineID
+  description: Get event by line ID Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v1GetDelta
+  description: Get event deltas (V1 format) Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetDeltaV2
+  description: Get event deltas (V2 format via V1 path) Read-only Product data or price calculation. Use
+    returned canonical IDs. Access, delay and metered usage follow your connected account; never infer
+    coverage from an empty result. One bounded request, no background polling or automatic retry. Affiliate
+    27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetBestLineMulti
+  description: Get best lines for multiple events Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetMoneylines
+  description: Get moneylines for an event Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v1GetTotals
+  description: Get totals (over/under) for an event Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetTeamTotals
+  description: Get team totals for an event Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetSpreads
+  description: Get spreads for an event Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v1GetSports
+  description: List all sports Read-only Product data or price calculation. Use returned canonical IDs.
+    Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v1GetTeamsBySport
+  description: Get teams for a sport Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v1GetDivisionsBySport
+  description: Get divisions for a sport Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v1GetConferencesBySport
+  description: Get conferences for a sport Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: v1GetDatesBySport
+  description: Get available dates for a sport Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetScheduleBySport
+  description: Get event schedule for a sport Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetEventsBySportAndDate
+  description: Get events with lines for a sport and date Read-only Product data or price calculation.
+    Use returned canonical IDs. Access, delay and metered usage follow your connected account; never infer
+    coverage from an empty result. One bounded request, no background polling or automatic retry. Affiliate
+    27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetOpenersBySportAndDate
+  description: Get opening lines for a sport and date Read-only Product data or price calculation. Use
+    returned canonical IDs. Access, delay and metered usage follow your connected account; never infer
+    coverage from an empty result. One bounded request, no background polling or automatic retry. Affiliate
+    27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetClosingBySportAndDate
+  description: Get closing lines for a sport and date Read-only Product data or price calculation. Use
+    returned canonical IDs. Access, delay and metered usage follow your connected account; never infer
+    coverage from an empty result. One bounded request, no background polling or automatic retry. Affiliate
+    27 is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetAffiliates
+  description: List all sportsbooks/affiliates Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetSportsbooks
+  description: List all sportsbooks (alias) Read-only Product data or price calculation. Use returned
+    canonical IDs. Access, delay and metered usage follow your connected account; never infer coverage
+    from an empty result. One bounded request, no background polling or automatic retry. Affiliate 27
+    is excluded. No wagers, account changes or guarantee of returns.
+- name: v1GetSeasonTypes
+  description: List season types per sport Read-only Product data or price calculation. Use returned canonical
+    IDs. Access, delay and metered usage follow your connected account; never infer coverage from an empty
+    result. One bounded request, no background polling or automatic retry. Affiliate 27 is excluded. No
+    wagers, account changes or guarantee of returns.
+- name: capture_v1_stream
+  description: Read actual frames from the V1 WebSocket for selected events and books. Use only for legacy
+    line contracts; prefer V2 market tools. Requires eligible WebSocket access with all periods, live/player-prop
+    access and no delay; restricted custom plans must use REST. One bounded socket closes after at most
+    five seconds of observation, 50 messages or 256 KiB; no ongoing background delivery.
+- name: capture_market_stream
+  description: Read actual V2 market-price WebSocket frames for explicit event/sport, market and affiliate
+    filters. Requires eligible WebSocket access with all periods, live/player-prop access and no delay;
+    restricted custom plans must use REST. Opens one socket for at most five seconds of observation, 50
+    messages or 256 KiB, then closes. Empty capture is not proof of no changes or no coverage.
+- name: capture_live_stream
+  description: Read actual multiplexed WebSocket markets, scores, plays, stats, live game state, futures
+    or hedge frames. Supports scoped subscriptions and supported snapshot, resync, usage and unsubscribe
+    controls; only plays supports durable resume. Stats needs a REST baseline. Requires each channel entitlement;
+    priced channels also need all periods, live/player-prop access and no delay. Restricted custom plans
+    can use REST. At most three subscriptions, five seconds of observation, 50 messages and 256 KiB; the
+    socket then closes. No continuous feed or automatic reconnect; report incomplete snapshot/replay and
+    gaps.
+- name: capture_hedge_stream
+  description: Read actual frames from the dedicated V2 hedge WebSocket for selected events and books.
+    Requires HedgeAccess or an eligible pass; this dedicated route has its own gate. Returns server-provided
+    calculations only; places no wagers. Capture closes after at most five seconds of observation, 50
+    messages or 256 KiB. No guaranteed opportunities or continuous coverage.
+tools_count: 85
