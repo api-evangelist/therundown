@@ -1,4 +1,4 @@
-# The Rundown (therundown)
+# The Rundown
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,61 +64,211 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The Rundown is a sports betting data API platform providing real-time odds, lines, scores, and results across 30+ sports leagues including NFL, NBA, MLB, NHL, WNBA, MLS, college football and basketball, and international soccer, tennis, cricket, and Formula 1. The API aggregates data from 16+ sportsbooks including DraftKings, FanDuel, BetMGM, and Pinnacle, as well as prediction markets like Kalshi and Polymarket, normalizing everything into a single unified schema with 600+ market types. Developers can access data via REST endpoints or WebSocket streaming for sub-second real-time updates, with historical odds data and line movement tracking available on higher tiers.
+The Rundown is a sports betting data API platform providing real-time odds, lines, scores, and results across 30+ sports leagues including NFL, NBA, MLB, NHL, WNBA, MLS, college football and basketball, and international soccer, tennis, cricket, and Formula 1. The API aggregates data from 16+ sportsbooks including DraftKings, FanDuel, BetMGM, and Pinnacle, as well as prediction markets like Kalshi and Polymarket, normalizing everything into a single unified schema with 600+ market types covering moneylines, spreads, totals, player props, team totals, futures, and live in-play odds. Developers can access data via REST endpoints or WebSocket streaming for sub-second real-time updates, with historical odds data and line movement tracking available on higher tiers.
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/therundown/refs/heads/main/apis.yml
-- Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=therundown-api-evangelist&utm_content=repo
+**Areas:** Sports · Betting · Odds · NFL · NBA · MLB · NHL · Soccer · Real-Time · Sports Data · Sportsbook
 
-## Tags
+## The Rundown on APIs.io
 
-Sports, Betting, Odds, NFL, NBA, MLB, NHL, Soccer, Real-Time, Sports Data, Sportsbook
+Everything profiled for The Rundown is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/therundown/](https://apis.io/providers/therundown/)** — or go straight to one of the APIs or properties below.
 
-## APIs
+### APIs (14)
 
-### TheRundown Sports Odds API
+- [The Rundown V1 Delta API](https://apis.io/apis/therundown/therundown-v1-delta-api/) — Delta/change feeds (V1 legacy)
+- [The Rundown V1 Events API](https://apis.io/apis/therundown/therundown-v1-events-api/) — Events with line-based odds (V1 legacy)
+- [The Rundown V1 Lines API](https://apis.io/apis/therundown/therundown-v1-lines-api/) — Moneyline, spread, total, best-line endpoints (V1 legacy)
+- [The Rundown V1 Reference API](https://apis.io/apis/therundown/therundown-v1-reference-api/) — Reference data (V1 legacy)
+- [The Rundown V1 Sports API](https://apis.io/apis/therundown/therundown-v1-sports-api/) — Sport listings, dates, events, schedules (V1 legacy)
+- [The Rundown V1 WebSocket API](https://apis.io/apis/therundown/therundown-v1-websocket-api/) — Real-time streaming via WebSocket (V1 legacy)
+- [The Rundown V2 Events API](https://apis.io/apis/therundown/therundown-v2-events-api/) — Events with market-based odds (V2)
+- [The Rundown V2 Markets API](https://apis.io/apis/therundown/therundown-v2-markets-api/) — Market definitions, odds, deltas, and history (V2)
+- [The Rundown V2 Players API](https://apis.io/apis/therundown/therundown-v2-players-api/) — Player data (V2)
+- [The Rundown V2 Reference API](https://apis.io/apis/therundown/therundown-v2-reference-api/) — Reference data — affiliates, sportsbooks, season types (V2)
+- [The Rundown V2 Sports API](https://apis.io/apis/therundown/therundown-v2-sports-api/) — Sport listings, dates, and teams (V2)
+- [The Rundown V2 Stats API](https://apis.io/apis/therundown/therundown-v2-stats-api/) — Team and player statistics (V2)
+- [The Rundown V2 Teams API](https://apis.io/apis/therundown/therundown-v2-teams-api/) — Team data, players, and stats (V2)
+- [The Rundown V2 WebSocket API](https://apis.io/apis/therundown/therundown-v2-websocket-api/) — Real-time streaming via WebSocket (V2)
 
-RESTful API providing real-time sports betting odds, lines, scores, schedules, team stats, and player props from 16+ sportsbooks normalized into a single schema. Supports 600+ market types across 30+ leagues including NFL, NBA, MLB, NHL, college sports, and international competitions. Also offers WebSocket streaming for sub-second updates and historical line movement data on higher-tier plans.
+### Published properties
 
-- Human URL: https://therundown.io/api
-- Base URL: https://therundown.io/api/v2
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Plans / Rate Limits / FinOps
+#### MCP servers (1)
 
-| Plan | Price | Data Points | Rate Limit | Delay |
-|------|-------|-------------|-----------|-------|
-| Free | $0/mo | 20K/day | 1 req/sec | 5 min |
-| Starter | $49/mo | 5M/mo | 2 req/sec | 60 sec |
-| Pro | $149/mo | 25M/mo | 5 req/sec | 30 sec |
-| Ultra | $399/mo | 100M/mo | 10 req/sec | Real-time |
-| Super | $649/mo | 250M/mo | 15 req/sec | Real-time |
-| Mega | $999/mo | 500M/mo | 20 req/sec | Real-time |
-| Max | $2,499/mo | 2.5B/mo | 50 req/sec | Real-time |
-| Enterprise | Custom | Custom | Custom | Real-time |
+Model Context Protocol servers that expose the API to agents.
 
-- Plans: [plans/therundown-plans-pricing.yml](plans/therundown-plans-pricing.yml)
-- Rate Limits: [rate-limits/therundown-rate-limits.yml](rate-limits/therundown-rate-limits.yml)
-- FinOps: [finops/therundown-finops.yml](finops/therundown-finops.yml)
+- [therundown](https://apis.io/servers/therundown/therundown/)
 
-## Timestamps
+#### Agentic access (1)
 
-- Created: 2026-06-12
-- Modified: 2026-06-12
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## Common
+- [Therundown Agentic Access](https://apis.io/agentic-access/therundown/therundown-agentic-access/)
 
-| Type | URL |
-|------|-----|
-| Website | https://therundown.io |
-| Documentation | https://docs.therundown.io/introduction |
-| GitHub Org | https://github.com/TheRundown |
-| LinkedIn | https://www.linkedin.com/company/therundowninc |
-| Blog | https://blog.therundown.io |
-| Pricing | https://therundown.io/pricing/api |
-| Status Page | https://therundown.instatus.com/ |
-| X | https://x.com/therundownio |
+#### JSON Schema (60)
 
-## Maintainers
+The data models the API reads and writes.
 
-| Name | Email |
-|------|-------|
-| Kin Lane | kin@apievangelist.com |
+- [Affiliate](https://apis.io/schemas/therundown/therundown-affiliate/)
+- [AffiliatesResponse](https://apis.io/schemas/therundown/therundown-affiliatesresponse/)
+- [BestAffiliateInfo](https://apis.io/schemas/therundown/therundown-bestaffiliateinfo/)
+- [BestLineResponse](https://apis.io/schemas/therundown/therundown-bestlineresponse/)
+- [BestMoneyline](https://apis.io/schemas/therundown/therundown-bestmoneyline/)
+- [BestSpread](https://apis.io/schemas/therundown/therundown-bestspread/)
+- [BestTotal](https://apis.io/schemas/therundown/therundown-besttotal/)
+- [ChartResponse](https://apis.io/schemas/therundown/therundown-chartresponse/)
+- [ChartSeries](https://apis.io/schemas/therundown/therundown-chartseries/)
+- [Conference](https://apis.io/schemas/therundown/therundown-conference/)
+- [ConferencesResponse](https://apis.io/schemas/therundown/therundown-conferencesresponse/)
+- [DeltasResponse](https://apis.io/schemas/therundown/therundown-deltasresponse/)
+- [Division](https://apis.io/schemas/therundown/therundown-division/)
+- [DivisionsResponse](https://apis.io/schemas/therundown/therundown-divisionsresponse/)
+- [EventsV2Response](https://apis.io/schemas/therundown/therundown-eventsv2response/)
+- [EventV2](https://apis.io/schemas/therundown/therundown-eventv2/)
+- [Market](https://apis.io/schemas/therundown/therundown-market/)
+- [MarketDeltaEntry](https://apis.io/schemas/therundown/therundown-marketdeltaentry/)
+- [MarketDeltaResponse](https://apis.io/schemas/therundown/therundown-marketdeltaresponse/)
+- [MarketHistoryResponse](https://apis.io/schemas/therundown/therundown-markethistoryresponse/)
+- [MarketLinePriceHistory](https://apis.io/schemas/therundown/therundown-marketlinepricehistory/)
+- [MarketLinePriceResponse](https://apis.io/schemas/therundown/therundown-marketlinepriceresponse/)
+- [MarketLinesResponse](https://apis.io/schemas/therundown/therundown-marketlinesresponse/)
+- [MarketParticipant](https://apis.io/schemas/therundown/therundown-marketparticipant/)
+- [MarketParticipantResponse](https://apis.io/schemas/therundown/therundown-marketparticipantresponse/)
+- …and 35 more published on APIs.io
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Therundown Context](https://apis.io/jsonld/therundown/therundown-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [TheRundown Sports Betting API Vocabulary](https://apis.io/vocabularies/therundown/therundown-vocabulary/)
+
+#### Examples (5)
+
+Example requests and responses.
+
+- [Therundown Get Best Line Example](https://apis.io/examples/therundown/therundown-get-best-line-example/)
+- [Therundown Get Delta Example](https://apis.io/examples/therundown/therundown-get-delta-example/)
+- [Therundown Get Events By Date Example](https://apis.io/examples/therundown/therundown-get-events-by-date-example/)
+- [Therundown Get Market Odds Example](https://apis.io/examples/therundown/therundown-get-market-odds-example/)
+- [Therundown List Sports Example](https://apis.io/examples/therundown/therundown-list-sports-example/)
+
+#### Collections (14)
+
+Postman and Open Collection request collections.
+
+- [TheRundown Sports V1 Delta API](https://apis.io/collections/therundown/open-therundown-v1-delta-api/)
+- [TheRundown Sports V1 Delta V1 Events API](https://apis.io/collections/therundown/open-therundown-v1-events-api/)
+- [TheRundown Sports V1 Delta V1 Lines API](https://apis.io/collections/therundown/open-therundown-v1-lines-api/)
+- [TheRundown Sports V1 Delta V1 Reference API](https://apis.io/collections/therundown/open-therundown-v1-reference-api/)
+- [TheRundown Sports V1 Delta V1 Sports API](https://apis.io/collections/therundown/open-therundown-v1-sports-api/)
+- [TheRundown Sports V1 Delta V1 WebSocket API](https://apis.io/collections/therundown/open-therundown-v1-websocket-api/)
+- [TheRundown Sports V1 Delta V2 Events API](https://apis.io/collections/therundown/open-therundown-v2-events-api/)
+- [TheRundown Sports V1 Delta V2 Markets API](https://apis.io/collections/therundown/open-therundown-v2-markets-api/)
+- [TheRundown Sports V1 Delta V2 Players API](https://apis.io/collections/therundown/open-therundown-v2-players-api/)
+- [TheRundown Sports V1 Delta V2 Reference API](https://apis.io/collections/therundown/open-therundown-v2-reference-api/)
+- [TheRundown Sports V1 Delta V2 Sports API](https://apis.io/collections/therundown/open-therundown-v2-sports-api/)
+- [TheRundown Sports V1 Delta V2 Stats API](https://apis.io/collections/therundown/open-therundown-v2-stats-api/)
+- [TheRundown Sports V1 Delta V2 Teams API](https://apis.io/collections/therundown/open-therundown-v2-teams-api/)
+- [TheRundown Sports V1 Delta V2 WebSocket API](https://apis.io/collections/therundown/open-therundown-v2-websocket-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [The Rundown — jsonschema rules](https://apis.io/rules/therundown/therundown-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Therundown Authentication](https://apis.io/security/therundown/therundown-authentication/)
+- [Therundown Domain Security](https://apis.io/security/therundown/therundown-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Therundown Plans Pricing](https://apis.io/plans/therundown/therundown-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Therundown Rate Limits](https://apis.io/rate-limits/therundown/therundown-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Therundown Finops](https://apis.io/finops/therundown/therundown-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://therundown.io)
+- [Documentation](https://docs.therundown.io/introduction)
+- [Pricing](https://therundown.io/pricing/api)
+- [Blog](https://therundown.io/blog)
+- [Status](https://therundown.instatus.com/)
+
+## API Evangelist rating
+
+**Kin Score 32.7** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 51.5 |
+| Contract governance | 23.5 |
+| Operational transparency | 13.2 |
+| Developer ergonomics | 22.6 |
+| Access clarity | 18.4 |
+
+**Agent readiness 36.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/therundown/](https://apis.io/providers/therundown/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for The Rundown: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/therundown/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
